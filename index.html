@@ -234,6 +234,13 @@
   }
   .visit:hover{background:#0a544d;}
   .visit.off{background:var(--soft); color:var(--muted); cursor:default;}
+  .sharerow{display:grid; gap:9px; margin-top:10px;}
+  .visit.ghost{
+    background:var(--soft); color:var(--brand); border:1px solid var(--line);
+    font-family:inherit; cursor:pointer; width:100%;
+  }
+  .visit.ghost:hover{background:#e3efee;}
+  .visit.ghost.done{background:var(--brand); color:#fff; border-color:var(--brand);}
   .shot{width:100%; border-radius:11px; border:1px solid var(--line); display:block;}
   .note{
     background:var(--soft); border-left:3px solid var(--brand); border-radius:0 9px 9px 0;
@@ -391,6 +398,7 @@
    ═══════════════════════════════════════════════════════════ */
 const PROJECTS = [
   {
+    slug:"ozo-commercial",
     name:"OZO Commercial — Corporate Website",
     client:"OZO Commercial Sdn Bhd",
     type:"Client", status:"live", bucket:"completed",
@@ -408,6 +416,7 @@ const PROJECTS = [
     skills:["PHP","HTML/CSS","JavaScript","Responsive Design","SEO"]
   },
   {
+    slug:"chalenshq",
     name:"ChalensHQ — E-Commerce Platform",
     client:"ChalensHQ",
     type:"Client", status:"live", bucket:"completed",
@@ -424,6 +433,7 @@ const PROJECTS = [
     skills:["PHP","MySQL","JavaScript","HTML/CSS","Responsive Design"]
   },
   {
+    slug:"irkaz-invoice-ocr",
     name:"IRKAZ Retail — Invoice OCR & Data Extraction",
     client:"IRKAZ Retail Sdn Bhd",
     type:"Client", status:"maintained", bucket:"completed",
@@ -439,6 +449,7 @@ const PROJECTS = [
     skills:["Python","OCR","Claude API","Automation","HTML/CSS"]
   },
   {
+    slug:"js-sapphire",
     name:"JS Sapphire — Corporate Website",
     client:"JS Sapphire Sdn Bhd",
     type:"Client", status:"completed", bucket:"completed",
@@ -454,23 +465,28 @@ const PROJECTS = [
     skills:["PHP","Tailwind CSS","JavaScript","HTML/CSS","SEO"]
   },
   {
-    name:"Bejaa Digital — Agency Site & Lead System",
+    slug:"bejaa-digital",
+    name:"Bejaa Digital — Agency Site & Client Portal",
     client:"Bejaa Digital (own company)",
     type:"Personal", status:"live", bucket:"completed",
     timeline:"2026 — present", icon:"⚡", highlight:true,
     url:"https://bejaadigital.com",
-    summary:"My own agency site — not just a brochure page, but a working lead-capture system with an admin backend, deployed via Docker and running in production.",
+    summary:"My own agency site — not just a brochure page, but a working lead-capture system with an admin backend and a client progress tracker, deployed via Docker and running in production.",
     features:[
       "PHP component-include architecture with centralised content layer",
       "Request-for-quote form writing leads to a database",
       "WhatsApp deep-link call-to-actions throughout",
       "Admin login with a leads dashboard and blog editor",
+      "Client progress tracker — every client gets a private link showing live milestone status, no login needed",
+      "Progress percentage calculated from milestones, never typed in by hand",
+      "Structured data, dynamic sitemap and per-page titles for search and AI discoverability",
       "Docker container deployed to Render",
       "Full custom-domain email setup — MX, SPF, DKIM and DMARC records"
     ],
     skills:["PHP","Tailwind CSS","MySQL","Docker","Render","DNS & Email","SEO"]
   },
   {
+    slug:"pet-hotel-booking",
     name:"Bejaa Pet Hotel — Booking System",
     client:"Product demo",
     type:"Demo", status:"completed", bucket:"completed",
@@ -485,6 +501,7 @@ const PROJECTS = [
     skills:["PHP","MySQL","JavaScript","HTML/CSS"]
   },
   {
+    slug:"cergas-bina",
     name:"Cergas Bina — Contractor Website Demo",
     client:"Pitch demo (fictional company)",
     type:"Demo", status:"completed", bucket:"completed",
@@ -501,6 +518,7 @@ const PROJECTS = [
     skills:["HTML/CSS","Tailwind CSS","JavaScript","Responsive Design"]
   },
   {
+    slug:"educational-supplies",
     name:"Educational Supplies — Store Demo",
     client:"Pitch demo",
     type:"Demo", status:"completed", bucket:"completed",
@@ -517,6 +535,7 @@ const PROJECTS = [
 
   /* ── IN PROGRESS ── */
   {
+    slug:"ozo-hub",
     name:"OZO HUB — Internal Project Management System",
     client:"OZO Commercial Sdn Bhd",
     type:"Client", status:"progress", bucket:"inprogress",
@@ -526,11 +545,30 @@ const PROJECTS = [
     features:[
       "Role-based system covering multiple levels of the client's organisation",
       "Web and mobile-friendly interfaces",
+      "Self-hosted database — the client's operational data stays on infrastructure they own",
       "Further scope and screens are covered by client confidentiality"
     ],
-    skills:["Next.js","Tailwind CSS","Supabase","PostgreSQL","DigitalOcean"]
+    skills:["Next.js","Tailwind CSS","PostgreSQL","Docker","DigitalOcean"]
   },
   {
+    slug:"gudang-erp",
+    name:"Gudang — Distribution ERP",
+    client:"Own product",
+    type:"Personal", status:"progress", bucket:"inprogress",
+    timeline:"August 2026 — present", icon:"📦", highlight:true,
+    summary:"A distribution ERP for Malaysian wholesalers and stockists — stock, sales orders, purchasing and customer pricing in one system instead of five spreadsheets. Specification written and the codebase scaffolded; modules are being built one at a time.",
+    features:[
+      "Stock movement ledger — quantity on hand is calculated from movements, never typed in by hand",
+      "Sales orders, purchase orders and goods receiving",
+      "Per-customer price tiers",
+      "Command-palette search across products, customers and documents",
+      "Self-hosted PostgreSQL — the database stays on hardware the business owns",
+      "Docker deployment to a private server"
+    ],
+    skills:["Next.js","TypeScript","PostgreSQL","Drizzle ORM","Tailwind CSS","Docker"]
+  },
+  {
+    slug:"sitepulse",
     name:"SitePulse — Construction Site Progress Tracker",
     client:"Own SaaS product",
     type:"Personal", status:"progress", bucket:"inprogress",
@@ -550,6 +588,24 @@ const PROJECTS = [
 
   /* ── UPCOMING ── */
   {
+    slug:"b2b-ordering-portal",
+    name:"Materials Distributor — B2B Ordering Portal & Accounting Sync",
+    client:"B2B distribution company",
+    type:"Client", status:"upcoming", bucket:"upcoming",
+    timeline:"Scoped 2026", icon:"🔄",
+    summary:"A trade-customer ordering portal for a distributor, with products and prices read straight out of the accounting system they already run, so nothing gets keyed in twice. A working catalogue demo was built from the client's own live product data. Scope and quotation delivered, awaiting go-ahead.",
+    features:[
+      "Corporate website plus a logged-in ordering portal for trade customers",
+      "Products, stock levels and prices read directly from the client's AutoCount system",
+      "Retail and dealer price tiers applied automatically per customer",
+      "Orders written back into AutoCount — no re-keying by the office",
+      "Scheduled sync agent running on the client's own network, read-only by default",
+      "Working demo already built and delivered using the client's real product data"
+    ],
+    skills:["Next.js","Tailwind CSS","Python","FastAPI","PostgreSQL","AutoCount Integration"]
+  },
+  {
+    slug:"catering-cms",
     name:"Catering Group — Corporate Website & CMS",
     client:"Catering & food service group",
     type:"Client", status:"upcoming", bucket:"upcoming",
@@ -666,7 +722,7 @@ function renderList(mode){
       }).slice(0, 6);
 
   $("#listArea").innerHTML = src.map(p => `
-    <button class="rowitem" data-open="${esc(p.name)}">
+    <button class="rowitem" data-open="${esc(p.slug)}">
       <div class="ic">${p.icon}</div>
       <div>
         <div class="nm">${esc(p.name)}</div>
@@ -730,7 +786,7 @@ function renderTable(bucket){
       <td>${typePill(p.type)}</td>
       <td>${statPill(p.status)}</td>
       <td>${esc(p.timeline)}</td>
-      <td><button class="viewbtn" data-open="${esc(p.name)}">👁 View</button></td>
+      <td><button class="viewbtn" data-open="${esc(p.slug)}">👁 View</button></td>
     </tr>`).join("")
     : `<tr><td colspan="6"><div class="empty">No projects match that search.</div></td></tr>`;
 
@@ -845,9 +901,10 @@ function viewContact(){
 }
 
 /* ═══ MODAL ═══ */
-function openProject(name){
-  const p = PROJECTS.find(x => x.name === name);
+function openProject(slug){
+  const p = PROJECTS.find(x => x.slug === slug);
   if(!p) return;
+  openSlug = slug;
 
   $("#mIcon").textContent = p.icon;
   $("#mName").textContent = p.name;
@@ -863,7 +920,13 @@ function openProject(name){
     </div>
     ${p.url
       ? `<a class="visit" href="${esc(p.url)}" target="_blank" rel="noopener">Visit Project ↗</a>`
-      : `<div class="visit off">No public link — internal or in development</div>`}`;
+      : `<div class="visit off">No public link — internal or in development</div>`}
+    <div class="sharerow">
+      <button class="visit ghost" id="copyLink">🔗 Copy link to this project</button>
+      <a class="visit ghost" href="https://wa.me/?text=${encodeURIComponent(p.name + " — " + projectUrl(p))}" target="_blank" rel="noopener">💬 Share on WhatsApp</a>
+    </div>`;
+
+  $("#copyLink").addEventListener("click", () => copyLink(p));
 
   $("#pFeatures").innerHTML =
     `<ul class="feat">${p.features.map(f => `<li>${esc(f)}</li>`).join("")}</ul>` +
@@ -883,11 +946,51 @@ function openProject(name){
   document.body.style.overflow = "hidden";
 }
 function closeModal(){
+  openSlug = "";
   $("#overlay").classList.remove("show");
   document.body.style.overflow = "";
 }
 
+/* ═══ SHAREABLE PROJECT LINKS ═══ */
+function projectUrl(p){
+  return location.origin + location.pathname + "#project/" + p.slug;
+}
+function copyLink(p){
+  const url = projectUrl(p);
+  const btn = $("#copyLink");
+  const done = () => {
+    btn.textContent = "✓ Link copied";
+    btn.classList.add("done");
+    setTimeout(() => {
+      btn.textContent = "\uD83D\uDD17 Copy link to this project";
+      btn.classList.remove("done");
+    }, 2000);
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(url).then(done, () => fallbackCopy(url, done));
+  } else {
+    fallbackCopy(url, done);
+  }
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.cssText = "position:fixed; top:-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); done(); }
+  catch(err){ window.prompt("Copy this link:", text); }
+  document.body.removeChild(ta);
+}
+function dismissModal(){
+  if(!openSlug) return;
+  location.hash = curRoute || "dashboard";
+}
+
 /* ═══ ROUTER ═══ */
+let curRoute = "";
+let openSlug = "";
+
 function go(route){
   const view = $("#view");
   if(route === "upcoming" || route === "inprogress" || route === "completed"){
@@ -923,10 +1026,25 @@ function go(route){
     });
   }
 
+  curRoute = route;
   $$(".navitem[data-route]").forEach(n => n.classList.toggle("active", n.dataset.route === route));
-  if(location.hash.slice(1) !== route) location.hash = route;
   window.scrollTo({ top:0, behavior:"instant" });
   closeSidebar();
+}
+
+/* The hash is the single source of truth: `#completed`, or `#project/<slug>`
+   for a direct link straight into one project's showcase. */
+function applyHash(){
+  const h = location.hash.slice(1) || "dashboard";
+  let route = h, slug = "";
+  if(h.indexOf("project/") === 0){
+    slug = h.slice(8);
+    const p = PROJECTS.find(x => x.slug === slug);
+    if(!p) slug = "";
+    route = curRoute || (p ? p.bucket : "dashboard");
+  }
+  if(route !== curRoute) go(route);
+  if(slug !== openSlug){ slug ? openProject(slug) : closeModal(); }
 }
 
 function send(how){
@@ -969,9 +1087,9 @@ $("#scrim").addEventListener("click", closeSidebar);
 
 document.addEventListener("click", e => {
   const nav = e.target.closest("[data-route]");
-  if(nav){ go(nav.dataset.route); return; }
+  if(nav){ location.hash = nav.dataset.route; return; }
   const open = e.target.closest("[data-open]");
-  if(open){ openProject(open.dataset.open); return; }
+  if(open){ location.hash = "project/" + open.dataset.open; return; }
   const mt = e.target.closest("[data-mtab]");
   if(mt){
     $$(".mtabs .tab").forEach(t => t.classList.toggle("active", t === mt));
@@ -980,12 +1098,12 @@ document.addEventListener("click", e => {
     $(map[mt.dataset.mtab]).classList.add("show");
   }
 });
-$("#mClose").addEventListener("click", closeModal);
-$("#overlay").addEventListener("click", e => { if(e.target === $("#overlay")) closeModal(); });
-document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
-window.addEventListener("hashchange", () => go(location.hash.slice(1)));
+$("#mClose").addEventListener("click", dismissModal);
+$("#overlay").addEventListener("click", e => { if(e.target === $("#overlay")) dismissModal(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") dismissModal(); });
+window.addEventListener("hashchange", applyHash);
 
-go(location.hash.slice(1) || "dashboard");
+applyHash();
 </script>
 </body>
 </html>
