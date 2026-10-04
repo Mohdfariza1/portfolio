@@ -69,7 +69,7 @@
   .subnav{max-height:0; overflow:hidden; transition:max-height .25s ease;}
   .subnav.open{max-height:200px;}
   .subnav .navitem{padding-left:34px; font-size:13.5px; color:rgba(255,255,255,.78);}
-  .subnav .navitem .count{
+  .navitem .count{
     margin-left:auto; font-size:11px; font-weight:700; background:rgba(255,255,255,.2);
     border-radius:20px; padding:1px 8px;
   }
@@ -94,7 +94,7 @@
   .pagehead p{font-size:14px; color:rgba(255,255,255,.85); margin-top:4px;}
 
   /* ── STATS ── */
-  .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:24px;}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:24px;}
   .stat{
     background:var(--card); border-radius:14px; padding:20px; box-shadow:var(--shadow);
     border-top:4px solid var(--line); display:flex; align-items:center; gap:16px; text-align:left;
@@ -111,6 +111,7 @@
   .stat.up{border-top-color:#e0a53c;} .stat.up .bubble{background:var(--amber-bg);}
   .stat.pr{border-top-color:#1aa88f;} .stat.pr .bubble{background:#d9f2ec;}
   .stat.dn{border-top-color:#3b82f6;} .stat.dn .bubble{background:var(--blue-bg);}
+  .stat.mk{border-top-color:#8b5cf6;} .stat.mk .bubble{background:#ede4fb;}
 
   .cols{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;}
   .panel{background:var(--card); border-radius:14px; box-shadow:var(--shadow); overflow:hidden;}
@@ -247,6 +248,32 @@
     padding:13px 16px; font-size:13.5px; color:var(--muted); margin-top:14px;
   }
 
+  /* ── MOCKUPS ── */
+  .mcat{display:flex; align-items:center; gap:10px; font-size:16px; font-weight:700; margin:4px 0 12px;}
+  .mcat span{
+    background:var(--brand); color:#fff; border-radius:20px; min-width:22px; text-align:center;
+    font-size:11.5px; padding:2px 7px;
+  }
+  .mgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px; margin-bottom:28px;}
+  .mcard{
+    background:var(--card); border-radius:14px; box-shadow:var(--shadow); overflow:hidden;
+    display:flex; flex-direction:column; color:var(--text); transition:transform .15s, box-shadow .15s;
+  }
+  .mcard:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(20,24,31,.13);}
+  .mcard .thumb{position:relative; aspect-ratio:16/10; background:var(--soft); overflow:hidden; border-bottom:1px solid var(--line);}
+  .mcard .thumb img{width:100%; height:100%; object-fit:cover; object-position:top; display:block;}
+  .mcard .thumb .go{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:rgba(13,107,98,.74); color:#fff; font-weight:700; font-size:15px; opacity:0; transition:opacity .15s;
+  }
+  .mcard:hover .thumb .go{opacity:1;}
+  .mbody{padding:16px 18px 18px; display:flex; flex-direction:column; gap:9px; flex:1;}
+  .mbody .mname{font-weight:700; font-size:15.5px; overflow-wrap:anywhere;}
+  .mbody .mdesc{font-size:13.5px; color:var(--muted); flex:1;}
+  .mbody .mtags{display:flex; flex-wrap:wrap; gap:6px;}
+  .mbody .mtags span{font-size:11.5px; font-weight:600; background:var(--soft); color:var(--brand); border-radius:20px; padding:3px 9px;}
+  .mbody .mmeta{display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12.5px; color:var(--muted);}
+
   /* ── CONTENT PAGES ── */
   .prose{background:var(--card); border-radius:14px; box-shadow:var(--shadow); padding:26px;}
   .prose h2{font-size:17px; margin-bottom:6px;}
@@ -296,6 +323,7 @@
 
   @media (max-width:1000px){
     .cols{grid-template-columns:1fr;}
+    .stats{grid-template-columns:1fr 1fr;}
     .svcgrid{grid-template-columns:1fr;}
   }
   @media (max-width:820px){
@@ -338,6 +366,7 @@
         <button class="navitem" data-route="completed"><span class="ico">🏆</span> Completed <span class="count" id="cDn">0</span></button>
       </div>
 
+      <button class="navitem" data-route="mockups"><span class="ico">🖥️</span> Mockups <span class="count" id="cMk">0</span></button>
       <button class="navitem" data-route="background"><span class="ico">🎓</span> Background</button>
       <button class="navitem" data-route="services"><span class="ico">🧩</span> Services</button>
       <button class="navitem" data-route="contact"><span class="ico">✉️</span> Send Message</button>
@@ -623,6 +652,131 @@ const PROJECTS = [
   }
 ];
 
+/* ═══════════════════════════════════════════════════════════
+   MOCKUPS — click-through demos. Each lives in mockups/<slug>/
+   (index.html + thumb.jpg). `project` links a card back to its
+   PROJECTS entry; leave it out if there is none.
+   ═══════════════════════════════════════════════════════════ */
+const MOCKUP_CATS = [
+  "Landing Pages",
+  "Business Websites",
+  "Booking & Catalogue",
+  "Online Stores",
+  "Internal Systems",
+  "Dashboards & Automation"
+];
+const MOCKUPS = [
+  /* ── Landing Pages ─────────────────────────────────────────── */
+  {
+    slug:"klinik-senyum",
+    name:"Klinik Senyum Sihat — Dental Clinic Landing Page",
+    category:"Landing Pages", pages:1, lang:"Bahasa Melayu",
+    desc:"One page built to get the phone ringing: booking form with live time slots, a before-and-after slider you can drag, prices stated up front and a WhatsApp button that follows you down the page.",
+    skills:["HTML/CSS","JavaScript"]
+  },
+  {
+    slug:"fitnes-kuasa",
+    name:"Kuasa Fitness — Gym Trial Pass Landing Page",
+    category:"Landing Pages", pages:1, lang:"English",
+    desc:"Dark, high-energy page for a gym. Tap any day to see that day's class timetable with live spots left, and switch the membership prices between monthly and yearly.",
+    skills:["HTML/CSS","JavaScript"]
+  },
+
+  /* ── Business Websites ─────────────────────────────────────── */
+  {
+    slug:"cergas-bina", project:"cergas-bina",
+    name:"Cergas Bina — Contractor Website",
+    category:"Business Websites", pages:5, lang:"English",
+    desc:"Five-page site for a fictional G7 contractor — dark industrial theme, animated project counters, CIDB grade display and a WhatsApp enquiry button. Every menu link works.",
+    skills:["HTML/CSS","Tailwind CSS","JavaScript"]
+  },
+  {
+    slug:"amani-legal",
+    name:"Amani & Partners — Law Firm Website",
+    category:"Business Websites", pages:1, lang:"English",
+    desc:"A professional-services site that has to look trustworthy before it looks modern: practice areas, the partners you would actually deal with, how a matter runs, and a consultation form.",
+    skills:["HTML/CSS","JavaScript"]
+  },
+  {
+    slug:"js-sapphire-cleaning", project:"js-sapphire",
+    name:"JS Sapphire — Cleaning Services Site",
+    category:"Business Websites", pages:1, lang:"Bahasa Melayu",
+    desc:"The one-page pitch demo shown to JS Sapphire before their full six-page site was built — services, why-us, clients and an enquiry section.",
+    skills:["HTML/CSS","JavaScript"]
+  },
+
+  /* ── Booking & Catalogue ───────────────────────────────────── */
+  {
+    slug:"pawsinn-booking",
+    name:"Paws Inn — Pet Boarding Booking",
+    category:"Booking & Catalogue", pages:1, lang:"English",
+    desc:"A real booking flow, not a contact form. Pick dates, pet size, room and extras — the price works itself out as you go, rooms that are full cannot be chosen, and you get a booking reference at the end.",
+    skills:["HTML/CSS","JavaScript","Booking logic"]
+  },
+  {
+    slug:"salon-aura",
+    name:"Aura Hair Studio — Appointment Booking",
+    category:"Booking & Catalogue", pages:1, lang:"English",
+    desc:"Choose your services and the system adds up how long the visit takes, then only offers start times long enough to fit it — and blocks the times that stylist is already booked.",
+    skills:["HTML/CSS","JavaScript","Scheduling logic"]
+  },
+
+  /* ── Online Stores ─────────────────────────────────────────── */
+  {
+    slug:"batik-store",
+    name:"Kirana Batik — Fashion Online Store",
+    category:"Online Stores", pages:1, lang:"English",
+    desc:"Browse, filter and sort, open a product to pick size and colourway, then go right through the cart to an FPX, card or e-wallet checkout. Sold-out sizes are blocked, and the free-shipping bar fills as the basket grows.",
+    skills:["HTML/CSS","JavaScript","Cart & checkout"]
+  },
+  {
+    slug:"segar-mart",
+    name:"Segar Mart — Online Grocery Store",
+    category:"Online Stores", pages:1, lang:"English",
+    desc:"A grocery shop the way customers actually use one: search, shop by aisle, add with plus and minus, hit the minimum order, then pick a delivery slot — slots that are full cannot be taken.",
+    skills:["HTML/CSS","JavaScript","Cart & delivery slots"]
+  },
+
+  /* ── Internal Systems ──────────────────────────────────────── */
+  {
+    slug:"stok-kontrol",
+    name:"StokKontrol — Stock & Inventory System",
+    category:"Internal Systems", pages:1, lang:"English",
+    desc:"Record goods in or out and watch everything move together — stock levels, total value, the reorder alert list and the movement history. It will not let you issue more than you have.",
+    skills:["HTML/CSS","JavaScript","Stock logic"]
+  },
+  {
+    slug:"hr-portal",
+    name:"KerjaHub — Staff Leave & Claims Portal",
+    category:"Internal Systems", pages:1, lang:"English",
+    desc:"Apply for leave and the system counts the working days, skips public holidays, checks your balance and warns if a colleague is already off. Switch to the manager view and approve your own request.",
+    skills:["HTML/CSS","JavaScript","Approval workflow"]
+  },
+  {
+    slug:"office-filing-system",
+    name:"Office Filing System — Document Custody Tracker",
+    category:"Internal Systems", pages:1, lang:"English",
+    desc:"Knows which officer holds each paper file right now — hand-overs, Director's office, overdue chasing and movement history. Fully working: click Load sample data and try it.",
+    skills:["HTML/CSS","JavaScript","localStorage"]
+  },
+
+  /* ── Dashboards & Automation ───────────────────────────────── */
+  {
+    slug:"sales-dashboard",
+    name:"SalesPulse — Sales Dashboard",
+    category:"Dashboards & Automation", pages:1, lang:"English",
+    desc:"The numbers a business owner actually asks for, read straight from the accounting system: revenue against last year, each outlet against target, product mix and what sold most. Hover any chart for the detail.",
+    skills:["HTML/CSS","JavaScript","SVG charts"]
+  },
+  {
+    slug:"invoice-inbox",
+    name:"DocuFlow — Supplier Invoice Automation",
+    category:"Dashboards & Automation", pages:1, lang:"English",
+    desc:"Supplier invoices arrive by email or WhatsApp and are read automatically. Only the doubtful ones reach a person — a total that does not add up, a price above the purchase order, a supplier never seen before.",
+    skills:["HTML/CSS","JavaScript","Document automation"]
+  }
+];
+
 /* ═══ CONFIG ═══ */
 const ME = {
   phone:"+60 17-8399812",
@@ -685,6 +839,10 @@ function viewDashboard(){
     <button class="stat dn" data-route="completed">
       <div class="bubble">🏆</div>
       <div><div class="n">${dn}</div><div class="l">Completed</div></div>
+    </button>
+    <button class="stat mk" data-route="mockups">
+      <div class="bubble">🖥️</div>
+      <div><div class="n">${MOCKUPS.length}</div><div class="l">Mockups to try</div></div>
     </button>
   </div>
 
@@ -900,11 +1058,58 @@ function viewContact(){
   </div>`;
 }
 
+/* ═══ MOCKUPS ═══ */
+function mockupUrl(m){ return "mockups/" + m.slug + "/index.html"; }
+
+function viewMockups(){
+  return `
+  <div class="pagehead">
+    <h1>Mockups</h1>
+    <p>Working demos you can click through — each one opens in a new tab</p>
+  </div>
+  <div class="tabs" id="mockTabs">
+    <button class="tab active" data-mcat="">All (${MOCKUPS.length})</button>
+    ${MOCKUP_CATS.map(c => `<button class="tab" data-mcat="${esc(c)}">${esc(c)} (${MOCKUPS.filter(m => m.category === c).length})</button>`).join("")}
+  </div>
+  <div id="mockArea"></div>
+  <div class="note">These are real pages, not screenshots — menus, forms and buttons all work. Demo data only; nothing you type is sent anywhere.</div>`;
+}
+
+function mockupCard(m){
+  return `
+    <a class="mcard" href="${esc(mockupUrl(m))}" target="_blank" rel="noopener">
+      <div class="thumb">
+        <img src="mockups/${esc(m.slug)}/thumb.jpg" alt="${esc(m.name)}" loading="lazy" />
+        <div class="go">Open mockup ↗</div>
+      </div>
+      <div class="mbody">
+        <div class="mname">${esc(m.name)}</div>
+        <div class="mdesc">${esc(m.desc)}</div>
+        <div class="mtags">${m.skills.map(s => `<span>${esc(s)}</span>`).join("")}</div>
+        <div class="mmeta">
+          <span class="pill p-demo">${esc(m.category)}</span>
+          <span>${m.pages} page${m.pages > 1 ? "s" : ""} · ${esc(m.lang)}</span>
+        </div>
+      </div>
+    </a>`;
+}
+
+function renderMockups(cat){
+  const cats = cat ? [cat] : MOCKUP_CATS;
+  $("#mockArea").innerHTML = cats.map(c => {
+    const rows = MOCKUPS.filter(m => m.category === c);
+    if(!rows.length) return "";
+    return `<h2 class="mcat">${esc(c)} <span>${rows.length}</span></h2>
+      <div class="mgrid">${rows.map(mockupCard).join("")}</div>`;
+  }).join("") || `<div class="empty">No mockups in this category yet.</div>`;
+}
+
 /* ═══ MODAL ═══ */
 function openProject(slug){
   const p = PROJECTS.find(x => x.slug === slug);
   if(!p) return;
   openSlug = slug;
+  const mk = MOCKUPS.find(m => m.project === slug);
 
   $("#mIcon").textContent = p.icon;
   $("#mName").textContent = p.name;
@@ -920,7 +1125,9 @@ function openProject(slug){
     </div>
     ${p.url
       ? `<a class="visit" href="${esc(p.url)}" target="_blank" rel="noopener">Visit Project ↗</a>`
-      : `<div class="visit off">No public link — internal or in development</div>`}
+      : mk
+        ? `<a class="visit" href="${esc(mockupUrl(mk))}" target="_blank" rel="noopener">Try the mockup ↗</a>`
+        : `<div class="visit off">No public link — internal or in development</div>`}
     <div class="sharerow">
       <button class="visit ghost" id="copyLink">🔗 Copy link to this project</button>
       <a class="visit ghost" href="https://wa.me/?text=${encodeURIComponent(p.name + " — " + projectUrl(p))}" target="_blank" rel="noopener">💬 Share on WhatsApp</a>
@@ -1001,6 +1208,14 @@ function go(route){
     redraw();
     $("#projSub").classList.add("open");
     $("#projToggle").classList.add("open");
+  } else if(route === "mockups"){
+    view.innerHTML = viewMockups();
+    renderMockups("");
+    $("#mockTabs").addEventListener("click", e => {
+      const b = e.target.closest("[data-mcat]"); if(!b) return;
+      $$("#mockTabs .tab").forEach(t => t.classList.toggle("active", t === b));
+      renderMockups(b.dataset.mcat);
+    });
   } else if(route === "background"){
     view.innerHTML = viewBackground();
   } else if(route === "services"){
@@ -1074,6 +1289,7 @@ $("#yr").textContent = new Date().getFullYear();
 $("#cUp").textContent = byBucket("upcoming").length;
 $("#cPr").textContent = byBucket("inprogress").length;
 $("#cDn").textContent = byBucket("completed").length;
+$("#cMk").textContent = MOCKUPS.length;
 
 $("#projToggle").addEventListener("click", () => {
   $("#projSub").classList.toggle("open");

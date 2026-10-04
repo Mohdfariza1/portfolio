@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cergas Bina Engineering — G7 Contractor Malaysia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bg:'#080c14',surface:'#0f1623',border:'#1e2d40',gold:'#f59e0b','gold-dark':'#d97706',muted:'#94a3b8'},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *{scroll-behavior:smooth}body{background:#080c14;color:#f1f5f9;font-family:'Inter',sans-serif}
+    #navbar{transition:all .3s}#navbar.scrolled{background:rgba(8,12,20,.97);backdrop-filter:blur(12px);border-bottom:1px solid #1e2d40}
+    .hero-bg{background-image:linear-gradient(to bottom,rgba(8,12,20,.5) 0%,rgba(8,12,20,.85) 60%,#080c14 100%),url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80&fit=crop');background-size:cover;background-position:center 30%}
+    .gold-line::before{content:'';display:block;width:48px;height:3px;background:#f59e0b;margin-bottom:16px}
+    .card{transition:border-color .3s,background .3s}.card:hover{border-color:#f59e0b;background:rgba(245,158,11,.05)}
+    .proj-card{transition:transform .3s,box-shadow .3s}.proj-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+    .proj-card .ov{transition:opacity .3s;opacity:0}.proj-card:hover .ov{opacity:1}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.reveal.in{opacity:1;transform:none}
+    .cnt{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}.cnt.in{opacity:1;transform:none}
+    .demo-tag{position:fixed;bottom:16px;right:16px;z-index:999;background:rgba(245,158,11,.12);border:1px solid #f59e0b;color:#f59e0b;font-size:11px;font-weight:700;padding:6px 12px;border-radius:4px;letter-spacing:.05em}
+    .nav-active{color:#f59e0b !important}
+  </style>
+</head>
+<body>
+<div class="demo-tag">BEJAA DIGITAL — DEMO</div>
+
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-4">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-gold flex items-center justify-center"><span class="text-bg font-black text-sm">CB</span></div>
+      <div><div class="font-bold text-white text-sm leading-tight">CERGAS BINA</div><div class="text-gold text-[10px] font-semibold tracking-widest uppercase">Engineering Sdn Bhd</div></div>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="about.html" class="text-muted hover:text-white text-sm font-medium transition-colors">About</a>
+      <a href="services.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Services</a>
+      <a href="projects.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Projects</a>
+      <a href="contact.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Contact</a>
+    </div>
+    <a href="contact.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-bg font-bold text-sm px-5 py-2.5 transition-colors">
+      Request Quote <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
+    <button id="mb" class="md:hidden text-muted hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  </div>
+  <div id="mm" class="hidden md:hidden mt-4 px-6 pb-4 border-t border-border pt-4 space-y-3">
+    <a href="about.html" class="block text-muted hover:text-white text-sm">About</a>
+    <a href="services.html" class="block text-muted hover:text-white text-sm">Services</a>
+    <a href="projects.html" class="block text-muted hover:text-white text-sm">Projects</a>
+    <a href="contact.html" class="block text-muted hover:text-white text-sm">Contact</a>
+    <a href="contact.html" class="inline-block bg-gold text-bg font-bold text-sm px-5 py-2.5 mt-2">Request Quote</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-bg min-h-screen flex items-center">
+  <div class="max-w-7xl mx-auto px-6 pt-24 pb-20 w-full">
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3 mb-6"><div class="h-px w-10 bg-gold"></div><span class="text-gold text-xs font-bold tracking-widest uppercase">CIDB Grade G7 · Est. 2004</span></div>
+      <h1 class="text-5xl md:text-7xl font-black text-white leading-[1.05] mb-6">Built for<br/><span class="text-gold">Permanence.</span><br/>Engineered for<br/>Excellence.</h1>
+      <p class="text-muted text-lg max-w-xl mb-10 leading-relaxed">Malaysia's trusted G7 contractor for civil, structural, and infrastructure projects. Delivering results that last — on time, on spec, on budget.</p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="contact.html" class="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-dark text-bg font-bold px-8 py-4 transition-colors text-sm">Request a Quote <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+        <a href="projects.html" class="inline-flex items-center justify-center gap-2 border border-border hover:border-gold text-white font-medium px-8 py-4 transition-colors text-sm">View Projects</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section class="bg-surface border-y border-border py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div class="cnt"><div class="text-4xl md:text-5xl font-black text-gold" data-target="20">0</div><div class="text-xs text-muted font-semibold mt-1 uppercase tracking-wider">Years Experience</div></div>
+      <div class="cnt" style="transition-delay:.1s"><div class="text-4xl md:text-5xl font-black text-gold" data-target="150">0</div><div class="text-xs text-muted font-semibold mt-1 uppercase tracking-wider">Projects Completed</div></div>
+      <div class="cnt" style="transition-delay:.2s"><div class="text-4xl md:text-5xl font-black text-gold" data-target="4">0</div><div class="text-xs text-muted font-semibold mt-1 uppercase tracking-wider">States Covered</div></div>
+      <div class="cnt" style="transition-delay:.3s"><div class="text-4xl md:text-5xl font-black text-white">RM 500M+</div><div class="text-xs text-muted font-semibold mt-1 uppercase tracking-wider">Contracts Delivered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT PREVIEW -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <div class="gold-line"><span class="text-gold text-xs font-bold tracking-widest uppercase">Who We Are</span></div>
+        <h2 class="text-4xl font-black text-white mb-5 leading-tight">20 Years of Building Malaysia's Infrastructure</h2>
+        <p class="text-muted text-base leading-relaxed mb-6">Cergas Bina Engineering Sdn Bhd was founded in 2004 with a single mission: deliver engineering works that stand the test of time. From civil earthworks to high-rise structural systems, we have built a reputation on precision and professional execution.</p>
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <div class="border border-border p-4 flex-1"><div class="text-gold font-bold text-xs uppercase tracking-wider mb-1">CIDB Registration</div><div class="text-white font-semibold text-sm">Grade G7 · B01, B04, CE21</div></div>
+          <div class="border border-border p-4 flex-1"><div class="text-gold font-bold text-xs uppercase tracking-wider mb-1">SSM Registration</div><div class="text-white font-semibold text-sm">200401234567 (123456-X)</div></div>
+        </div>
+        <a href="about.html" class="inline-flex items-center gap-2 text-gold hover:text-gold-dark text-sm font-semibold transition-colors">Learn More About Us <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="reveal" style="transition-delay:.2s">
+        <div class="relative">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=700&q=80&fit=crop" alt="Construction site" class="w-full h-80 object-cover"/>
+          <div class="absolute -bottom-5 -left-5 bg-gold p-5 hidden md:block"><div class="text-bg text-3xl font-black">G7</div><div class="text-bg text-xs font-bold uppercase tracking-wider mt-0.5">CIDB Grade</div></div>
+          <div class="absolute -top-4 -right-4 bg-surface border border-border p-4 hidden md:block"><div class="text-white text-xl font-black">ISO 9001</div><div class="text-muted text-xs mt-0.5">Quality Certified</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="py-20 bg-surface">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 reveal">
+      <div>
+        <div class="flex items-center gap-3 mb-3"><div class="h-px w-10 bg-gold"></div><span class="text-gold text-xs font-bold tracking-widest uppercase">What We Do</span></div>
+        <h2 class="text-4xl font-black text-white">Our Core Services</h2>
+      </div>
+      <a href="services.html" class="mt-4 md:mt-0 inline-flex items-center gap-2 text-gold hover:text-gold-dark text-sm font-semibold transition-colors">View All Services <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="card border border-border p-6 reveal cursor-default">
+        <div class="w-10 h-10 border border-gold flex items-center justify-center mb-4"><svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
+        <h3 class="text-white font-bold mb-2">Civil & Earthworks</h3>
+        <p class="text-muted text-sm leading-relaxed">Site clearing, grading, drainage systems, retaining walls and infrastructure groundwork.</p>
+      </div>
+      <div class="card border border-border p-6 reveal cursor-default" style="transition-delay:.1s">
+        <div class="w-10 h-10 border border-gold flex items-center justify-center mb-4"><svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
+        <h3 class="text-white font-bold mb-2">Structural Works</h3>
+        <p class="text-muted text-sm leading-relaxed">RC frame construction, piling, beam-column systems and structural reinforcement.</p>
+      </div>
+      <div class="card border border-border p-6 reveal cursor-default" style="transition-delay:.2s">
+        <div class="w-10 h-10 border border-gold flex items-center justify-center mb-4"><svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg></div>
+        <h3 class="text-white font-bold mb-2">Road & Infrastructure</h3>
+        <p class="text-muted text-sm leading-relaxed">Road construction, asphalt paving, bridges, culverts under JKR standards.</p>
+      </div>
+      <div class="card border border-border p-6 reveal cursor-default" style="transition-delay:.1s">
+        <div class="w-10 h-10 border border-gold flex items-center justify-center mb-4"><svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+        <h3 class="text-white font-bold mb-2">M&E Works</h3>
+        <p class="text-muted text-sm leading-relaxed">Mechanical and electrical — HVAC, plumbing, power distribution, building automation.</p>
+      </div>
+      <div class="card border border-border p-6 reveal cursor-default" style="transition-delay:.2s">
+        <div class="w-10 h-10 border border-gold flex items-center justify-center mb-4"><svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></div>
+        <h3 class="text-white font-bold mb-2">Building Renovation</h3>
+        <p class="text-muted text-sm leading-relaxed">Full refurbishment for commercial premises, offices, factories and government facilities.</p>
+      </div>
+      <div class="card border border-border p-6 reveal cursor-default" style="transition-delay:.3s">
+        <div class="w-10 h-10 border border-gold flex items-center justify-center mb-4"><svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+        <h3 class="text-white font-bold mb-2">Project Management</h3>
+        <p class="text-muted text-sm leading-relaxed">End-to-end supervision — scheduling, QA/QC, subcontractor coordination, reporting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS PREVIEW -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 reveal">
+      <div>
+        <div class="flex items-center gap-3 mb-3"><div class="h-px w-10 bg-gold"></div><span class="text-gold text-xs font-bold tracking-widest uppercase">Our Work</span></div>
+        <h2 class="text-4xl font-black text-white">Selected Projects</h2>
+      </div>
+      <a href="projects.html" class="mt-4 md:mt-0 inline-flex items-center gap-2 text-gold hover:text-gold-dark text-sm font-semibold transition-colors">View All Projects <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="proj-card relative overflow-hidden reveal">
+        <img src="https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?w=600&q=80&fit=crop" alt="Warehouse" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-4"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Commercial</div><div class="text-white font-bold text-sm">Industrial Warehouse — Shah Alam</div></div></div>
+        <div class="p-4 bg-surface border border-border border-t-0"><div class="text-xs text-muted uppercase tracking-wider font-semibold mb-0.5">Civil + Structural</div><div class="text-white font-semibold text-sm">Industrial Warehouse Complex</div><div class="text-muted text-xs mt-0.5">Shah Alam, Selangor · 2022</div></div>
+      </div>
+      <div class="proj-card relative overflow-hidden reveal" style="transition-delay:.1s">
+        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80&fit=crop" alt="Road" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-4"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Infrastructure</div><div class="text-white font-bold text-sm">Federal Road Widening — Pahang</div></div></div>
+        <div class="p-4 bg-surface border border-border border-t-0"><div class="text-xs text-muted uppercase tracking-wider font-semibold mb-0.5">Road & Infrastructure</div><div class="text-white font-semibold text-sm">Federal Road Widening Project</div><div class="text-muted text-xs mt-0.5">Temerloh, Pahang · 2023</div></div>
+      </div>
+      <div class="proj-card relative overflow-hidden reveal" style="transition-delay:.2s">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&fit=crop" alt="Office" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-4"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Commercial</div><div class="text-white font-bold text-sm">8-Storey Office Tower — PJ</div></div></div>
+        <div class="p-4 bg-surface border border-border border-t-0"><div class="text-xs text-muted uppercase tracking-wider font-semibold mb-0.5">Structural + M&E</div><div class="text-white font-semibold text-sm">8-Storey Commercial Office Tower</div><div class="text-muted text-xs mt-0.5">Petaling Jaya · 2021</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-20 bg-surface">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12 reveal">
+      <div class="flex items-center justify-center gap-3 mb-4"><div class="h-px w-10 bg-gold"></div><span class="text-gold text-xs font-bold tracking-widest uppercase">Client Feedback</span><div class="h-px w-10 bg-gold"></div></div>
+      <h2 class="text-4xl font-black text-white">What Our Clients Say</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="border border-border p-7 reveal">
+        <div class="text-gold text-4xl font-serif leading-none mb-4">"</div>
+        <p class="text-muted text-sm leading-relaxed mb-5">Cergas Bina completed our 2.8km road widening project 3 weeks ahead of schedule. Their site management team was professional, transparent, and proactive. We will be engaging them again for Phase 2.</p>
+        <div class="flex items-center gap-3"><div class="w-9 h-9 bg-border flex items-center justify-center font-bold text-gold text-xs">RA</div><div><div class="text-white font-semibold text-sm">Ir. Rizwan Abdul Halim</div><div class="text-muted text-xs">Project Director — JKR Pahang</div></div></div>
+      </div>
+      <div class="border border-border p-7 reveal" style="transition-delay:.15s">
+        <div class="text-gold text-4xl font-serif leading-none mb-4">"</div>
+        <p class="text-muted text-sm leading-relaxed mb-5">We engaged Cergas Bina for our factory expansion in Cheras. Their team handled structural, civil, and M&E all under one roof — zero coordination problems. Build quality matched drawings exactly.</p>
+        <div class="flex items-center gap-3"><div class="w-9 h-9 bg-border flex items-center justify-center font-bold text-gold text-xs">LC</div><div><div class="text-white font-semibold text-sm">Lee Chong Wei</div><div class="text-muted text-xs">COO — Matang Industries Sdn Bhd</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-gold">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="text-4xl md:text-5xl font-black text-bg mb-4 leading-tight">Ready to Build Something That Lasts?</h2>
+    <p class="text-bg/70 text-lg mb-8">Talk to our team. We respond within 24 hours.</p>
+    <a href="contact.html" class="inline-flex items-center gap-2 bg-bg hover:bg-surface text-white font-bold px-10 py-4 transition-colors text-sm">Get a Free Quote <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-border py-10">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gold flex items-center justify-center"><span class="text-bg font-black text-xs">CB</span></div>
+      <div><div class="text-white font-bold text-sm">Cergas Bina Engineering Sdn Bhd</div><div class="text-muted text-xs">SSM: 200401234567 (123456-X) · CIDB: G7</div></div>
+    </div>
+    <div class="text-muted text-xs text-center md:text-right">© 2024 Cergas Bina Engineering Sdn Bhd. All rights reserved.<br/><span class="text-gold/60">Website by Bejaa Digital — bejaadigital.com</span></div>
+  </div>
+</footer>
+
+<script>
+  const nb=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>{nb.classList.toggle('scrolled',window.scrollY>60)});
+  const mb=document.getElementById('mb'),mm=document.getElementById('mm');
+  mb.addEventListener('click',()=>mm.classList.toggle('hidden'));
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.add('hidden')));
+  const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');ro.unobserve(x.target)}})},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  const co=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');const el=x.target.querySelector('[data-target]');if(el){const t=parseInt(el.getAttribute('data-target'));let c=0;const s=Math.ceil(t/40);const ti=setInterval(()=>{c+=s;if(c>=t){el.textContent=t+'+';clearInterval(ti)}else el.textContent=c},40)}co.unobserve(x.target)}})},{threshold:.5});
+  document.querySelectorAll('.cnt').forEach(el=>co.observe(el));
+</script>
+</body>
+</html>

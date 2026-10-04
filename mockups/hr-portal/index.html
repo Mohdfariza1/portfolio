@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KerjaHub — Staff Leave &amp; Claims Portal</title>
+<meta name="description" content="Internal portal demo: apply for leave, submit claims, and approve your team's requests. Switch between staff and manager views.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1b1f33; --ink2:#666d85; --ink3:#9aa0b5;
+  --line:#e6e8f0; --line2:#d2d6e3; --bg:#f6f7fb; --card:#fff;
+  --indi:#4338a8; --indi-d:#332b85; --indi-l:#eeecfa;
+  --green:#1f8a5a; --green-l:#e8f6ef; --amber:#b87914; --amber-l:#fdf4e4;
+  --red:#c13c4c; --red-l:#fdedef; --teal:#157a8c; --teal-l:#e6f4f6;
+  --r:12px;
+}
+body{font:14.5px/1.58 "Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit}
+.mono{font-variant-numeric:tabular-nums}
+h1{font-size:20px;font-weight:700;letter-spacing:-.02em}
+h2{font-size:16.5px;font-weight:700}
+h3{font-size:14.5px;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 17px;border-radius:9px;font-weight:600;font-size:13.5px;border:1px solid transparent;cursor:pointer;transition:.15s}
+.btn-p{background:var(--indi);color:#fff}
+.btn-p:hover{background:var(--indi-d)}
+.btn-p:disabled{background:var(--line2);cursor:not-allowed}
+.btn-o{background:#fff;color:var(--ink);border-color:var(--line2)}
+.btn-o:hover{border-color:var(--indi);color:var(--indi)}
+.btn-g{background:var(--green);color:#fff}
+.btn-g:hover{filter:brightness(.93)}
+.btn-r{background:#fff;color:var(--red);border-color:#f0ccd2}
+.btn-r:hover{background:var(--red-l)}
+.btn-sm{padding:7px 12px;font-size:12.5px}
+
+/* shell */
+.app{display:grid;grid-template-columns:234px 1fr;min-height:100vh}
+.side{background:#191d2f;color:#a6abc0;padding:18px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:0 18px 18px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+.brand i{width:36px;height:36px;border-radius:10px;background:var(--indi);color:#fff;display:grid;place-items:center;font-style:normal;font-size:16px;font-weight:800}
+.brand b{display:block;color:#fff;font-size:15.5px}
+.brand span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#7b8198}
+.slbl{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#636a85;padding:13px 18px 6px}
+.snav{display:flex;align-items:center;gap:11px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;border-left:3px solid transparent;color:#a6abc0}
+.snav:hover{background:rgba(255,255,255,.05);color:#fff}
+.snav.on{background:rgba(67,56,168,.26);border-left-color:#8075e0;color:#fff}
+.snav .ic{width:18px;text-align:center;font-size:15px}
+.snav .pill{margin-left:auto;background:var(--amber);color:#fff;font-size:10.5px;font-weight:800;border-radius:999px;padding:1px 7px}
+.who{margin:18px 14px 0;padding:13px;border-radius:11px;background:rgba(255,255,255,.055);font-size:12.5px}
+.who .av{width:36px;height:36px;border-radius:50%;background:var(--indi);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;margin-bottom:9px}
+.who b{color:#fff;display:block;font-size:13.5px}
+.rsw{margin:12px 14px 0;background:rgba(255,255,255,.07);border-radius:9px;padding:4px;display:flex}
+.rsw button{flex:1;padding:8px 6px;border:0;background:none;color:#a6abc0;font-size:12.5px;font-weight:700;border-radius:7px;cursor:pointer}
+.rsw button.on{background:#fff;color:var(--ink)}
+
+.body{padding-bottom:40px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:15px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+.top .bc{font-size:12px;color:var(--ink2);margin-bottom:2px}
+.pad{padding:22px 26px}
+
+.bal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.bc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.bc .lb{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.bc .vl{font-size:28px;font-weight:700;letter-spacing:-.03em;margin:6px 0 1px}
+.bc .vl small{font-size:14px;font-weight:600;color:var(--ink2);letter-spacing:0}
+.bc .dt{font-size:12px;color:var(--ink2)}
+.bar{height:6px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:9px}
+.bar i{display:block;height:100%;border-radius:999px}
+@media(max-width:1060px){.bal{grid-template-columns:1fr 1fr}}
+
+.cols{display:grid;grid-template-columns:1fr 352px;gap:18px;align-items:start}
+@media(max-width:1080px){.cols{grid-template-columns:1fr}.cols>*{min-width:0}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:18px}
+.chead{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.chead p{font-size:12.5px;color:var(--ink2);margin-top:2px}
+.cbody{padding:18px}
+
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);padding:11px 18px;background:#fafbfd;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13.5px}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafbfd}
+.num{text-align:right}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.04em;padding:3px 9px;border-radius:999px;text-transform:uppercase}
+.t-app{background:var(--green-l);color:var(--green)}
+.t-pen{background:var(--amber-l);color:var(--amber)}
+.t-rej{background:var(--red-l);color:var(--red)}
+.t-can{background:#eef0f5;color:var(--ink2)}
+.t-ann{background:var(--indi-l);color:var(--indi)}
+.t-med{background:var(--teal-l);color:var(--teal)}
+.t-emg{background:var(--red-l);color:var(--red)}
+.t-unp{background:#eef0f5;color:var(--ink2)}
+.empty{padding:38px 18px;text-align:center;color:var(--ink2)}
+.rowacts{display:flex;gap:6px;justify-content:flex-end}
+
+.fld{margin-bottom:14px}
+.fld label{display:block;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px}
+.fld input,.fld select,.fld textarea{width:100%;padding:10px 12px;border:1.5px solid var(--line2);border-radius:9px;font-size:14px;background:#fcfcfe;color:var(--ink)}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:0;border-color:var(--indi);background:#fff}
+.fld textarea{resize:vertical;min-height:64px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.calc{background:var(--indi-l);border:1px solid #ddd9f4;border-radius:10px;padding:13px;font-size:13px;margin-bottom:14px}
+.calc .r{display:flex;justify-content:space-between;padding:3px 0}
+.calc .r b{font-weight:700}
+.warnbox{background:var(--red-l);border:1px solid #f0ccd2;border-radius:9px;padding:11px 13px;font-size:12.5px;color:#92303d;margin-bottom:14px}
+.okbox{background:var(--green-l);border:1px solid #c6e6d5;border-radius:9px;padding:11px 13px;font-size:12.5px;color:#13613c;margin-bottom:14px}
+
+/* team strip */
+.tm{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.tm:last-child{border:0}
+.tm .av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12px;flex:none}
+.tm b{display:block;font-size:13.5px}
+.tm span{font-size:12px;color:var(--ink2)}
+.tm .st{margin-left:auto;font-size:11.5px;font-weight:700}
+.out{color:var(--amber)}
+.inn{color:var(--green)}
+
+.page{display:none}.page.on{display:block}
+.vw{display:none}.vw.on{display:block}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(150%);background:var(--ink);color:#fff;border-radius:10px;padding:13px 20px;font-size:13.5px;font-weight:600;z-index:80;transition:.25s;box-shadow:0 12px 34px rgba(0,0,0,.3)}
+.toast.on{transform:translateX(-50%)}
+.demo{position:fixed;right:16px;bottom:16px;z-index:70;background:#191d2f;color:#fff;border-radius:11px;padding:11px 15px;font-size:11.5px;line-height:1.45;max-width:248px;box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.demo b{color:#a79bf5}
+.rolehint{background:var(--amber-l);border:1px solid #f0e0bc;border-radius:10px;padding:11px 14px;font-size:12.5px;color:#7d5410;margin-bottom:18px}
+
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side,.body{min-width:0}
+  .top>div{min-width:0}
+  .side{position:static;height:auto}
+  .pad,.top{padding-left:16px;padding-right:16px}
+  .hidem{display:none}
+  .demo{max-width:158px;font-size:11px;padding:9px 11px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand"><i>KH</i><span><b>KerjaHub</b><span>Staff Portal</span></span></div>
+
+    <div class="rsw" id="rsw">
+      <button class="on" data-r="staff">Staff view</button>
+      <button data-r="mgr">Manager view</button>
+    </div>
+
+    <div id="nav-staff">
+      <div class="slbl">My things</div>
+      <div class="snav on" data-p="dash"><span class="ic">&#127968;</span> Dashboard</div>
+      <div class="snav" data-p="leave"><span class="ic">&#128197;</span> Apply for leave</div>
+      <div class="snav" data-p="mine"><span class="ic">&#128203;</span> My requests</div>
+      <div class="snav" data-p="claims"><span class="ic">&#128181;</span> Expense claims</div>
+      <div class="slbl">Company</div>
+      <div class="snav" data-p="team"><span class="ic">&#128101;</span> Who is out</div>
+      <div class="snav" data-p="docs"><span class="ic">&#128196;</span> Payslips &amp; letters</div>
+    </div>
+
+    <div id="nav-mgr" style="display:none">
+      <div class="slbl">To action</div>
+      <div class="snav on" data-p="queue"><span class="ic">&#9203;</span> Approvals <span class="pill" id="qpill">0</span></div>
+      <div class="slbl">My team</div>
+      <div class="snav" data-p="team"><span class="ic">&#128101;</span> Who is out</div>
+      <div class="snav" data-p="bal"><span class="ic">&#128202;</span> Team balances</div>
+    </div>
+
+    <div class="who" id="whobox"></div>
+  </aside>
+
+  <main class="body">
+    <div class="top">
+      <div><div class="bc" id="crumb">Bejaa Manufacturing Sdn Bhd &middot; Shah Alam</div><h1 id="ptitle">Dashboard</h1></div>
+      <div id="topacts"></div>
+    </div>
+
+    <div class="pad">
+
+      <!-- ===== STAFF ===== -->
+      <div class="vw on" id="v-staff">
+        <div class="page on" id="p-dash">
+          <div class="bal" id="balcards"></div>
+          <div class="cols">
+            <div>
+              <div class="card">
+                <div class="chead"><div><h2>My recent requests</h2><p>Leave and claims you submitted.</p></div>
+                  <button class="btn btn-p btn-sm" data-goto="leave">+ Apply for leave</button></div>
+                <div style="overflow-x:auto"><table>
+                  <thead><tr><th>Type</th><th>Dates</th><th class="num">Days</th><th class="hidem">Reason</th><th>Status</th></tr></thead>
+                  <tbody id="myrows"></tbody>
+                </table></div>
+              </div>
+              <div class="card">
+                <div class="chead"><div><h2>Public holidays coming up</h2><p>Selangor calendar 2026.</p></div></div>
+                <div style="overflow-x:auto"><table>
+                  <thead><tr><th>Date</th><th>Holiday</th><th class="hidem">Day</th><th>Note</th></tr></thead>
+                  <tbody>
+                    <tr><td class="mono">20 Oct 2026</td><td>Deepavali</td><td class="hidem">Tuesday</td><td><span class="tag t-ann">Long weekend</span></td></tr>
+                    <tr><td class="mono">11 Nov 2026</td><td>Hari Keputeraan Sultan Selangor</td><td class="hidem">Wednesday</td><td>&mdash;</td></tr>
+                    <tr><td class="mono">25 Dec 2026</td><td>Christmas Day</td><td class="hidem">Friday</td><td><span class="tag t-ann">Long weekend</span></td></tr>
+                  </tbody>
+                </table></div>
+              </div>
+            </div>
+            <div>
+              <div class="card">
+                <div class="chead"><div><h2>Who is out today</h2><p>4 Oct 2026</p></div></div>
+                <div class="cbody" id="outtoday"></div>
+              </div>
+              <div class="card">
+                <div class="chead"><div><h2>Leave policy, short version</h2></div></div>
+                <div class="cbody" style="font-size:13.5px;color:var(--ink2)">
+                  <p style="margin-bottom:9px">&bull; Annual leave must be applied at least <b>3 working days</b> ahead, except emergencies.</p>
+                  <p style="margin-bottom:9px">&bull; Medical leave needs an MC uploaded within <b>48 hours</b> of returning.</p>
+                  <p style="margin-bottom:9px">&bull; Carry forward is capped at <b>5 days</b> and expires 31 March.</p>
+                  <p>&bull; Two people from the same team cannot be on leave the same day without the manager&rsquo;s note.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="p-leave">
+          <div class="cols">
+            <div class="card">
+              <div class="chead"><div><h2>Apply for leave</h2><p>Weekends and public holidays are left out of the day count automatically.</p></div></div>
+              <div class="cbody">
+                <div class="fld"><label>Leave type</label>
+                  <select id="ltype">
+                    <option value="ann">Annual leave</option>
+                    <option value="med">Medical leave</option>
+                    <option value="emg">Emergency leave</option>
+                    <option value="unp">Unpaid leave</option>
+                  </select></div>
+                <div class="two">
+                  <div class="fld"><label>From</label><input type="date" id="lfrom" value="2026-10-19"></div>
+                  <div class="fld"><label>To</label><input type="date" id="lto" value="2026-10-23"></div>
+                </div>
+                <div class="fld"><label>Half day?</label>
+                  <select id="lhalf"><option value="0">No, full days</option><option value="1">Yes, half day (0.5)</option></select></div>
+                <div class="calc" id="lcalc"></div>
+                <div id="lwarn"></div>
+                <div class="fld"><label>Reason</label><textarea id="lreason" placeholder="Short reason for your manager.">Family trip to Penang during the school holidays.</textarea></div>
+                <div class="fld" id="mcwrap" style="display:none"><label>Upload MC (required for medical leave)</label><input type="file"></div>
+                <div class="fld"><label>Covering colleague</label>
+                  <select id="lcover"><option>Hafiz Latif</option><option>Suriani Abdullah</option><option>Chong Wai Keat</option><option>Nobody needed</option></select></div>
+                <button class="btn btn-p" id="lsubmit" style="width:100%">Submit for approval</button>
+              </div>
+            </div>
+            <div>
+              <div class="card">
+                <div class="chead"><div><h2>Your balance</h2><p>After this request.</p></div></div>
+                <div class="cbody" id="balside"></div>
+              </div>
+              <div class="card">
+                <div class="chead"><div><h2>Team clash check</h2></div></div>
+                <div class="cbody" id="clash" style="font-size:13.5px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="p-mine">
+          <div class="card">
+            <div class="chead"><div><h2>All my requests</h2><p>Including past years.</p></div>
+              <select id="fmine" style="padding:8px 11px;border:1px solid var(--line2);border-radius:8px;font-size:13px">
+                <option value="all">All statuses</option><option value="pen">Pending</option><option value="app">Approved</option><option value="rej">Rejected</option>
+              </select></div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>Ref</th><th>Type</th><th>Dates</th><th class="num">Days</th><th class="hidem">Applied</th><th>Status</th><th></th></tr></thead>
+              <tbody id="allrows"></tbody>
+            </table></div>
+          </div>
+        </div>
+
+        <div class="page" id="p-claims">
+          <div class="bal" style="grid-template-columns:repeat(3,1fr)">
+            <div class="bc"><div class="lb">Claimed this year</div><div class="vl mono">RM 2,418</div><div class="dt">9 claims submitted</div></div>
+            <div class="bc"><div class="lb">Awaiting approval</div><div class="vl mono">RM 386</div><div class="dt">2 claims pending</div></div>
+            <div class="bc"><div class="lb">Paid out</div><div class="vl mono">RM 2,032</div><div class="dt">Last payout 25 Sept</div></div>
+          </div>
+          <div class="card">
+            <div class="chead"><div><h2>Expense claims</h2><p>Receipts are kept with each claim for audit.</p></div>
+              <button class="btn btn-p btn-sm" id="newclaim">+ New claim</button></div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>Ref</th><th>Category</th><th class="hidem">Description</th><th>Date</th><th class="num">Amount</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">CL-0291</td><td>Mileage</td><td class="hidem">Site visit Klang &ndash; Nilai, 184 km</td><td class="mono">02 Oct</td><td class="num mono">RM 110.40</td><td><span class="tag t-pen">Pending</span></td></tr>
+                <tr><td class="mono">CL-0288</td><td>Meals</td><td class="hidem">Client lunch, 3 pax</td><td class="mono">28 Sept</td><td class="num mono">RM 275.60</td><td><span class="tag t-pen">Pending</span></td></tr>
+                <tr><td class="mono">CL-0280</td><td>Parking &amp; toll</td><td class="hidem">KL meetings, September</td><td class="mono">22 Sept</td><td class="num mono">RM 96.00</td><td><span class="tag t-app">Approved</span></td></tr>
+                <tr><td class="mono">CL-0274</td><td>Equipment</td><td class="hidem">Safety boots replacement</td><td class="mono">14 Sept</td><td class="num mono">RM 189.00</td><td><span class="tag t-app">Approved</span></td></tr>
+                <tr><td class="mono">CL-0266</td><td>Mileage</td><td class="hidem">Supplier audit, Rawang</td><td class="mono">05 Sept</td><td class="num mono">RM 67.20</td><td><span class="tag t-rej">Rejected</span></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+
+        <div class="page" id="p-docs">
+          <div class="card">
+            <div class="chead"><div><h2>Payslips &amp; letters</h2><p>Only you and HR can see these.</p></div></div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>Document</th><th>Period</th><th class="hidem">Issued</th><th></th></tr></thead>
+              <tbody>
+                <tr><td>Payslip</td><td>September 2026</td><td class="hidem mono">25 Sept 2026</td><td class="num"><button class="btn btn-o btn-sm" data-dl="1">Download</button></td></tr>
+                <tr><td>Payslip</td><td>August 2026</td><td class="hidem mono">25 Aug 2026</td><td class="num"><button class="btn btn-o btn-sm" data-dl="1">Download</button></td></tr>
+                <tr><td>EA Form</td><td>Year 2025</td><td class="hidem mono">28 Feb 2026</td><td class="num"><button class="btn btn-o btn-sm" data-dl="1">Download</button></td></tr>
+                <tr><td>Employment confirmation letter</td><td>&mdash;</td><td class="hidem mono">On request</td><td class="num"><button class="btn btn-o btn-sm" data-dl="1">Request</button></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== MANAGER ===== -->
+      <div class="vw" id="v-mgr">
+        <div class="rolehint">You are now looking at the <b>manager view</b>. Same portal, different permissions &mdash; a manager sees their team&rsquo;s requests, a staff member only sees their own.</div>
+
+        <div class="page on" id="p-queue">
+          <div class="bal" style="grid-template-columns:repeat(4,1fr)" id="mgrkpi"></div>
+          <div class="card">
+            <div class="chead"><div><h2>Waiting for your approval</h2><p>Oldest first. Approving updates the staff member&rsquo;s balance immediately.</p></div>
+              <button class="btn btn-o btn-sm" id="apprall">Approve all clear requests</button></div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>Staff</th><th>Type</th><th>Dates</th><th class="num">Days</th><th class="hidem">Balance after</th><th>Clash</th><th></th></tr></thead>
+              <tbody id="qrows"></tbody>
+            </table></div>
+          </div>
+          <div class="card">
+            <div class="chead"><div><h2>Recently actioned</h2><p>Your decisions this month.</p></div></div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>Staff</th><th>Type</th><th>Dates</th><th>Decision</th><th class="hidem">When</th></tr></thead>
+              <tbody id="actrows"></tbody>
+            </table></div>
+          </div>
+        </div>
+
+        <div class="page" id="p-bal">
+          <div class="card">
+            <div class="chead"><div><h2>Team leave balances</h2><p>Annual leave entitlement and what is left.</p></div></div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>Staff</th><th class="hidem">Role</th><th class="num">Entitled</th><th class="num">Taken</th><th class="num">Pending</th><th class="num">Left</th><th>Usage</th></tr></thead>
+              <tbody id="tbalrows"></tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- shared -->
+      <div class="page" id="p-team">
+        <div class="card">
+          <div class="chead"><div><h2>Team calendar &mdash; October 2026</h2><p>Approved leave only. Pending requests are not shown here.</p></div></div>
+          <div class="cbody" id="teamcal" style="overflow-x:auto"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="demo"><b>DEMO MOCKUP</b><br>Fictional company, sample data. Built by Bejaa Digital.</div>
+
+<script>
+var ME={n:"Nadia Rahim",r:"Production Executive",init:"NR"};
+var MGR={n:"Zarina Osman",r:"Operations Manager",init:"ZO"};
+var TYPE={ann:["Annual","t-ann"],med:["Medical","t-med"],emg:["Emergency","t-emg"],unp:["Unpaid","t-unp"]};
+var STAT={app:["Approved","t-app"],pen:["Pending","t-pen"],rej:["Rejected","t-rej"],can:["Cancelled","t-can"]};
+var BAL={ann:{e:16,t:9.5,p:0},med:{e:14,t:3,p:0},emg:{e:3,t:1,p:0},unp:{e:0,t:0,p:0}};
+var MINE=[
+  {ref:"LV-1182",t:"ann",f:"08 Sept",to:"09 Sept",d:2,why:"Personal matters",s:"app",ap:"01 Sept"},
+  {ref:"LV-1150",t:"med",f:"21 Aug",to:"22 Aug",d:2,why:"Fever, MC attached",s:"app",ap:"21 Aug"},
+  {ref:"LV-1121",t:"ann",f:"14 Jul",to:"18 Jul",d:5,why:"Family holiday",s:"app",ap:"20 Jun"},
+  {ref:"LV-1098",t:"emg",f:"02 Jul",to:"02 Jul",d:1,why:"Child sent home from school",s:"app",ap:"02 Jul"},
+  {ref:"LV-1077",t:"ann",f:"16 Jun",to:"20 Jun",d:5,why:"Raya travel",s:"rej",ap:"02 Jun"},
+  {ref:"LV-1060",t:"med",f:"30 May",to:"30 May",d:1,why:"Dental appointment",s:"app",ap:"30 May"}
+];
+var QUEUE=[
+  {id:1,who:"Hafiz Latif",init:"HL",bg:"#4338a8",t:"ann",f:"13 Oct",to:"17 Oct",d:5,left:3,clash:false,why:"Wedding in Kuantan"},
+  {id:2,who:"Suriani Abdullah",init:"SA",bg:"#157a8c",t:"med",f:"06 Oct",to:"06 Oct",d:1,left:11,clash:false,why:"Specialist appointment, MC attached"},
+  {id:3,who:"Chong Wai Keat",init:"CW",bg:"#b87914",t:"ann",f:"19 Oct",to:"23 Oct",d:5,left:1,clash:true,why:"School holiday trip"},
+  {id:4,who:"Ravi Kumar",init:"RK",bg:"#1f8a5a",t:"emg",f:"05 Oct",to:"05 Oct",d:1,left:2,clash:false,why:"Burst pipe at home"}
+];
+var ACTED=[
+  {who:"Suriani Abdullah",t:"ann",f:"22 Sept",to:"23 Sept",s:"app",w:"18 Sept"},
+  {who:"Hafiz Latif",t:"unp",f:"15 Sept",to:"19 Sept",s:"rej",w:"10 Sept"},
+  {who:"Ravi Kumar",t:"med",f:"08 Sept",to:"09 Sept",s:"app",w:"08 Sept"}
+];
+var TEAM=[
+  {n:"Hafiz Latif",r:"Production Supervisor",init:"HL",bg:"#4338a8",e:16,t:13,p:5,days:[13,14,15,16,17]},
+  {n:"Suriani Abdullah",r:"QA Executive",init:"SA",bg:"#157a8c",e:16,t:5,p:1,days:[22,23]},
+  {n:"Chong Wai Keat",r:"Store Assistant",init:"CW",bg:"#b87914",e:14,t:13,p:5,days:[]},
+  {n:"Ravi Kumar",r:"Technician",init:"RK",bg:"#1f8a5a",e:14,t:12,p:1,days:[5]},
+  {n:"Nadia Rahim",r:"Production Executive",init:"NR",bg:"#c13c4c",e:16,t:9.5,p:0,days:[]}
+];
+var HOL=[20];
+var st={role:"staff",page:"dash",fmine:"all"};
+
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");
+  clearTimeout(window._tt);window._tt=setTimeout(function(){t.classList.remove("on")},3200)}
+function left(k){ return BAL[k].e-BAL[k].t-BAL[k].p }
+
+function balcards(){
+  var defs=[["ann","Annual leave","var(--indi)"],["med","Medical leave","var(--teal)"],["emg","Emergency leave","var(--red)"],["unp","Unpaid leave","var(--ink2)"]];
+  document.getElementById("balcards").innerHTML=defs.map(function(d){
+    var b=BAL[d[0]], l=left(d[0]), pct=b.e?Math.round((b.t+b.p)/b.e*100):0;
+    return '<div class="bc"><div class="lb">'+d[1]+'</div>'+
+      '<div class="vl mono">'+l+' <small>of '+(b.e||"—")+' days</small></div>'+
+      '<div class="dt">'+b.t+' taken'+(b.p?" &middot; "+b.p+" pending":"")+'</div>'+
+      '<div class="bar"><i style="width:'+Math.min(100,pct)+'%;background:'+d[2]+'"></i></div></div>';
+  }).join("");
+}
+function myrows(){
+  document.getElementById("myrows").innerHTML=MINE.slice(0,5).map(function(r){
+    return '<tr><td><span class="tag '+TYPE[r.t][1]+'">'+TYPE[r.t][0]+'</span></td>'+
+      '<td class="mono">'+r.f+' &ndash; '+r.to+'</td><td class="num mono">'+r.d+'</td>'+
+      '<td class="hidem">'+r.why+'</td><td><span class="tag '+STAT[r.s][1]+'">'+STAT[r.s][0]+'</span></td></tr>';
+  }).join("");
+}
+function allrows(){
+  var L=MINE.filter(function(r){return st.fmine==="all"||r.s===st.fmine});
+  document.getElementById("allrows").innerHTML= L.length? L.map(function(r){
+    return '<tr><td class="mono">'+r.ref+'</td><td><span class="tag '+TYPE[r.t][1]+'">'+TYPE[r.t][0]+'</span></td>'+
+      '<td class="mono">'+r.f+' &ndash; '+r.to+'</td><td class="num mono">'+r.d+'</td>'+
+      '<td class="hidem mono">'+r.ap+'</td><td><span class="tag '+STAT[r.s][1]+'">'+STAT[r.s][0]+'</span></td>'+
+      '<td class="num">'+(r.s==="pen"?'<button class="btn btn-r btn-sm" data-cxl="'+r.ref+'">Cancel</button>':"")+'</td></tr>';
+  }).join("") : '<tr><td colspan="7" class="empty">No requests with that status.</td></tr>';
+  document.querySelectorAll("[data-cxl]").forEach(function(b){
+    b.onclick=function(){
+      var r=MINE.filter(function(x){return x.ref===b.dataset.cxl})[0];
+      r.s="can"; BAL[r.t].p=Math.max(0,BAL[r.t].p-r.d);
+      refresh(); toast("Request "+r.ref+" cancelled. The days went back to your balance.");
+    };
+  });
+}
+function wdays(a,b,half){
+  var s=new Date(a), e=new Date(b), n=0;
+  if(isNaN(s)||isNaN(e)||e<s) return 0;
+  for(var d=new Date(s); d<=e; d.setDate(d.getDate()+1)){
+    var w=d.getDay();
+    if(w===0||w===6) continue;
+    if(d.getMonth()===9 && HOL.indexOf(d.getDate())>-1) continue;
+    n++;
+  }
+  return half==="1" ? Math.max(.5,n-.5) : n;
+}
+function lcalc(){
+  var t=document.getElementById("ltype").value;
+  var f=document.getElementById("lfrom").value, to=document.getElementById("lto").value;
+  var half=document.getElementById("lhalf").value;
+  var d=wdays(f,to,half), b=BAL[t], l=left(t);
+  document.getElementById("mcwrap").style.display = t==="med"?"":"none";
+  var cal=document.getElementById("lcalc");
+  var raw = (f&&to&&new Date(to)>=new Date(f)) ? Math.round((new Date(to)-new Date(f))/86400000)+1 : 0;
+  cal.innerHTML='<div class="r"><span>Calendar days selected</span><b class="mono">'+raw+'</b></div>'+
+    '<div class="r"><span>Weekends &amp; holidays excluded</span><b class="mono">&minus;'+Math.max(0,raw-(half==="1"?d+.5:d))+'</b></div>'+
+    '<div class="r" style="border-top:1px solid #ddd9f4;margin-top:5px;padding-top:7px"><span><b>Leave days deducted</b></span><b class="mono">'+d+'</b></div>'+
+    '<div class="r"><span>'+TYPE[t][0]+' balance left</span><b class="mono">'+l+' day'+(l===1?"":"s")+'</b></div>'+
+    '<div class="r"><span>Balance if approved</span><b class="mono">'+(t==="unp"?"—":(l-d))+'</b></div>';
+  var w=document.getElementById("lwarn"), h="";
+  if(d===0) h='<div class="warnbox">Pick a valid date range. The end date must be on or after the start date.</div>';
+  else if(t!=="unp" && d>l) h='<div class="warnbox">You only have <b>'+l+'</b> '+TYPE[t][0].toLowerCase()+' day'+(l===1?"":"s")+' left, but this request is for '+d+'. Reduce the range, or apply for unpaid leave for the extra days.</div>';
+  else if(t==="ann" && new Date(f)-new Date("2026-10-04") < 3*86400000) h='<div class="okbox">Note: this is less than 3 working days ahead. The policy allows it but your manager will see a late-notice flag.</div>';
+  w.innerHTML=h;
+  document.getElementById("lsubmit").disabled = d===0 || (t!=="unp" && d>l);
+  document.getElementById("balside").innerHTML=
+    Object.keys(TYPE).map(function(k){
+      var kb=BAL[k], kl=left(k), after = k===t ? kl-d : kl;
+      return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px">'+
+        '<span><span class="tag '+TYPE[k][1]+'">'+TYPE[k][0]+'</span></span>'+
+        '<span class="mono"'+(k===t?' style="font-weight:700"':'')+'>'+kl+(k===t&&d?' → '+after:'')+'</span></div>';
+    }).join("");
+  var clashers=TEAM.filter(function(m){
+    if(m.n===ME.n) return false;
+    var s=new Date(f).getDate(), e=new Date(to).getDate();
+    return m.days.some(function(x){return x>=s&&x<=e});
+  });
+  document.getElementById("clash").innerHTML = clashers.length
+    ? '<p style="color:var(--amber)"><b>'+clashers.map(function(m){return m.n}).join(", ")+'</b> already has approved leave overlapping these dates. Your manager will be warned about team coverage.</p>'
+    : '<p style="color:var(--green)">&#10003; Nobody else in your team is on approved leave during these dates.</p>';
+}
+function qrows(){
+  document.getElementById("qpill").textContent=QUEUE.length;
+  document.getElementById("qpill").style.display=QUEUE.length?"":"none";
+  document.getElementById("qrows").innerHTML= QUEUE.length? QUEUE.map(function(r){
+    return '<tr><td><div style="display:flex;align-items:center;gap:9px"><span class="tm"><span class="av" style="background:'+r.bg+'">'+r.init+'</span></span>'+
+      '<span><b>'+r.who+'</b><span style="display:block;font-size:12px;color:var(--ink2)">'+r.why+'</span></span></div></td>'+
+      '<td><span class="tag '+TYPE[r.t][1]+'">'+TYPE[r.t][0]+'</span></td>'+
+      '<td class="mono">'+r.f+' &ndash; '+r.to+'</td><td class="num mono">'+r.d+'</td>'+
+      '<td class="num mono hidem">'+(r.left-r.d)+' days</td>'+
+      '<td>'+(r.clash?'<span class="tag t-pen">Overlaps</span>':'<span class="tag t-app">Clear</span>')+'</td>'+
+      '<td><div class="rowacts"><button class="btn btn-g btn-sm" data-ap="'+r.id+'">Approve</button>'+
+      '<button class="btn btn-r btn-sm" data-rj="'+r.id+'">Reject</button></div></td></tr>';
+  }).join("") : '<tr><td colspan="7" class="empty">Nothing waiting. Your team is all caught up.</td></tr>';
+  document.querySelectorAll("[data-ap]").forEach(function(b){b.onclick=function(){decide(+b.dataset.ap,"app")}});
+  document.querySelectorAll("[data-rj]").forEach(function(b){b.onclick=function(){decide(+b.dataset.rj,"rej")}});
+  document.getElementById("mgrkpi").innerHTML=
+    '<div class="bc"><div class="lb">Waiting on you</div><div class="vl mono">'+QUEUE.length+'</div><div class="dt">'+QUEUE.filter(function(r){return r.clash}).length+' with a team overlap</div></div>'+
+    '<div class="bc"><div class="lb">Out today</div><div class="vl mono">'+TEAM.filter(function(m){return m.days.indexOf(4)>-1}).length+'</div><div class="dt">of '+TEAM.length+' team members</div></div>'+
+    '<div class="bc"><div class="lb">Out this month</div><div class="vl mono">'+TEAM.reduce(function(a,b){return a+b.days.length},0)+'</div><div class="dt">approved leave days</div></div>'+
+    '<div class="bc"><div class="lb">Team usage</div><div class="vl mono">'+Math.round(TEAM.reduce(function(a,b){return a+b.t},0)/TEAM.reduce(function(a,b){return a+b.e},0)*100)+'%</div><div class="dt">of annual entitlement</div></div>';
+}
+function decide(id,s){
+  var r=QUEUE.filter(function(x){return x.id===id})[0];
+  QUEUE=QUEUE.filter(function(x){return x.id!==id});
+  ACTED.unshift({who:r.who,t:r.t,f:r.f,to:r.to,s:s,w:"just now"});
+  refresh();
+  toast(s==="app"
+    ? "Approved — "+r.who+"'s balance updated and the team calendar now shows them out."
+    : "Rejected — "+r.who+" is notified and the days stay in their balance.");
+}
+function actrows(){
+  document.getElementById("actrows").innerHTML=ACTED.map(function(r){
+    return '<tr><td><b>'+r.who+'</b></td><td><span class="tag '+TYPE[r.t][1]+'">'+TYPE[r.t][0]+'</span></td>'+
+      '<td class="mono">'+r.f+' &ndash; '+r.to+'</td><td><span class="tag '+STAT[r.s][1]+'">'+STAT[r.s][0]+'</span></td>'+
+      '<td class="hidem">'+r.w+'</td></tr>';
+  }).join("");
+}
+function tbalrows(){
+  document.getElementById("tbalrows").innerHTML=TEAM.map(function(m){
+    var l=m.e-m.t-m.p, pct=Math.round((m.t+m.p)/m.e*100);
+    return '<tr><td><div style="display:flex;align-items:center;gap:9px"><span class="av" style="background:'+m.bg+';width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:11.5px">'+m.init+'</span><b>'+m.n+'</b></div></td>'+
+      '<td class="hidem">'+m.r+'</td><td class="num mono">'+m.e+'</td><td class="num mono">'+m.t+'</td>'+
+      '<td class="num mono">'+m.p+'</td><td class="num mono"><b>'+l+'</b></td>'+
+      '<td><div class="bar" style="width:110px"><i style="width:'+Math.min(100,pct)+'%;background:'+(pct>85?"var(--red)":pct>60?"var(--amber)":"var(--green)")+'"></i></div></td></tr>';
+  }).join("");
+}
+function outtoday(){
+  var o=TEAM.filter(function(m){return m.days.indexOf(4)>-1});
+  document.getElementById("outtoday").innerHTML = TEAM.map(function(m){
+    var isOut=m.days.indexOf(4)>-1;
+    return '<div class="tm"><span class="av" style="background:'+m.bg+'">'+m.init+'</span>'+
+      '<span><b>'+m.n+'</b><span>'+m.r+'</span></span>'+
+      '<span class="st '+(isOut?"out":"inn")+'">'+(isOut?"On leave":"Working")+'</span></div>';
+  }).join("") + (o.length?'':'<p style="font-size:12.5px;color:var(--ink2);margin-top:10px">Nobody is on leave today.</p>');
+}
+function teamcal(){
+  var h='<table style="min-width:760px"><thead><tr><th>Staff</th>';
+  for(var d=1;d<=31;d++) h+='<th style="padding:7px 0;text-align:center;font-size:10.5px">'+d+'</th>';
+  h+='</tr></thead><tbody>';
+  TEAM.forEach(function(m){
+    h+='<tr><td style="white-space:nowrap"><div style="display:flex;align-items:center;gap:8px"><span class="av" style="background:'+m.bg+';width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:10.5px">'+m.init+'</span>'+m.n.split(" ")[0]+'</div></td>';
+    for(var d=1;d<=31;d++){
+      var dow=new Date(2026,9,d).getDay();
+      var we=dow===0||dow===6, hol=HOL.indexOf(d)>-1, on=m.days.indexOf(d)>-1;
+      var bg=on?m.bg:hol?"#fdf4e4":we?"#f1f2f7":"#fff";
+      h+='<td style="padding:0;text-align:center;border:1px solid var(--line)"><div style="height:26px;background:'+bg+'"></div></td>';
+    }
+    h+='</tr>';
+  });
+  h+='</tbody></table><div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:12px">'+
+    '<span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#4338a8;vertical-align:-2px"></i> On approved leave</span>'+
+    '<span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#fdf4e4;border:1px solid var(--line2);vertical-align:-2px"></i> Public holiday (20 Oct)</span>'+
+    '<span><i style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#f1f2f7;border:1px solid var(--line2);vertical-align:-2px"></i> Weekend</span></div>';
+  document.getElementById("teamcal").innerHTML=h;
+}
+function whobox(){
+  var p = st.role==="staff"?ME:MGR;
+  document.getElementById("whobox").innerHTML=
+    '<div class="av">'+p.init+'</div><b>'+p.n+'</b><span>'+p.r+'</span>'+
+    '<span style="display:block;margin-top:6px;color:#7b8198">Employee ID BM-'+(st.role==="staff"?"0241":"0117")+'</span>';
+  document.getElementById("topacts").innerHTML = st.role==="staff"
+    ? '<button class="btn btn-p" data-goto="leave">+ Apply for leave</button>'
+    : '<button class="btn btn-o" id="remind">Send reminder to team</button>';
+  var r=document.getElementById("remind");
+  if(r) r.onclick=function(){toast("In the live portal this emails anyone with unsubmitted claims or timesheets.")};
+}
+function refresh(){ balcards(); myrows(); allrows(); lcalc(); qrows(); actrows(); tbalrows(); outtoday(); teamcal(); whobox() }
+function go(p){
+  st.page=p;
+  document.querySelectorAll(".page").forEach(function(el){el.classList.toggle("on",el.id==="p-"+p)});
+  document.querySelectorAll(".snav").forEach(function(el){el.classList.toggle("on",el.dataset.p===p)});
+  document.getElementById("ptitle").textContent=
+    {dash:"Dashboard",leave:"Apply for leave",mine:"My requests",claims:"Expense claims",team:"Who is out",docs:"Payslips & letters",queue:"Approvals",bal:"Team balances"}[p];
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function setRole(r){
+  st.role=r;
+  document.querySelectorAll("#rsw button").forEach(function(b){b.classList.toggle("on",b.dataset.r===r)});
+  document.getElementById("nav-staff").style.display = r==="staff"?"":"none";
+  document.getElementById("nav-mgr").style.display = r==="mgr"?"":"none";
+  document.getElementById("v-staff").classList.toggle("on",r==="staff");
+  document.getElementById("v-mgr").classList.toggle("on",r==="mgr");
+  document.getElementById("crumb").textContent = r==="staff"
+    ? "Bejaa Manufacturing Sdn Bhd · Shah Alam"
+    : "Bejaa Manufacturing Sdn Bhd · Operations team (5 staff)";
+  go(r==="staff"?"dash":"queue");
+  whobox();
+}
+document.querySelectorAll("#rsw button").forEach(function(b){b.onclick=function(){setRole(b.dataset.r)}});
+document.querySelectorAll(".snav").forEach(function(el){el.onclick=function(){go(el.dataset.p)}});
+document.addEventListener("click",function(e){
+  var g=e.target.closest("[data-goto]"); if(g) go(g.dataset.goto);
+  var d=e.target.closest("[data-dl]"); if(d) toast("In the live portal this streams the PDF, watermarked with the staff name.");
+});
+["ltype","lfrom","lto","lhalf"].forEach(function(id){
+  document.getElementById(id).addEventListener("change",lcalc);
+});
+document.getElementById("lsubmit").onclick=function(){
+  var t=document.getElementById("ltype").value;
+  var d=wdays(document.getElementById("lfrom").value,document.getElementById("lto").value,document.getElementById("lhalf").value);
+  var n=1200+MINE.length;
+  MINE.unshift({ref:"LV-"+n,t:t,f:"19 Oct",to:"23 Oct",d:d,why:document.getElementById("lreason").value||"—",s:"pen",ap:"04 Oct"});
+  BAL[t].p+=d;
+  refresh(); go("mine");
+  toast("Submitted. "+d+" day"+(d===1?"":"s")+" held as pending until Zarina approves.");
+};
+document.getElementById("fmine").onchange=function(){st.fmine=this.value;allrows()};
+document.getElementById("newclaim").onclick=function(){toast("In the live portal this opens a claim form with receipt upload and OCR of the amount.")};
+document.getElementById("apprall").onclick=function(){
+  var clear=QUEUE.filter(function(r){return !r.clash});
+  if(!clear.length){toast("Every remaining request has a team overlap — those need a decision one by one.");return}
+  clear.forEach(function(r){ACTED.unshift({who:r.who,t:r.t,f:r.f,to:r.to,s:"app",w:"just now"})});
+  QUEUE=QUEUE.filter(function(r){return r.clash});
+  refresh(); toast("Approved "+clear.length+" request"+(clear.length===1?"":"s")+" with no coverage clash.");
+};
+refresh(); setRole("staff");
+</script>
+</body>
+</html>

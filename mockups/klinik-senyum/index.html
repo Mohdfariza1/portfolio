@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Klinik Pergigian Senyum Sihat — Scaling, Tampung &amp; Braces | Shah Alam</title>
+<meta name="description" content="Klinik pergigian keluarga di Shah Alam. Scaling, tampung, cabut gigi dan braces. Tempah slot melalui WhatsApp.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#10312e; --ink2:#4a6763; --line:#dceae7;
+  --teal:#0d6b62; --teal-d:#07514a; --mint:#eaf6f3; --sand:#fff8ee;
+  --gold:#c79a3b; --r:16px;
+}
+body{font:16px/1.65 "Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3{line-height:1.2;letter-spacing:-.02em}
+h1{font-size:clamp(30px,5vw,50px);font-weight:800}
+h2{font-size:clamp(24px,3.6vw,36px);font-weight:800}
+h3{font-size:19px;font-weight:700}
+.lead{font-size:17px;color:var(--ink2)}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:999px;font-weight:700;font-size:15px;border:0;cursor:pointer;transition:.18s;font-family:inherit}
+.btn-p{background:var(--teal);color:#fff;box-shadow:0 8px 22px rgba(13,107,98,.26)}
+.btn-p:hover{background:var(--teal-d);transform:translateY(-2px)}
+.btn-g{background:#25d366;color:#fff}
+.btn-g:hover{filter:brightness(.94)}
+.btn-o{background:#fff;color:var(--teal);border:1.5px solid var(--line)}
+.btn-o:hover{border-color:var(--teal)}
+
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px}
+.logo i{width:38px;height:38px;border-radius:11px;background:linear-gradient(140deg,var(--teal),#1c9b8d);display:grid;place-items:center;color:#fff;font-size:19px;font-style:normal}
+.logo small{display:block;font-size:10.5px;font-weight:600;color:var(--ink2);letter-spacing:.08em;text-transform:uppercase}
+.nav nav{display:flex;gap:26px;font-size:14.5px;font-weight:600}
+.nav nav a:hover{color:var(--teal)}
+.burger{display:none;background:none;border:0;font-size:24px;cursor:pointer;color:var(--ink)}
+@media(max-width:900px){.nav nav,.nav .btn{display:none}.burger{display:block}}
+
+.hero{background:linear-gradient(170deg,var(--mint) 0%,#fff 72%);padding:58px 0 70px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(13,107,98,.09),transparent 70%);top:-180px;right:-130px}
+.hero-g{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;position:relative}
+.hero h1{margin:14px 0 16px}
+.hero h1 span{color:var(--teal)}
+.trust{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 28px}
+.chip{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600}
+.chip b{color:var(--teal)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.rating{display:flex;align-items:center;gap:12px;margin-top:26px;font-size:13.5px;color:var(--ink2)}
+.stars{color:var(--gold);letter-spacing:2px;font-size:15px}
+.faces{display:flex}
+.faces span{width:34px;height:34px;border-radius:50%;border:2.5px solid #fff;margin-left:-11px;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff}
+.faces span:first-child{margin:0}
+
+.bk{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 26px 60px -24px rgba(16,49,46,.28)}
+.bk h3{margin-bottom:4px}
+.bk p.sm{font-size:13px;color:var(--ink2);margin-bottom:18px}
+.fld{margin-bottom:13px}
+.fld label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px;color:var(--ink2)}
+.fld input,.fld select{width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:11px;font:inherit;font-size:14.5px;background:#fcfefe;color:var(--ink)}
+.fld input:focus,.fld select:focus{outline:0;border-color:var(--teal);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.slot{padding:9px 0;text-align:center;border:1.5px solid var(--line);border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;background:#fff;font-family:inherit;color:var(--ink)}
+.slot:hover{border-color:var(--teal)}
+.slot.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.slot.off{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.bk .btn{width:100%;justify-content:center;margin-top:7px}
+.okmsg{display:none;background:var(--mint);border:1px solid #bfe3dc;border-radius:12px;padding:14px;font-size:13.5px;margin-top:13px}
+.okmsg.show{display:block}
+
+section{padding:74px 0}
+.sec-head{max-width:620px;margin:0 auto 42px;text-align:center}
+.sec-head h2{margin:12px 0 12px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:.2s}
+.card:hover{border-color:#b9ddd6;box-shadow:0 14px 34px -18px rgba(16,49,46,.3);transform:translateY(-3px)}
+.ico{width:48px;height:48px;border-radius:13px;background:var(--mint);display:grid;place-items:center;font-size:23px;margin-bottom:16px}
+.card p{font-size:14.5px;color:var(--ink2);margin-top:8px}
+.price-tag{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink2)}
+.price-tag b{font-size:19px;color:var(--teal);font-weight:800}
+
+.ba{background:var(--sand)}
+.ba-g{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.slider{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);cursor:ew-resize;user-select:none}
+.slider .ly{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:.1em}
+.ly-b{background:linear-gradient(135deg,#d8cfc2,#b9ab99);color:#5b4f41}
+.ly-a{background:linear-gradient(135deg,#eafaf6,#bfe9df);color:var(--teal-d);clip-path:inset(0 0 0 50%)}
+.handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.handle:after{content:"\2194";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:15px;color:var(--teal);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.tooth-row{display:flex;gap:10px;margin-top:20px}
+.tooth-row div{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.tooth-row b{display:block;font-size:22px;color:var(--teal);font-weight:800}
+.tooth-row span{font-size:12px;color:var(--ink2)}
+
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.tq{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.tq p{font-size:14.5px;margin:12px 0 18px}
+.who{display:flex;align-items:center;gap:12px}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px}
+.who b{display:block;font-size:14px}
+.who span{font-size:12.5px;color:var(--ink2)}
+
+.faq{max-width:760px;margin:0 auto}
+.q{border:1px solid var(--line);border-radius:13px;margin-bottom:11px;overflow:hidden;background:#fff}
+.q button{width:100%;text-align:left;padding:17px 20px;background:none;border:0;font:inherit;font-size:15.5px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:16px;color:var(--ink)}
+.q .a{display:none;padding:0 20px 18px;font-size:14.5px;color:var(--ink2)}
+.q.open .a{display:block}
+.q.open button{color:var(--teal)}
+.q i{font-style:normal;transition:.2s;flex:none}
+.q.open i{transform:rotate(45deg)}
+
+.band{background:linear-gradient(135deg,var(--teal-d),var(--teal));color:#fff;border-radius:24px;padding:52px 44px;text-align:center;position:relative;overflow:hidden}
+.band:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.07);top:-200px;left:-120px}
+.band h2{position:relative}
+.band p{position:relative;max-width:520px;margin:14px auto 26px;opacity:.9}
+.band .cta-row{position:relative;justify-content:center}
+.band .btn-o{border-color:rgba(255,255,255,.4);background:transparent;color:#fff}
+
+footer{background:#06302c;color:#9ec4bd;padding:52px 0 28px;font-size:14px;margin-top:74px}
+.f-g{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:34px}
+footer h4{color:#fff;font-size:14px;margin-bottom:14px;letter-spacing:.06em;text-transform:uppercase}
+footer li{list-style:none;margin-bottom:9px}
+footer a:hover{color:#fff}
+.f-bot{border-top:1px solid rgba(255,255,255,.12);padding-top:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px}
+
+.demo{position:fixed;right:16px;bottom:16px;z-index:60;background:#10312e;color:#fff;border-radius:12px;padding:11px 15px;font-size:12px;line-height:1.45;box-shadow:0 10px 30px rgba(0,0,0,.26);max-width:260px}
+.demo b{color:#7fd8c9}
+.wa-fix{position:fixed;left:16px;bottom:16px;z-index:60;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:27px;color:#fff;box-shadow:0 10px 26px rgba(37,211,102,.45)}
+
+@media(max-width:900px){
+  .hero-g,.ba-g{grid-template-columns:1fr;gap:34px}
+  .grid-3,.tg,.f-g{grid-template-columns:1fr}
+  section{padding:54px 0}
+  .band{padding:38px 22px}
+  .demo{max-width:170px;font-size:11px;padding:9px 11px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><i>&#8853;</i><span>Senyum Sihat<small>Klinik Pergigian</small></span></a>
+    <nav>
+      <a href="#servis">Rawatan</a>
+      <a href="#hasil">Hasil Pesakit</a>
+      <a href="#ulasan">Ulasan</a>
+      <a href="#faq">Soalan Lazim</a>
+    </nav>
+    <a href="#tempah" class="btn btn-p">Tempah Slot</a>
+    <button class="burger" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-g">
+    <div>
+      <span class="eyebrow">Shah Alam &middot; Seksyen 13</span>
+      <h1>Gigi sakit tak payah tunggu. <span>Slot hari ini masih ada.</span></h1>
+      <p class="lead">Klinik pergigian keluarga. Scaling, tampung, cabut gigi dan braces — harga diberitahu dahulu, tiada caj tersembunyi.</p>
+      <div class="trust">
+        <span class="chip">&#129463; <b>12 tahun</b> beroperasi</span>
+        <span class="chip">&#127973; Berdaftar <b>KKM</b></span>
+        <span class="chip">&#128179; Terima <b>ansuran 0%</b></span>
+        <span class="chip">&#128664; Parking percuma</span>
+      </div>
+      <div class="cta-row">
+        <a href="#tempah" class="btn btn-p">Tempah slot sekarang &rarr;</a>
+        <a href="#" class="btn btn-g">&#128172; WhatsApp kami</a>
+      </div>
+      <div class="rating">
+        <div class="faces">
+          <span style="background:#0d6b62">NA</span><span style="background:#c79a3b">SH</span>
+          <span style="background:#1c9b8d">FZ</span><span style="background:#4a6763">RM</span>
+        </div>
+        <div><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><br><b>4.9 / 5</b> daripada 318 ulasan Google</div>
+      </div>
+    </div>
+
+    <form class="bk" id="bkform">
+      <h3>Tempah slot anda</h3>
+      <p class="sm">Isi 4 maklumat. Kami sahkan melalui WhatsApp dalam 15 minit.</p>
+      <div class="fld">
+        <label>Nama penuh</label>
+        <input required placeholder="cth. Nurul Aisyah">
+      </div>
+      <div class="two">
+        <div class="fld"><label>No. telefon</label><input required placeholder="012-345 6789"></div>
+        <div class="fld"><label>Rawatan</label>
+          <select>
+            <option>Pemeriksaan + Scaling</option>
+            <option>Tampung gigi</option>
+            <option>Cabut gigi / gigi bongsu</option>
+            <option>Konsultasi braces</option>
+            <option>Gigi palsu / denture</option>
+          </select>
+        </div>
+      </div>
+      <div class="fld">
+        <label>Pilih masa — Sabtu, 11 Okt</label>
+        <div class="slots" id="slots">
+          <button type="button" class="slot">9:00</button>
+          <button type="button" class="slot off" disabled>10:00</button>
+          <button type="button" class="slot on">11:30</button>
+          <button type="button" class="slot">2:30</button>
+          <button type="button" class="slot">3:30</button>
+          <button type="button" class="slot off" disabled>4:30</button>
+          <button type="button" class="slot">5:30</button>
+          <button type="button" class="slot">8:00</button>
+        </div>
+      </div>
+      <button class="btn btn-p" type="submit">Hantar tempahan</button>
+      <div class="okmsg" id="ok">&#9989; <b>Tempahan diterima.</b> Dalam sistem sebenar, mesej WhatsApp pengesahan dihantar automatik kepada pesakit dan slot ini ditanda penuh di kalendar klinik.</div>
+    </form>
+  </div>
+</div>
+
+<section id="servis">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Rawatan kami</span>
+      <h2>Semua rawatan asas bawah satu bumbung</h2>
+      <p class="lead">Harga dinyatakan awal. Jika rawatan perlu ditambah, kami beritahu dan minta kebenaran dahulu.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="ico">&#129701;</div><h3>Scaling &amp; Polishing</h3>
+        <p>Buang karang gigi dan kotoran yang menyebabkan gusi berdarah serta bau mulut. Selesai dalam 30 minit.</p>
+        <div class="price-tag">Dari <b>RM 80</b> / sesi</div></div>
+      <div class="card"><div class="ico">&#9898;</div><h3>Tampung Gigi</h3>
+        <p>Tampung sewarna gigi untuk lubang kecil dan sederhana. Boleh makan selepas 1 jam.</p>
+        <div class="price-tag">Dari <b>RM 120</b> / gigi</div></div>
+      <div class="card"><div class="ico">&#128295;</div><h3>Cabut Gigi Bongsu</h3>
+        <p>Termasuk X-ray, suntikan kebas dan ubat tahan sakit. Surat cuti sakit disediakan.</p>
+        <div class="price-tag">Dari <b>RM 350</b></div></div>
+      <div class="card"><div class="ico">&#128513;</div><h3>Braces (Pendakap Gigi)</h3>
+        <p>Metal atau ceramic. Konsultasi dan pelan rawatan percuma sebelum anda putuskan.</p>
+        <div class="price-tag">Dari <b>RM 4,500</b> &middot; ansuran</div></div>
+      <div class="card"><div class="ico">&#10024;</div><h3>Pemutihan Gigi</h3>
+        <p>Rawatan dalam klinik dengan lampu LED. Beza warna nampak dalam satu sesi.</p>
+        <div class="price-tag">Dari <b>RM 650</b></div></div>
+      <div class="card"><div class="ico">&#129463;</div><h3>Gigi Palsu &amp; Crown</h3>
+        <p>Separa atau penuh, dibuat ikut ukuran. Sesi cubaan sebelum siap sepenuhnya.</p>
+        <div class="price-tag">Dari <b>RM 900</b></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ba" id="hasil">
+  <div class="wrap ba-g">
+    <div>
+      <span class="eyebrow">Hasil pesakit</span>
+      <h2>Tarik gelangsar untuk lihat perbezaan</h2>
+      <p class="lead" style="margin:14px 0 0">Rawatan scaling dan pemutihan, satu sesi 45 minit. Gambar diambil di klinik dengan kebenaran pesakit.</p>
+      <div class="tooth-row">
+        <div><b>318</b><span>ulasan Google</span></div>
+        <div><b>45</b><span>minit sesi</span></div>
+        <div><b>1</b><span>sesi sahaja</span></div>
+      </div>
+      <a href="#tempah" class="btn btn-p" style="margin-top:24px">Saya nak cuba juga &rarr;</a>
+    </div>
+    <div class="slider" id="sl">
+      <div class="ly ly-b">SEBELUM</div>
+      <div class="ly ly-a" id="la">SELEPAS</div>
+      <div class="handle" id="hd"></div>
+    </div>
+  </div>
+</section>
+
+<section id="ulasan">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Kata pesakit</span>
+      <h2>Kenapa keluarga di Shah Alam pilih kami</h2>
+    </div>
+    <div class="tg">
+      <div class="tq"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p>&ldquo;Anak saya takut doktor gigi. Nurse main dengan dia dulu 10 minit, lepas tu dia duduk sendiri atas kerusi. Memang pandai handle budak.&rdquo;</p>
+        <div class="who"><div class="av" style="background:#0d6b62">SH</div><div><b>Siti Hajar</b><span>Ibu kepada 3 anak &middot; Seksyen 9</span></div></div></div>
+      <div class="tq"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p>&ldquo;Cabut gigi bongsu 2 batang. Doktor terangkan dulu guna X-ray, kos semua dibagi awal. Tak ada caj tiba-tiba masa bayar.&rdquo;</p>
+        <div class="who"><div class="av" style="background:#c79a3b">AF</div><div><b>Ahmad Faiz</b><span>Jurutera &middot; Setia Alam</span></div></div></div>
+      <div class="tq"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p>&ldquo;Braces saya dah 8 bulan. Setiap kali datang tak pernah tunggu lama sebab ada slot tetap. Staff ingat nama saya.&rdquo;</p>
+        <div class="who"><div class="av" style="background:#1c9b8d">NL</div><div><b>Nur Laila</b><span>Pelajar UiTM</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--mint)">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Soalan lazim</span><h2>Perkara yang pesakit selalu tanya</h2></div>
+    <div class="faq">
+      <div class="q open"><button>Berapa lama kena tunggu untuk dapat slot?<i>+</i></button><div class="a">Biasanya slot untuk hari yang sama masih ada jika anda WhatsApp sebelum 11 pagi. Untuk rawatan braces dan crown, kami tetapkan slot lebih panjang jadi perlu tempah 2&ndash;3 hari lebih awal.</div></div>
+      <div class="q"><button>Boleh guna panel insurans atau kad perubatan syarikat?<i>+</i></button><div class="a">Kami panel untuk beberapa syarikat pengurusan kesihatan. Hantar gambar kad anda melalui WhatsApp dan kami sahkan sebelum anda datang, supaya tiada kejutan pada hari rawatan.</div></div>
+      <div class="q"><button>Rawatan braces boleh bayar ansuran?<i>+</i></button><div class="a">Ya. Deposit dibayar pada hari pemasangan, kemudian bayaran bulanan sepanjang tempoh rawatan. Tiada faedah dikenakan. Pelan penuh diberikan secara bertulis sebelum anda bersetuju.</div></div>
+      <div class="q"><button>Klinik buka hari Ahad?<i>+</i></button><div class="a">Isnin hingga Jumaat 9 pagi&ndash;9 malam, Sabtu 9 pagi&ndash;6 petang. Ahad dan cuti umum tutup, kecuali kes kecemasan yang telah dijadualkan terlebih dahulu.</div></div>
+      <div class="q"><button>Sakit tak masa cabut gigi?<i>+</i></button><div class="a">Kawasan gigi dikebaskan sepenuhnya sebelum rawatan bermula, jadi anda tidak rasa sakit semasa prosedur. Ubat tahan sakit dan antibiotik diberikan untuk 2&ndash;3 hari selepas itu.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="tempah" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="band">
+      <h2>Gigi sakit malam tadi? Jangan tunggu sampai bengkak.</h2>
+      <p>WhatsApp kami sekarang — nurse kami balas dalam 15 minit waktu operasi dan terus beritahu slot yang kosong hari ini.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-g">&#128172; WhatsApp 03-5522 1188</a>
+        <a href="#" class="btn btn-o">&#128205; Lihat lokasi di peta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-g">
+      <div>
+        <div class="logo" style="color:#fff;margin-bottom:14px"><i>&#8853;</i><span>Senyum Sihat<small style="color:#9ec4bd">Klinik Pergigian</small></span></div>
+        <p>No. 23-1, Jalan Serawak 13/4,<br>Seksyen 13, 40100 Shah Alam, Selangor.</p>
+        <p style="margin-top:12px">03-5522 1188 &middot; hello@senyumsihat.my</p>
+      </div>
+      <div><h4>Rawatan</h4><ul>
+        <li><a href="#servis">Scaling &amp; polishing</a></li><li><a href="#servis">Tampung gigi</a></li>
+        <li><a href="#servis">Cabut gigi bongsu</a></li><li><a href="#servis">Braces</a></li><li><a href="#servis">Pemutihan gigi</a></li></ul></div>
+      <div><h4>Waktu Operasi</h4><ul>
+        <li>Isnin &ndash; Jumaat &middot; 9:00 pagi &ndash; 9:00 malam</li><li>Sabtu &middot; 9:00 pagi &ndash; 6:00 petang</li>
+        <li>Ahad &amp; cuti umum &middot; Tutup</li></ul></div>
+    </div>
+    <div class="f-bot">
+      <span>&copy; 2026 Klinik Pergigian Senyum Sihat (demo). Hak cipta terpelihara.</span>
+      <span>Mockup dibina oleh Bejaa Digital</span>
+    </div>
+  </div>
+</footer>
+
+<a href="#tempah" class="wa-fix" aria-label="WhatsApp">&#128172;</a>
+<div class="demo"><b>DEMO MOCKUP</b><br>Perniagaan rekaan, data contoh. Dibina oleh Bejaa Digital.</div>
+
+<script>
+document.querySelectorAll(".q button").forEach(function(b){
+  b.onclick=function(){
+    var q=b.parentElement, open=q.classList.contains("open");
+    document.querySelectorAll(".q").forEach(function(x){x.classList.remove("open")});
+    if(!open) q.classList.add("open");
+  };
+});
+document.querySelectorAll(".slot:not(.off)").forEach(function(s){
+  s.onclick=function(){
+    document.querySelectorAll(".slot").forEach(function(x){x.classList.remove("on")});
+    s.classList.add("on");
+  };
+});
+document.getElementById("bkform").onsubmit=function(e){
+  e.preventDefault();
+  document.getElementById("ok").classList.add("show");
+};
+(function(){
+  var sl=document.getElementById("sl"), la=document.getElementById("la"), hd=document.getElementById("hd"), drag=false;
+  function move(x){
+    var r=sl.getBoundingClientRect();
+    var p=Math.min(Math.max((x-r.left)/r.width,.04),.96)*100;
+    la.style.clipPath="inset(0 0 0 "+p+"%)"; hd.style.left=p+"%";
+  }
+  sl.addEventListener("mousedown",function(e){drag=true;move(e.clientX)});
+  window.addEventListener("mousemove",function(e){if(drag)move(e.clientX)});
+  window.addEventListener("mouseup",function(){drag=false});
+  sl.addEventListener("touchstart",function(e){move(e.touches[0].clientX)},{passive:true});
+  sl.addEventListener("touchmove",function(e){move(e.touches[0].clientX)},{passive:true});
+})();
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.onclick=function(e){
+    var h=a.getAttribute("href");
+    if(h==="#") return;
+    var t=document.querySelector(h);
+    if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"})}
+  };
+});
+</script>
+</body>
+</html>

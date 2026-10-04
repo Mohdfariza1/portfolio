@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DocuFlow — Supplier Invoice Automation Inbox</title>
+<meta name="description" content="Automation demo: supplier invoices arrive by email, get read automatically, and a human approves only what the system is unsure about.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#11131c; --ink2:#5a6072; --ink3:#8e95a6;
+  --line:#e6e8ef; --line2:#d2d6e1; --bg:#f5f6fa; --card:#fff;
+  --nav:#141725;
+  --vio:#5b4bd6; --vio-d:#4538bd; --vio-l:#eeecfb;
+  --good:#17784f; --good-l:#e7f5ee; --warn:#9c6a0a; --warn-l:#fdf4e2;
+  --bad:#bb3745; --bad-l:#fcecee;
+  --r:12px;
+}
+body{font:14.5px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit}
+.mono{font-variant-numeric:tabular-nums}
+h1{font-size:20px;font-weight:700;letter-spacing:-.02em}
+h2{font-size:15.5px;font-weight:700}
+h3{font-size:14px;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 16px;border-radius:9px;font-weight:600;font-size:13.5px;border:1px solid var(--line2);background:#fff;color:var(--ink);cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--vio);color:var(--vio)}
+.btn-p{background:var(--vio);border-color:var(--vio);color:#fff}
+.btn-p:hover{background:var(--vio-d);color:#fff}
+.btn-g{background:var(--good);border-color:var(--good);color:#fff}
+.btn-g:hover{filter:brightness(.92);color:#fff}
+.btn-r{color:var(--bad);border-color:#f0cdd2}
+.btn-r:hover{background:var(--bad-l);color:var(--bad)}
+.btn-sm{padding:6px 11px;font-size:12.5px}
+
+.app{display:grid;grid-template-columns:222px 1fr;min-height:100vh}
+.side{background:var(--nav);color:#9ba1b2;padding:18px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:0 18px 18px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px}
+.brand i{width:36px;height:36px;border-radius:10px;background:var(--vio);color:#fff;display:grid;place-items:center;font-style:normal;font-size:17px}
+.brand b{display:block;color:#fff;font-size:15.5px}
+.brand span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#777e90}
+.slbl{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#5c6376;padding:13px 18px 6px}
+.snav{display:flex;align-items:center;gap:11px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;border-left:3px solid transparent;color:#9ba1b2}
+.snav:hover{background:rgba(255,255,255,.05);color:#fff}
+.snav.on{background:rgba(91,75,214,.22);border-left-color:#8a7dee;color:#fff}
+.snav .ic{width:17px;text-align:center}
+.snav .pill{margin-left:auto;background:var(--warn);color:#fff;font-size:10.5px;font-weight:800;border-radius:999px;padding:1px 7px}
+.snav.on .pill{background:#fff;color:var(--vio-d)}
+.botcard{margin:16px 14px 0;background:rgba(255,255,255,.055);border-radius:11px;padding:13px;font-size:12px}
+.botcard b{color:#fff;display:block;font-size:12.5px;margin-bottom:4px}
+.dotg{display:inline-block;width:7px;height:7px;border-radius:50%;background:#2fbe7e;margin-right:6px;box-shadow:0 0 0 3px rgba(47,190,126,.2)}
+
+.body{padding-bottom:40px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+.top .bc{font-size:12px;color:var(--ink2);margin-bottom:2px}
+.pad{padding:20px 24px}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.tile .lb{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
+.tile .hero{font-size:28px;font-weight:700;letter-spacing:-.035em;margin:7px 0 2px}
+.tile .sub{font-size:12.5px;color:var(--ink2)}
+.tile.hi{background:var(--vio-l);border-color:#ddd8f7}
+@media(max-width:1140px){.tiles{grid-template-columns:1fr 1fr}}
+
+.split{display:grid;grid-template-columns:386px 1fr;gap:16px;align-items:start}
+@media(max-width:1100px){.split{grid-template-columns:1fr}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.chead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.chead p{font-size:12.5px;color:var(--ink2);margin-top:2px}
+.cbody{padding:16px}
+
+.tabs{display:flex;border-bottom:1px solid var(--line);background:#fafbfc}
+.tabs button{flex:1;padding:12px 8px;border:0;background:none;font-size:13px;font-weight:700;color:var(--ink2);cursor:pointer;border-bottom:2px solid transparent}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--vio);border-bottom-color:var(--vio);background:#fff}
+.tabs button i{font-style:normal;background:var(--line);color:var(--ink2);border-radius:999px;padding:1px 7px;font-size:11px;margin-left:5px}
+.tabs button.on i{background:var(--vio-l);color:var(--vio)}
+
+.inbox{max-height:620px;overflow-y:auto}
+.itm{display:grid;grid-template-columns:34px 1fr auto;gap:11px;padding:13px 16px;border-bottom:1px solid var(--line);cursor:pointer;align-items:start}
+.itm:last-child{border-bottom:0}
+.itm:hover{background:#fafbfd}
+.itm.on{background:var(--vio-l)}
+.itm .src{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:15px;background:#f1f2f7}
+.itm b{display:block;font-size:13.5px;line-height:1.3}
+.itm .mt{font-size:12px;color:var(--ink2);margin-top:3px}
+.itm .rt{text-align:right}
+.itm .amt{font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.conf{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;margin-top:5px;letter-spacing:.03em}
+.c-hi{background:var(--good-l);color:var(--good)}
+.c-md{background:var(--warn-l);color:var(--warn)}
+.c-lo{background:var(--bad-l);color:var(--bad)}
+.empty{padding:50px 16px;text-align:center;color:var(--ink2)}
+.empty .ic{font-size:40px;margin-bottom:12px}
+
+/* doc preview */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:1340px){.dgrid{grid-template-columns:1fr}}
+.docpane{background:#eef0f4;padding:18px;border-right:1px solid var(--line)}
+.paper{background:#fff;border:1px solid var(--line2);border-radius:5px;padding:22px;font-size:11.5px;line-height:1.5;box-shadow:0 4px 18px rgba(17,19,28,.1)}
+.paper .ph{display:flex;justify-content:space-between;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:11px;margin-bottom:13px}
+.paper .ph b{font-size:15px;letter-spacing:-.01em}
+.paper .ph span{font-size:10.5px;color:var(--ink2);display:block}
+.paper h4{font-size:16px;text-align:right;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.paper .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.paper .meta div{font-size:11px}
+.paper .meta b{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.paper table{width:100%;border-collapse:collapse;margin-bottom:12px}
+.paper th{text-align:left;font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);border-bottom:1px solid var(--line2);padding:6px 4px;background:none}
+.paper td{padding:6px 4px;border-bottom:1px solid var(--line);font-size:11px}
+.paper .tot{display:flex;justify-content:flex-end;gap:26px;font-size:11.5px;padding:3px 4px}
+.paper .tot.g{font-weight:800;font-size:13px;border-top:2px solid var(--ink);margin-top:5px;padding-top:7px}
+.hl{background:#fff3c4;box-shadow:0 0 0 2px #fde68a;border-radius:2px}
+.hl-bad{background:#fde2e4;box-shadow:0 0 0 2px #f8b4bd;border-radius:2px}
+
+/* extracted fields */
+.fpane{padding:18px}
+.fgrp{margin-bottom:18px}
+.fgrp > .lb{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.fr{display:grid;grid-template-columns:128px 1fr;gap:12px;align-items:center;padding:7px 0}
+.fr > .k{font-size:12.5px;color:var(--ink2);font-weight:600}
+.fv{display:flex;align-items:center;gap:8px}
+.fv input{flex:1;padding:8px 10px;border:1.5px solid var(--line2);border-radius:8px;font-size:13.5px;background:#fcfcfe;color:var(--ink)}
+.fv input:focus{outline:0;border-color:var(--vio);background:#fff}
+.fv input.low{border-color:#f3c7a0;background:#fffaf3}
+.fv input.verylow{border-color:#f0b4bc;background:#fff6f7}
+.cb{font-size:10.5px;font-weight:800;padding:3px 7px;border-radius:999px;white-space:nowrap}
+.lineitems{border:1px solid var(--line);border-radius:9px;overflow:hidden;margin-top:4px}
+.lineitems table{width:100%;border-collapse:collapse}
+.lineitems th{font-size:10px;padding:8px 10px;background:#fafbfc;border-bottom:1px solid var(--line);text-align:left;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
+.lineitems td{padding:9px 10px;border-bottom:1px solid var(--line);font-size:12.5px}
+.lineitems tr:last-child td{border-bottom:0}
+.num{text-align:right}
+.chkrow{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:9px;font-size:12.5px;margin-bottom:7px}
+.chk-ok{background:var(--good-l);color:#115c3c}
+.chk-warn{background:var(--warn-l);color:#7d5408}
+.chk-bad{background:var(--bad-l);color:#942b36}
+.chkrow .i{flex:none;font-size:13px}
+.actbar{display:flex;gap:9px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--line);background:#fafbfc}
+.actbar .sp{flex:1}
+
+/* rules */
+.rule{display:flex;align-items:center;gap:13px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:13.5px}
+.rule:last-child{border-bottom:0}
+.rule .ic{width:32px;height:32px;border-radius:9px;background:var(--vio-l);color:var(--vio);display:grid;place-items:center;font-size:14px;flex:none}
+.rule b{display:block}
+.rule span{font-size:12.5px;color:var(--ink2)}
+.sw{margin-left:auto;width:40px;height:22px;border-radius:999px;background:var(--good);position:relative;flex:none;cursor:pointer}
+.sw:after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff}
+.sw.off{background:var(--line2)}
+.sw.off:after{left:3px;right:auto}
+
+table.list{width:100%;border-collapse:collapse}
+table.list th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);padding:10px 16px;background:#fafbfc;border-bottom:1px solid var(--line);white-space:nowrap}
+table.list td{padding:11px 16px;border-bottom:1px solid var(--line);font-size:13.5px}
+table.list tr:last-child td{border-bottom:0}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.04em;padding:3px 9px;border-radius:999px;text-transform:uppercase}
+.t-good{background:var(--good-l);color:var(--good)}
+.t-warn{background:var(--warn-l);color:var(--warn)}
+.t-bad{background:var(--bad-l);color:var(--bad)}
+
+.page{display:none}.page.on{display:block}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(150%);background:var(--ink);color:#fff;border-radius:10px;padding:13px 20px;font-size:13.5px;font-weight:600;z-index:80;transition:.25s;box-shadow:0 12px 34px rgba(0,0,0,.3)}
+.toast.on{transform:translateX(-50%)}
+.note{background:var(--vio-l);border:1px solid #ddd8f7;border-radius:11px;padding:14px 16px;font-size:13px;color:#3b2f9c;margin-top:16px}
+.demo{position:fixed;right:16px;bottom:16px;z-index:70;background:var(--nav);color:#fff;border-radius:11px;padding:11px 15px;font-size:11.5px;line-height:1.45;max-width:248px;box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.demo b{color:#a79bf5}
+
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto}
+  .pad,.top{padding-left:15px;padding-right:15px}
+  .hidem{display:none}
+  .demo{max-width:158px;font-size:11px;padding:9px 11px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand"><i>&#128228;</i><span><b>DocuFlow</b><span>Invoice Automation</span></span></div>
+    <div class="slbl">Workflow</div>
+    <div class="snav on" data-p="inbox"><span class="ic">&#128229;</span> Inbox <span class="pill" id="pill">0</span></div>
+    <div class="snav" data-p="posted"><span class="ic">&#9989;</span> Posted</div>
+    <div class="snav" data-p="rules"><span class="ic">&#9881;</span> Reading rules</div>
+    <div class="slbl">Records</div>
+    <div class="snav" data-p="sup"><span class="ic">&#128667;</span> Suppliers</div>
+    <div class="botcard">
+      <b><span class="dotg"></span>Watching 3 sources</b>
+      <span>invoices@tigarasa.my<br>WhatsApp 03-5566 2200<br>Scanner &mdash; Accounts dept</span>
+    </div>
+  </aside>
+
+  <main class="body">
+    <div class="top">
+      <div><div class="bc">Tiga Rasa Group &middot; Accounts payable</div><h1 id="ptitle">Invoice inbox</h1></div>
+      <div style="display:flex;gap:9px;flex-wrap:wrap">
+        <button class="btn" id="refresh">&#128260; Check for new documents</button>
+        <button class="btn btn-p" id="upl">+ Upload manually</button>
+      </div>
+    </div>
+
+    <div class="pad">
+      <div class="tiles" id="tiles"></div>
+
+      <!-- INBOX -->
+      <div class="page on" id="p-inbox">
+        <div class="split">
+          <div class="card">
+            <div class="tabs" id="tabs">
+              <button class="on" data-f="need">Needs a look <i id="n1">0</i></button>
+              <button data-f="all">All waiting <i id="n2">0</i></button>
+            </div>
+            <div class="inbox" id="inbox"></div>
+          </div>
+
+          <div class="card" id="detail"></div>
+        </div>
+        <div class="note"><b>How this is meant to work:</b> the system reads every invoice that arrives and posts the ones it is confident about on its own. A person only opens the ones with a flag &mdash; a price that does not match the purchase order, a supplier it has not seen before, or a total that does not add up. That is where the time is saved, not in the typing.</div>
+      </div>
+
+      <!-- POSTED -->
+      <div class="page" id="p-posted">
+        <div class="card">
+          <div class="chead"><div><h2>Posted to the accounting system</h2><p>Last 30 days. Each row links back to the original document.</p></div></div>
+          <div style="overflow-x:auto"><table class="list">
+            <thead><tr><th>Supplier</th><th>Invoice no.</th><th class="hidem">Date</th><th class="num">Amount</th><th>How</th><th class="hidem">Posted by</th></tr></thead>
+            <tbody id="postrows"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- RULES -->
+      <div class="page" id="p-rules">
+        <div class="split" style="grid-template-columns:1fr 1fr">
+          <div class="card">
+            <div class="chead"><div><h2>When to post without asking</h2><p>If every rule here passes, the invoice goes straight through.</p></div></div>
+            <div id="rulerows"></div>
+          </div>
+          <div class="card">
+            <div class="chead"><div><h2>When to stop and ask a human</h2><p>Any one of these sends the invoice to the inbox.</p></div></div>
+            <div id="stoprows"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUPPLIERS -->
+      <div class="page" id="p-sup">
+        <div class="card">
+          <div class="chead"><div><h2>Suppliers the system knows</h2><p>Accuracy improves as more of their invoices are read.</p></div></div>
+          <div style="overflow-x:auto"><table class="list">
+            <thead><tr><th>Supplier</th><th class="hidem">Format learned from</th><th class="num">Invoices read</th><th class="num">Auto-posted</th><th>Reading accuracy</th></tr></thead>
+            <tbody id="suprows"></tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="demo"><b>DEMO MOCKUP</b><br>Fictional company, sample data. Built by Bejaa Digital.</div>
+
+<script>
+var DOCS=[
+  {
+    id:1, sup:"Segar Borong Sdn Bhd", no:"SB-2026-11847", src:"&#9993;", srcn:"Email &middot; accounts@segarborong.my",
+    when:"Today 08:41", amt:4286.50, conf:62, need:true,
+    reg:"Co. Reg 201401023456", addr:"Lot 12, Jalan Industri 4, 41050 Klang, Selangor",
+    date:"02/10/2026", due:"01/11/2026", po:"PO-2026-0914", terms:"30 days",
+    lines:[
+      {d:"Beras Super Tempatan 10kg",q:40,p:32.50,t:1300.00,flag:""},
+      {d:"Minyak Masak Sawit 2kg",q:60,p:17.90,t:1074.00,flag:""},
+      {d:"Gula Halus 1kg",q:100,p:5.40,t:540.00,flag:""},
+      {d:"Tepung Gandum 1kg",q:120,p:3.95,t:474.00,flag:"hl"},
+      {d:"Garam Halus 1kg",q:80,p:1.80,t:144.00,flag:""}
+    ],
+    sub:3532.00, tax:211.92, grand:4286.50,
+    fields:[
+      {k:"Supplier",v:"Segar Borong Sdn Bhd",c:98},
+      {k:"Invoice number",v:"SB-2026-11847",c:96},
+      {k:"Invoice date",v:"02/10/2026",c:94},
+      {k:"Due date",v:"01/11/2026",c:91},
+      {k:"PO reference",v:"PO-2026-0914",c:88},
+      {k:"Subtotal",v:"3,532.00",c:93},
+      {k:"Tax (6%)",v:"211.92",c:90},
+      {k:"Total",v:"4,286.50",c:62}
+    ],
+    checks:[
+      {t:"bad",i:"&#10007;",m:"<b>Total does not add up.</b> Subtotal plus tax is RM 3,743.92, but the invoice total reads RM 4,286.50 &mdash; a difference of RM 542.58. Check whether a delivery charge was left off the printed subtotal."},
+      {t:"warn",i:"&#9888;",m:"<b>Tepung Gandum is priced at RM 3.95</b>, but the purchase order says RM 3.60. 120 units means RM 42 more than agreed."},
+      {t:"ok",i:"&#10003;",m:"Supplier matched to an existing account. Bank details are unchanged from the last invoice."}
+    ]
+  },
+  {
+    id:2, sup:"Hwa Tai Packaging", no:"HT-88214", src:"&#128241;", srcn:"WhatsApp &middot; 012-443 7781",
+    when:"Today 07:12", amt:1920.00, conf:74, need:true,
+    reg:"Co. Reg 199801004422", addr:"88, Jalan Perusahaan, 68100 Batu Caves, Selangor",
+    date:"03/10/2026", due:"17/10/2026", po:"&mdash;", terms:"14 days",
+    lines:[
+      {d:"Carton box 300x300 (bundle 50)",q:24,p:52.00,t:1248.00,flag:""},
+      {d:"Tape 48mm clear (box 36)",q:8,p:84.00,t:672.00,flag:""}
+    ],
+    sub:1920.00, tax:0, grand:1920.00,
+    fields:[
+      {k:"Supplier",v:"Hwa Tai Packaging",c:95},
+      {k:"Invoice number",v:"HT-88214",c:89},
+      {k:"Invoice date",v:"03/10/2026",c:92},
+      {k:"Due date",v:"17/10/2026",c:74},
+      {k:"PO reference",v:"",c:31},
+      {k:"Subtotal",v:"1,920.00",c:93},
+      {k:"Tax (6%)",v:"0.00",c:86},
+      {k:"Total",v:"1,920.00",c:93}
+    ],
+    checks:[
+      {t:"warn",i:"&#9888;",m:"<b>No purchase order reference found.</b> Company policy needs a PO for anything above RM 1,000. Ask the supplier, or attach the right PO before posting."},
+      {t:"warn",i:"&#9888;",m:"Photo taken at an angle, bottom right corner slightly cut. The due date was read with low confidence &mdash; worth confirming."},
+      {t:"ok",i:"&#10003;",m:"Both line items match the agreed price list exactly."}
+    ]
+  },
+  {
+    id:3, sup:"Kilat Logistics", no:"KL-2026-0788", src:"&#9993;", srcn:"Email &middot; billing@kilatlogistics.com",
+    when:"Yesterday 16:28", amt:860.00, conf:58, need:true,
+    reg:"Co. Reg 202201019988", addr:"Unit 5-3, Kompleks Niaga, 47100 Puchong, Selangor",
+    date:"01/10/2026", due:"31/10/2026", po:"&mdash;", terms:"30 days",
+    lines:[
+      {d:"Delivery trips &mdash; September (43 trips)",q:43,p:20.00,t:860.00,flag:""}
+    ],
+    sub:860.00, tax:0, grand:860.00,
+    fields:[
+      {k:"Supplier",v:"Kilat Logistics",c:58},
+      {k:"Invoice number",v:"KL-2026-0788",c:90},
+      {k:"Invoice date",v:"01/10/2026",c:93},
+      {k:"Due date",v:"31/10/2026",c:91},
+      {k:"PO reference",v:"",c:28},
+      {k:"Subtotal",v:"860.00",c:95},
+      {k:"Tax (6%)",v:"0.00",c:88},
+      {k:"Total",v:"860.00",c:95}
+    ],
+    checks:[
+      {t:"bad",i:"&#10007;",m:"<b>Supplier not in the system.</b> First invoice from this company. Someone needs to create the account and confirm the bank details by phone, not by replying to the email."},
+      {t:"ok",i:"&#10003;",m:"Trip count matches the delivery log for September (43 trips)."}
+    ]
+  },
+  {
+    id:4, sup:"Prima Chem Trading", no:"PC-5541", src:"&#128424;", srcn:"Scanner &middot; Accounts dept",
+    when:"Yesterday 14:05", amt:2184.00, conf:97, need:false,
+    reg:"Co. Reg 200501007711", addr:"21, Jalan Kimia, 40200 Shah Alam, Selangor",
+    date:"30/09/2026", due:"30/10/2026", po:"PO-2026-0902", terms:"30 days",
+    lines:[
+      {d:"Sanitiser concentrate 20L",q:6,p:286.00,t:1716.00,flag:""},
+      {d:"Degreaser 5L",q:12,p:39.00,t:468.00,flag:""}
+    ],
+    sub:2184.00, tax:0, grand:2184.00,
+    fields:[
+      {k:"Supplier",v:"Prima Chem Trading",c:99},
+      {k:"Invoice number",v:"PC-5541",c:98},
+      {k:"Invoice date",v:"30/09/2026",c:97},
+      {k:"Due date",v:"30/10/2026",c:96},
+      {k:"PO reference",v:"PO-2026-0902",c:95},
+      {k:"Subtotal",v:"2,184.00",c:98},
+      {k:"Tax (6%)",v:"0.00",c:97},
+      {k:"Total",v:"2,184.00",c:99}
+    ],
+    checks:[
+      {t:"ok",i:"&#10003;",m:"Every figure matches purchase order PO-2026-0902."},
+      {t:"ok",i:"&#10003;",m:"Totals add up correctly."},
+      {t:"ok",i:"&#10003;",m:"Supplier and bank details unchanged. This one would have posted on its own."}
+    ]
+  }
+];
+var POSTED=[
+  {s:"Prima Chem Trading",no:"PC-5508",d:"28 Sept",a:1896.00,how:"auto",by:"System"},
+  {s:"Segar Borong Sdn Bhd",no:"SB-2026-11702",d:"26 Sept",a:3914.20,how:"auto",by:"System"},
+  {s:"Hwa Tai Packaging",no:"HT-88109",d:"25 Sept",a:2240.00,how:"man",by:"Siti Normah"},
+  {s:"Tenaga Hardware Supply",no:"TH-3341",d:"24 Sept",a:742.60,how:"auto",by:"System"},
+  {s:"Segar Borong Sdn Bhd",no:"SB-2026-11688",d:"22 Sept",a:4102.75,how:"auto",by:"System"},
+  {s:"Mega Packaging Sdn Bhd",no:"MP-7719",d:"19 Sept",a:1588.00,how:"man",by:"Siti Normah"}
+];
+var SUPS=[
+  {n:"Segar Borong Sdn Bhd",f:"62 invoices since Jan 2025",c:184,a:171,acc:97},
+  {n:"Prima Chem Trading",f:"41 invoices since Mar 2025",c:122,a:119,acc:99},
+  {n:"Hwa Tai Packaging",f:"28 invoices, photos only",c:76,a:58,acc:88},
+  {n:"Tenaga Hardware Supply",f:"19 invoices since Jun 2026",c:44,a:39,acc:94},
+  {n:"Kilat Logistics",f:"Not seen before",c:0,a:0,acc:0}
+];
+var RULES=[
+  {i:"&#10003;",t:"Supplier already in the system",s:"Name, registration number and bank details all match an existing account",on:true},
+  {i:"&#10003;",t:"Totals add up",s:"Line items, subtotal and tax reconcile to the printed total",on:true},
+  {i:"&#10003;",t:"Prices match the purchase order",s:"Within 2% tolerance per line",on:true},
+  {i:"&#10003;",t:"Reading confidence above 90%",s:"Every required field read cleanly",on:true},
+  {i:"&#10003;",t:"Not a duplicate",s:"Same supplier and invoice number has not been posted before",on:true}
+];
+var STOPS=[
+  {i:"&#9888;",t:"New supplier",s:"Always reviewed by a person, and bank details confirmed by phone",on:true},
+  {i:"&#9888;",t:"Amount above RM 10,000",s:"Needs a second approver regardless of confidence",on:true},
+  {i:"&#9888;",t:"Missing purchase order above RM 1,000",s:"Company policy",on:true},
+  {i:"&#9888;",t:"Bank details changed since last invoice",s:"The commonest invoice fraud. Never auto-posted",on:true},
+  {i:"&#9888;",t:"Handwriting detected on the document",s:"Reading accuracy drops sharply",on:false}
+];
+var st={page:"inbox",filter:"need",sel:1};
+function rm(n){return "RM "+n.toLocaleString("en-MY",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function toast(m){var t=document.getElementById("toast");t.innerHTML=m;t.classList.add("on");
+  clearTimeout(window._tt);window._tt=setTimeout(function(){t.classList.remove("on")},3600)}
+function cls(c){ return c>=90?"c-hi":c>=70?"c-md":"c-lo" }
+function clbl(c){ return c>=90?"High confidence":c>=70?"Check 1 field":"Needs review" }
+
+function tiles(){
+  var waiting=DOCS.length, flagged=DOCS.filter(function(d){return d.need}).length;
+  document.getElementById("tiles").innerHTML=
+    '<div class="tile hi"><div class="lb">Waiting in the inbox</div><div class="hero mono">'+waiting+'</div><div class="sub">'+flagged+' flagged for a human</div></div>'+
+    '<div class="tile"><div class="lb">Read this month</div><div class="hero mono">218</div><div class="sub">Email, WhatsApp and scanner</div></div>'+
+    '<div class="tile"><div class="lb">Posted without a human</div><div class="hero mono">81%</div><div class="sub">176 of 218 documents</div></div>'+
+    '<div class="tile"><div class="lb">Typing time saved</div><div class="hero mono">24 hrs</div><div class="sub">At 7 minutes a document</div></div>';
+  document.getElementById("pill").textContent=flagged;
+  document.getElementById("pill").style.display=flagged?"":"none";
+  document.getElementById("n1").textContent=flagged;
+  document.getElementById("n2").textContent=waiting;
+}
+function inbox(){
+  var L=DOCS.filter(function(d){return st.filter==="all"||d.need});
+  document.getElementById("inbox").innerHTML= L.length? L.map(function(d){
+    return '<div class="itm '+(st.sel===d.id?"on":"")+'" data-d="'+d.id+'">'+
+      '<div class="src">'+d.src+'</div>'+
+      '<div><b>'+d.sup+'</b><div class="mt">'+d.no+' &middot; '+d.when+'<br>'+d.srcn+'</div></div>'+
+      '<div class="rt"><div class="amt">'+rm(d.amt)+'</div>'+
+      '<span class="conf '+cls(d.conf)+'">'+d.conf+'% '+(d.conf>=90?"clean":"unsure")+'</span></div></div>';
+  }).join("") : '<div class="empty"><div class="ic">&#127881;</div><p><b>Nothing needs your attention.</b></p><p style="font-size:13px;margin-top:6px">Everything that arrived was read cleanly and posted on its own.</p></div>';
+  document.querySelectorAll("[data-d]").forEach(function(el){
+    el.onclick=function(){ st.sel=+el.dataset.d; inbox(); detail() };
+  });
+}
+function detail(){
+  var d=DOCS.filter(function(x){return x.id===st.sel})[0], box=document.getElementById("detail");
+  if(!d){
+    box.innerHTML='<div class="empty"><div class="ic">&#128196;</div><p>Select a document on the left to review it.</p></div>';
+    return;
+  }
+  box.innerHTML=
+    '<div class="chead"><div><h2>'+d.sup+'</h2><p>'+d.no+' &middot; arrived '+d.when+' &middot; '+d.srcn+'</p></div>'+
+    '<span class="conf '+cls(d.conf)+'" style="font-size:12px">'+d.conf+'% &middot; '+clbl(d.conf)+'</span></div>'+
+    '<div class="dgrid">'+
+      '<div class="docpane"><div class="paper">'+
+        '<div class="ph"><div><b>'+d.sup+'</b><span>'+d.reg+'</span><span>'+d.addr+'</span></div><h4>Invoice</h4></div>'+
+        '<div class="meta">'+
+          '<div><b>Invoice no.</b>'+d.no+'</div>'+
+          '<div><b>Date</b>'+d.date+'</div>'+
+          '<div><b>PO reference</b>'+d.po+'</div>'+
+          '<div><b>Terms</b>'+d.terms+' &middot; due '+d.due+'</div>'+
+        '</div>'+
+        '<table><thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Amount</th></tr></thead><tbody>'+
+          d.lines.map(function(l){
+            return '<tr><td>'+l.d+'</td><td class="num">'+l.q+'</td>'+
+              '<td class="num'+(l.flag?'" ':'"')+'><span'+(l.flag?' class="hl"':'')+'>'+l.p.toFixed(2)+'</span></td>'+
+              '<td class="num">'+l.t.toFixed(2)+'</td></tr>';
+          }).join("")+
+        '</tbody></table>'+
+        '<div class="tot"><span>Subtotal</span><span>'+d.sub.toFixed(2)+'</span></div>'+
+        '<div class="tot"><span>Tax 6%</span><span>'+d.tax.toFixed(2)+'</span></div>'+
+        '<div class="tot g"><span>Total (RM)</span><span class="'+(d.id===1?"hl-bad":"")+'">'+d.grand.toFixed(2)+'</span></div>'+
+      '</div></div>'+
+
+      '<div class="fpane">'+
+        '<div class="fgrp"><div class="lb">What the system read</div>'+
+          d.fields.map(function(f){
+            var c=f.c<70?"verylow":f.c<90?"low":"";
+            return '<div class="fr"><div class="k">'+f.k+'</div><div class="fv">'+
+              '<input class="'+c+'" value="'+f.v+'" placeholder="'+(f.v?"":"not found")+'">'+
+              '<span class="cb '+cls(f.c)+'">'+f.c+'%</span></div></div>';
+          }).join("")+
+        '</div>'+
+        '<div class="fgrp"><div class="lb">Line items read ('+d.lines.length+')</div>'+
+          '<div class="lineitems"><table><thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Total</th></tr></thead><tbody>'+
+          d.lines.map(function(l){
+            return '<tr><td>'+l.d+'</td><td class="num mono">'+l.q+'</td>'+
+              '<td class="num mono"'+(l.flag?' style="color:var(--warn);font-weight:700"':'')+'>'+l.p.toFixed(2)+'</td>'+
+              '<td class="num mono">'+l.t.toFixed(2)+'</td></tr>';
+          }).join("")+'</tbody></table></div>'+
+        '</div>'+
+        '<div class="fgrp" style="margin-bottom:0"><div class="lb">Automatic checks</div>'+
+          d.checks.map(function(c){
+            return '<div class="chkrow chk-'+c.t+'"><span class="i">'+c.i+'</span><span>'+c.m+'</span></div>';
+          }).join("")+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="actbar">'+
+      '<button class="btn btn-g" data-act="post">&#10003; Approve &amp; post</button>'+
+      '<button class="btn" data-act="ask">&#9993; Ask the supplier</button>'+
+      '<button class="btn btn-r" data-act="rej">Reject</button>'+
+      '<span class="sp"></span>'+
+      '<button class="btn" data-act="skip">Skip for now</button>'+
+    '</div>';
+  box.querySelectorAll("[data-act]").forEach(function(b){
+    b.onclick=function(){
+      var a=b.dataset.act;
+      if(a==="skip"){ toast("Left in the inbox. Nothing was changed."); return }
+      if(a==="ask"){ toast("In the live system this replies to <b>"+d.srcn.split("&middot;")[1]+"</b> with the queries listed above, and parks the invoice until they answer."); return }
+      if(a==="rej"){
+        DOCS=DOCS.filter(function(x){return x.id!==d.id});
+        st.sel=DOCS.length?DOCS[0].id:0; tiles(); inbox(); detail();
+        toast("Rejected. The supplier is notified and nothing reaches the accounts.");
+        return;
+      }
+      POSTED.unshift({s:d.sup,no:d.no,d:"Today",a:d.amt,how:"man",by:"Siti Normah"});
+      DOCS=DOCS.filter(function(x){return x.id!==d.id});
+      st.sel=DOCS.length?DOCS[0].id:0;
+      tiles(); inbox(); detail(); postrows();
+      toast("Posted "+rm(d.amt)+" to accounts payable &mdash; "+d.sup+".");
+    };
+  });
+}
+function postrows(){
+  document.getElementById("postrows").innerHTML=POSTED.map(function(p){
+    return '<tr><td><b>'+p.s+'</b></td><td class="mono">'+p.no+'</td><td class="hidem mono">'+p.d+'</td>'+
+      '<td class="num mono">'+rm(p.a)+'</td>'+
+      '<td><span class="tag '+(p.how==="auto"?"t-good":"t-warn")+'">'+(p.how==="auto"?"Automatic":"Approved by hand")+'</span></td>'+
+      '<td class="hidem">'+p.by+'</td></tr>';
+  }).join("");
+}
+function rulerows(){
+  function draw(arr,id){
+    document.getElementById(id).innerHTML=arr.map(function(r,i){
+      return '<div class="rule"><div class="ic">'+r.i+'</div><div><b>'+r.t+'</b><span>'+r.s+'</span></div>'+
+        '<div class="sw '+(r.on?"":"off")+'" data-sw="'+id+'-'+i+'"></div></div>';
+    }).join("");
+  }
+  draw(RULES,"rulerows"); draw(STOPS,"stoprows");
+  document.querySelectorAll("[data-sw]").forEach(function(el){
+    el.onclick=function(){
+      var p=el.dataset.sw.split("-"), arr=p[0]==="rulerows"?RULES:STOPS, i=+p[1];
+      arr[i].on=!arr[i].on; rulerows();
+      toast(arr[i].on?'Rule switched on: "'+arr[i].t+'"':'Rule switched off: "'+arr[i].t+'" — more invoices will pass without review.');
+    };
+  });
+}
+function suprows(){
+  document.getElementById("suprows").innerHTML=SUPS.map(function(s){
+    return '<tr><td><b>'+s.n+'</b></td><td class="hidem">'+s.f+'</td>'+
+      '<td class="num mono">'+s.c+'</td><td class="num mono">'+(s.c?Math.round(s.a/s.c*100)+"%":"&mdash;")+'</td>'+
+      '<td>'+(s.acc?'<span class="tag '+(s.acc>=95?"t-good":s.acc>=90?"t-warn":"t-bad")+'">'+s.acc+'%</span>':'<span class="tag t-bad">Not learned yet</span>')+'</td></tr>';
+  }).join("");
+}
+document.querySelectorAll("#tabs button").forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll("#tabs button").forEach(function(x){x.classList.remove("on")});
+    b.classList.add("on"); st.filter=b.dataset.f; inbox();
+  };
+});
+document.querySelectorAll(".snav").forEach(function(el){
+  el.onclick=function(){
+    var p=el.dataset.p; if(!p) return;
+    document.querySelectorAll(".snav").forEach(function(x){x.classList.remove("on")});
+    el.classList.add("on");
+    document.querySelectorAll(".page").forEach(function(x){x.classList.toggle("on",x.id==="p-"+p)});
+    document.getElementById("ptitle").textContent=
+      {inbox:"Invoice inbox",posted:"Posted documents",rules:"Reading rules",sup:"Suppliers"}[p];
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+document.getElementById("refresh").onclick=function(){toast("Checked all 3 sources &mdash; no new documents since 08:41.")};
+document.getElementById("upl").onclick=function(){toast("In the live system this opens a file picker, then reads the document the same way.")};
+tiles(); inbox(); detail(); postrows(); rulerows(); suprows();
+</script>
+</body>
+</html>

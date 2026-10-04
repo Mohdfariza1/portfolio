@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services — Cergas Bina Engineering Sdn Bhd</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bg:'#080c14',surface:'#0f1623',border:'#1e2d40',gold:'#f59e0b','gold-dark':'#d97706',muted:'#94a3b8'},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    body{background:#080c14;color:#f1f5f9;font-family:'Inter',sans-serif}
+    .gold-line::before{content:'';display:block;width:48px;height:3px;background:#f59e0b;margin-bottom:16px}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.reveal.in{opacity:1;transform:none}
+    .demo-tag{position:fixed;bottom:16px;right:16px;z-index:999;background:rgba(245,158,11,.12);border:1px solid #f59e0b;color:#f59e0b;font-size:11px;font-weight:700;padding:6px 12px;border-radius:4px;letter-spacing:.05em}
+    .svc-card{transition:border-color .3s,box-shadow .3s}.svc-card:hover{border-color:#f59e0b;box-shadow:0 0 0 1px rgba(245,158,11,.2)}
+  </style>
+</head>
+<body>
+<div class="demo-tag">BEJAA DIGITAL — DEMO</div>
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 py-4 bg-bg/95 border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3"><div class="w-9 h-9 bg-gold flex items-center justify-center"><span class="text-bg font-black text-sm">CB</span></div><div><div class="font-bold text-white text-sm leading-tight">CERGAS BINA</div><div class="text-gold text-[10px] font-semibold tracking-widest uppercase">Engineering Sdn Bhd</div></div></a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="about.html" class="text-muted hover:text-white text-sm font-medium transition-colors">About</a>
+      <a href="services.html" class="text-gold text-sm font-semibold">Services</a>
+      <a href="projects.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Projects</a>
+      <a href="contact.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Contact</a>
+    </div>
+    <a href="contact.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-bg font-bold text-sm px-5 py-2.5 transition-colors">Request Quote <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+    <button id="mb" class="md:hidden text-muted hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  </div>
+  <div id="mm" class="hidden md:hidden mt-4 px-6 pb-4 border-t border-border pt-4 space-y-3">
+    <a href="about.html" class="block text-muted hover:text-white text-sm">About</a>
+    <a href="services.html" class="block text-gold text-sm font-semibold">Services</a>
+    <a href="projects.html" class="block text-muted hover:text-white text-sm">Projects</a>
+    <a href="contact.html" class="block text-muted hover:text-white text-sm">Contact</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="pt-32 pb-16 border-b border-border">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center gap-3 mb-4"><a href="index.html" class="text-muted text-xs hover:text-white transition-colors">Home</a><span class="text-border">/</span><span class="text-gold text-xs font-semibold">Services</span></div>
+    <h1 class="text-5xl md:text-6xl font-black text-white mb-4">Our Services</h1>
+    <p class="text-muted text-lg max-w-2xl">Full-scope engineering and construction services — from ground preparation to handover.</p>
+  </div>
+</section>
+
+<!-- SERVICES GRID -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6 space-y-5">
+
+    <!-- Civil -->
+    <div class="svc-card border border-border p-8 md:p-10 reveal">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          <div class="w-12 h-12 border border-gold flex items-center justify-center mb-5"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
+          <div class="text-gold text-xs font-bold uppercase tracking-wider mb-2">Category 01</div>
+          <h2 class="text-white font-black text-2xl">Civil & Earthworks</h2>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-muted text-sm leading-relaxed mb-5">We provide complete civil and earthworks services for industrial estates, residential townships, commercial developments, and government infrastructure. Our heavy machinery fleet allows us to mobilise within 48 hours of award.</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Site clearing & vegetation removal</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Bulk earthworks & cut-and-fill</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Slope protection & retaining walls</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Drainage & stormwater systems</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Subgrade preparation & compaction</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Silt trap & erosion control (DOE)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structural -->
+    <div class="svc-card border border-border p-8 md:p-10 reveal">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          <div class="w-12 h-12 border border-gold flex items-center justify-center mb-5"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
+          <div class="text-gold text-xs font-bold uppercase tracking-wider mb-2">Category 02</div>
+          <h2 class="text-white font-black text-2xl">Structural Works</h2>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-muted text-sm leading-relaxed mb-5">From foundation to rooftop, our structural works division handles reinforced concrete construction for commercial, industrial, and government buildings. All works supervised by PE-registered engineers.</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Bored & driven piling works</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">RC pad & raft foundations</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Column, beam & slab construction</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Pre-stressed & post-tensioned works</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Structural steel fabrication & erection</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Structural repair & strengthening</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Road -->
+    <div class="svc-card border border-border p-8 md:p-10 reveal">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          <div class="w-12 h-12 border border-gold flex items-center justify-center mb-5"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg></div>
+          <div class="text-gold text-xs font-bold uppercase tracking-wider mb-2">Category 03</div>
+          <h2 class="text-white font-black text-2xl">Road & Infrastructure</h2>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-muted text-sm leading-relaxed mb-5">Registered under JKR Approved Contractor List, we execute road and infrastructure works for state governments, local authorities, and private developers. QLASSIC-certified with consistent scores above 75.</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">New road construction (AC pavement)</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Road widening & realignment</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Bridge construction & replacement</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Culverts, box drains & headwalls</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Road markings & signage</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Rehabilitation & resurfacing works</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- M&E -->
+    <div class="svc-card border border-border p-8 md:p-10 reveal">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          <div class="w-12 h-12 border border-gold flex items-center justify-center mb-5"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div class="text-gold text-xs font-bold uppercase tracking-wider mb-2">Category 04</div>
+          <h2 class="text-white font-black text-2xl">M&E Works</h2>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-muted text-sm leading-relaxed mb-5">Our M&E division handles full mechanical and electrical installation for commercial and industrial buildings, working alongside or independently from main civil contractors.</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">HV/LV electrical distribution</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Lighting & power wiring</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">HVAC system design & install</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Plumbing & sanitary works</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Fire suppression & alarm system</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">BMS & building automation</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Renovation -->
+    <div class="svc-card border border-border p-8 md:p-10 reveal">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          <div class="w-12 h-12 border border-gold flex items-center justify-center mb-5"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></div>
+          <div class="text-gold text-xs font-bold uppercase tracking-wider mb-2">Category 05</div>
+          <h2 class="text-white font-black text-2xl">Building Renovation</h2>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-muted text-sm leading-relaxed mb-5">Renovation and refurbishment works for occupied and non-occupied buildings. We plan works to minimise disruption and maintain safety throughout construction phases.</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Office & commercial space fit-out</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Factory layout redesign</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Roofing & waterproofing</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Wall, ceiling & floor finishes</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Government facility upgrading</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">DBKL / MBPJ compliance works</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PM -->
+    <div class="svc-card border border-border p-8 md:p-10 reveal">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          <div class="w-12 h-12 border border-gold flex items-center justify-center mb-5"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+          <div class="text-gold text-xs font-bold uppercase tracking-wider mb-2">Category 06</div>
+          <h2 class="text-white font-black text-2xl">Project Management</h2>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-muted text-sm leading-relaxed mb-5">For clients who need oversight without self-performing, we offer project management consultancy — from tender evaluation through to practical completion and CCC application.</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Programme planning (P6 / MS Project)</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">QA/QC inspection & NCR management</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Weekly progress report to client</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Subcontractor management</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">Variation & claims administration</span></div>
+            <div class="flex items-start gap-2"><div class="w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0"></div><span class="text-muted text-sm">CCC application & handover</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="py-20 bg-surface">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <div class="flex items-center justify-center gap-3 mb-4"><div class="h-px w-10 bg-gold"></div><span class="text-gold text-xs font-bold tracking-widest uppercase">How It Works</span><div class="h-px w-10 bg-gold"></div></div>
+      <h2 class="text-4xl font-black text-white">Our Process</h2>
+    </div>
+    <div class="grid md:grid-cols-4 gap-5 reveal">
+      <div class="text-center p-6">
+        <div class="w-12 h-12 bg-gold flex items-center justify-center mx-auto mb-4"><span class="text-bg font-black">01</span></div>
+        <h3 class="text-white font-bold mb-2">Inquiry & Briefing</h3>
+        <p class="text-muted text-xs leading-relaxed">Submit your project brief. We respond within 24 hours for initial assessment.</p>
+      </div>
+      <div class="text-center p-6">
+        <div class="w-12 h-12 bg-gold flex items-center justify-center mx-auto mb-4"><span class="text-bg font-black">02</span></div>
+        <h3 class="text-white font-bold mb-2">Site Visit & Quotation</h3>
+        <p class="text-muted text-xs leading-relaxed">Our engineer visits site, assesses scope, and issues a detailed BOQ-based quotation.</p>
+      </div>
+      <div class="text-center p-6">
+        <div class="w-12 h-12 bg-gold flex items-center justify-center mx-auto mb-4"><span class="text-bg font-black">03</span></div>
+        <h3 class="text-white font-bold mb-2">Award & Mobilisation</h3>
+        <p class="text-muted text-xs leading-relaxed">Contract signed, programme submitted, site established. Mobilise within agreed timeframe.</p>
+      </div>
+      <div class="text-center p-6">
+        <div class="w-12 h-12 bg-gold flex items-center justify-center mx-auto mb-4"><span class="text-bg font-black">04</span></div>
+        <h3 class="text-white font-bold mb-2">Delivery & Handover</h3>
+        <p class="text-muted text-xs leading-relaxed">Project completed, inspected, defects cleared. CCC or handover certificate issued.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-gold">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="text-4xl font-black text-bg mb-4">Need a Quote for Your Project?</h2>
+    <p class="text-bg/70 text-lg mb-8">Fill in our enquiry form and we'll get back to you within 24 hours.</p>
+    <a href="contact.html" class="inline-flex items-center gap-2 bg-bg hover:bg-surface text-white font-bold px-10 py-4 transition-colors text-sm">Request a Quote <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-border py-10">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3"><div class="w-8 h-8 bg-gold flex items-center justify-center"><span class="text-bg font-black text-xs">CB</span></div><div><div class="text-white font-bold text-sm">Cergas Bina Engineering Sdn Bhd</div><div class="text-muted text-xs">SSM: 200401234567 (123456-X) · CIDB: G7</div></div></div>
+    <div class="text-muted text-xs text-center md:text-right">© 2024 Cergas Bina Engineering Sdn Bhd. All rights reserved.<br/><span class="text-gold/60">Website by Bejaa Digital — bejaadigital.com</span></div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('mb').addEventListener('click',()=>document.getElementById('mm').classList.toggle('hidden'));
+  const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');ro.unobserve(x.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

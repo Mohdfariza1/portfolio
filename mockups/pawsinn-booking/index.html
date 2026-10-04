@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paws Inn — Pet Boarding &amp; Daycare Booking | Subang Jaya</title>
+<meta name="description" content="Book cat and dog boarding in Subang Jaya. Pick your dates, room and add-ons, and see the total before you confirm.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#2a2118; --ink2:#7a6b5c; --line:#ecE3d8; --line2:#ddd0c0;
+  --cream:#fdf9f3; --amber:#e08a1e; --amber-d:#c2740f; --amber-l:#fdf1dd;
+  --sky:#2f7fa8; --sky-l:#e8f3f9; --green:#4a9b6e; --red:#c9533f;
+  --r:14px;
+}
+body{font:16px/1.65 "Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+h1,h2,h3{line-height:1.2;letter-spacing:-.02em}
+h1{font-size:clamp(28px,4.4vw,44px);font-weight:800}
+h2{font-size:clamp(22px,3vw,30px);font-weight:800}
+h3{font-size:18px;font-weight:700}
+.lead{font-size:17px;color:var(--ink2)}
+.eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 24px;border-radius:999px;font-weight:700;font-size:15px;border:0;cursor:pointer;font-family:inherit;transition:.18s}
+.btn-a{background:var(--amber);color:#fff;box-shadow:0 8px 20px rgba(224,138,30,.3)}
+.btn-a:hover{background:var(--amber-d);transform:translateY(-2px)}
+.btn-a:disabled{background:var(--line2);box-shadow:none;cursor:not-allowed;transform:none}
+.btn-o{background:#fff;color:var(--ink);border:1.5px solid var(--line2)}
+.btn-o:hover{border-color:var(--amber);color:var(--amber-d)}
+.btn-sm{padding:10px 18px;font-size:13.5px}
+
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px}
+.logo i{width:40px;height:40px;border-radius:13px;background:var(--amber-l);display:grid;place-items:center;font-size:21px;font-style:normal}
+.logo small{display:block;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.nav nav{display:flex;gap:26px;font-size:14.5px;font-weight:600}
+.nav nav a:hover{color:var(--amber-d)}
+.ph{font-size:14px;font-weight:700;color:var(--sky)}
+@media(max-width:920px){.nav nav{display:none}}
+
+.hero{background:linear-gradient(165deg,#fff 0%,var(--amber-l) 100%);padding:46px 0 40px;border-bottom:1px solid var(--line)}
+.hero-g{display:grid;grid-template-columns:1fr auto;gap:36px;align-items:center}
+.hero h1{margin:12px 0 12px}
+.hero-stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
+.hs{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 18px}
+.hs b{display:block;font-size:21px;font-weight:800;color:var(--amber-d)}
+.hs span{font-size:11.5px;color:var(--ink2);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+
+/* layout */
+.main{padding:40px 0 70px}
+.cols{display:grid;grid-template-columns:1fr 362px;gap:30px;align-items:start}
+
+/* steps */
+.stepper{display:flex;gap:0;margin-bottom:26px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px;overflow:hidden}
+.stepper div{flex:1;text-align:center;padding:11px 8px;font-size:13.5px;font-weight:700;color:var(--ink2);border-radius:999px;display:flex;align-items:center;justify-content:center;gap:8px}
+.stepper div b{width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink2);display:grid;place-items:center;font-size:12px;flex:none}
+.stepper div.on{background:var(--amber);color:#fff}
+.stepper div.on b{background:rgba(255,255,255,.28);color:#fff}
+.stepper div.done{color:var(--green)}
+.stepper div.done b{background:var(--green);color:#fff}
+@media(max-width:700px){.stepper div span{display:none}.stepper div{padding:11px 4px}}
+
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:20px}
+.panel.hide{display:none}
+.panel > .ph-head{margin-bottom:20px}
+.ph-head h2{font-size:23px}
+.ph-head p{font-size:14.5px;color:var(--ink2);margin-top:6px}
+
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2);margin-bottom:7px}
+.fld input,.fld select,.fld textarea{width:100%;padding:12px 13px;border:1.5px solid var(--line2);border-radius:11px;font:inherit;font-size:14.5px;background:#fffdfa;color:var(--ink)}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:0;border-color:var(--amber);background:#fff}
+.fld textarea{resize:vertical;min-height:76px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:700px){.two,.three{grid-template-columns:1fr}}
+
+/* pick tiles */
+.picks{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.pick{border:1.5px solid var(--line2);border-radius:13px;padding:16px 12px;text-align:center;cursor:pointer;background:#fffdfa;transition:.16s}
+.pick:hover{border-color:var(--amber)}
+.pick.on{border-color:var(--amber);background:var(--amber-l);box-shadow:0 0 0 3px rgba(224,138,30,.14)}
+.pick .ic{font-size:27px;display:block;margin-bottom:7px}
+.pick b{display:block;font-size:14.5px}
+.pick span{font-size:12px;color:var(--ink2)}
+
+/* rooms */
+.room{display:grid;grid-template-columns:96px 1fr auto;gap:18px;align-items:center;border:1.5px solid var(--line2);border-radius:14px;padding:16px;margin-bottom:12px;cursor:pointer;background:#fffdfa;transition:.16s}
+.room:hover{border-color:var(--amber)}
+.room.on{border-color:var(--amber);background:var(--amber-l);box-shadow:0 0 0 3px rgba(224,138,30,.14)}
+.room.out{opacity:.5;cursor:not-allowed}
+.room .im{height:76px;border-radius:11px;display:grid;place-items:center;font-size:30px}
+.room h3{font-size:16.5px}
+.room p{font-size:13.5px;color:var(--ink2);margin-top:4px}
+.room .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.tag{font-size:11px;font-weight:700;background:#fff;border:1px solid var(--line2);border-radius:999px;padding:3px 9px;color:var(--ink2)}
+.room .pr{text-align:right;flex:none}
+.room .pr b{display:block;font-size:20px;font-weight:800;color:var(--amber-d)}
+.room .pr span{font-size:11.5px;color:var(--ink2)}
+.sold{font-size:11px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:700px){.room{grid-template-columns:62px 1fr}.room .pr{grid-column:2;text-align:left}.room .im{height:54px;font-size:22px}}
+
+/* addons */
+.addon{display:flex;align-items:center;gap:14px;border:1.5px solid var(--line2);border-radius:13px;padding:14px 16px;margin-bottom:10px;cursor:pointer;background:#fffdfa;transition:.16s}
+.addon:hover{border-color:var(--sky)}
+.addon.on{border-color:var(--sky);background:var(--sky-l)}
+.addon .bx{width:22px;height:22px;border-radius:6px;border:2px solid var(--line2);flex:none;display:grid;place-items:center;font-size:13px;color:#fff;font-weight:900}
+.addon.on .bx{background:var(--sky);border-color:var(--sky)}
+.addon .tx{flex:1}
+.addon b{font-size:14.5px}
+.addon p{font-size:13px;color:var(--ink2)}
+.addon .amt{font-weight:800;font-size:15px;color:var(--sky)}
+
+/* availability strip */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:10px}
+.cal div{text-align:center;padding:9px 2px;border-radius:9px;font-size:12.5px;border:1px solid var(--line);background:#fffdfa}
+.cal div b{display:block;font-size:15px;font-weight:800}
+.cal div.sel{background:var(--amber);color:#fff;border-color:var(--amber)}
+.cal div.full{background:#fbeae7;color:var(--red);border-color:#f2cfc8;text-decoration:line-through}
+.cal div.in{background:var(--amber-l);border-color:#f0d9b0}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:12px}
+.legend span{display:flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:4px;display:inline-block}
+
+/* summary */
+.sum{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;position:sticky;top:92px}
+.sum h3{margin-bottom:4px}
+.sum .sub{font-size:13px;color:var(--ink2);margin-bottom:18px}
+.line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;font-size:14px;border-bottom:1px dashed var(--line)}
+.line span:first-child{color:var(--ink2)}
+.line b{font-weight:700}
+.line.empty{color:var(--ink2);font-style:italic;border:0}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:16px;border-top:2px solid var(--ink)}
+.total span{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+.total b{font-size:30px;font-weight:800;letter-spacing:-.03em}
+.dep{background:var(--amber-l);border-radius:11px;padding:12px 14px;font-size:13px;margin-top:14px;color:#7a5410}
+.dep b{display:block;font-size:17px;color:var(--amber-d)}
+.sum .btn{width:100%;margin-top:16px}
+.trustline{font-size:12px;color:var(--ink2);text-align:center;margin-top:12px}
+
+.navrow{display:flex;justify-content:space-between;gap:12px;margin-top:4px}
+
+/* confirm */
+.done-box{text-align:center;padding:18px 0}
+.done-box .tick{width:70px;height:70px;border-radius:50%;background:#e8f6ee;color:var(--green);display:grid;place-items:center;font-size:36px;margin:0 auto 18px}
+.ref{display:inline-block;background:var(--cream);border:1px dashed var(--line2);border-radius:10px;padding:10px 18px;font-size:15px;font-weight:800;letter-spacing:.06em;margin:14px 0 6px}
+.recap{text-align:left;background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:22px}
+.note{background:var(--sky-l);border:1px solid #c6e0ee;border-radius:12px;padding:14px;font-size:13.5px;margin-top:18px;text-align:left;color:#1d5c7c}
+
+footer{background:#fff;border-top:1px solid var(--line);padding:40px 0 24px;font-size:14px;color:var(--ink2)}
+.f-g{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:34px;margin-bottom:28px}
+footer h4{color:var(--ink);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:13px}
+footer li{list-style:none;margin-bottom:8px}
+.f-bot{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
+
+.demo{position:fixed;right:16px;bottom:16px;z-index:60;background:#2a2118;color:#fff;border-radius:12px;padding:11px 15px;font-size:12px;line-height:1.45;max-width:258px;box-shadow:0 12px 32px rgba(0,0,0,.26)}
+.demo b{color:#f5c173}
+
+@media(max-width:980px){.cols{grid-template-columns:1fr}.sum{position:static}.hero-g{grid-template-columns:1fr}}
+@media(max-width:700px){.picks{grid-template-columns:1fr 1fr}.demo{max-width:166px;font-size:11px;padding:9px 11px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><i>&#128062;</i><span>Paws Inn<small>Boarding &amp; Daycare</small></span></a>
+    <nav>
+      <a href="#">Rooms</a><a href="#">Daycare</a><a href="#">Grooming</a><a href="#">About us</a>
+    </nav>
+    <span class="ph">&#128222; 03-5612 7788</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-g">
+    <div>
+      <span class="eyebrow">Subang Jaya &middot; SS15</span>
+      <h1>Book your pet&rsquo;s stay in under two minutes</h1>
+      <p class="lead">Air-conditioned rooms, two walks a day, and a photo update every evening. Pick your dates and see the full price before you pay anything.</p>
+      <div class="hero-stats">
+        <div class="hs"><b>8</b><span>Years open</span></div>
+        <div class="hs"><b>2,900+</b><span>Stays hosted</span></div>
+        <div class="hs"><b>24/7</b><span>Staff on site</span></div>
+        <div class="hs"><b>4.9</b><span>Google rating</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="wrap cols">
+    <div>
+      <div class="stepper" id="stepper">
+        <div class="on" data-s="1"><b>1</b><span>Pet &amp; dates</span></div>
+        <div data-s="2"><b>2</b><span>Room</span></div>
+        <div data-s="3"><b>3</b><span>Add-ons</span></div>
+        <div data-s="4"><b>4</b><span>Confirm</span></div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="panel" id="p1">
+        <div class="ph-head"><h2>Who is staying with us?</h2><p>We keep cats and dogs in separate wings, so we need to know which.</p></div>
+        <div class="fld">
+          <label>Pet type</label>
+          <div class="picks" id="ptype">
+            <div class="pick on" data-v="Dog"><span class="ic">&#128021;</span><b>Dog</b><span>Separate wing</span></div>
+            <div class="pick" data-v="Cat"><span class="ic">&#128008;</span><b>Cat</b><span>Quiet wing</span></div>
+            <div class="pick" data-v="Rabbit"><span class="ic">&#128048;</span><b>Rabbit</b><span>Small pets</span></div>
+          </div>
+        </div>
+        <div class="fld">
+          <label>Size</label>
+          <div class="picks" id="psize">
+            <div class="pick" data-v="Small" data-m="0"><span class="ic">&#9679;</span><b>Small</b><span>Under 10 kg</span></div>
+            <div class="pick on" data-v="Medium" data-m="10"><span class="ic">&#9679;&#9679;</span><b>Medium</b><span>10&ndash;25 kg &middot; +RM10/night</span></div>
+            <div class="pick" data-v="Large" data-m="22"><span class="ic">&#9679;&#9679;&#9679;</span><b>Large</b><span>Above 25 kg &middot; +RM22/night</span></div>
+          </div>
+        </div>
+        <div class="two">
+          <div class="fld"><label>Pet name</label><input id="pname" value="Mochi" placeholder="e.g. Mochi"></div>
+          <div class="fld"><label>Breed (optional)</label><input id="pbreed" value="Golden Retriever" placeholder="e.g. Golden Retriever"></div>
+        </div>
+        <div class="two">
+          <div class="fld"><label>Check-in</label><input type="date" id="din" value="2026-10-17"></div>
+          <div class="fld"><label>Check-out</label><input type="date" id="dout" value="2026-10-21"></div>
+        </div>
+        <div class="fld" style="margin-bottom:6px">
+          <label>October availability &mdash; dog wing</label>
+          <div class="cal" id="cal"></div>
+          <div class="legend">
+            <span><i class="sw" style="background:var(--amber)"></i> Your dates</span>
+            <span><i class="sw" style="background:#fbeae7;border:1px solid #f2cfc8"></i> Fully booked</span>
+            <span><i class="sw" style="background:#fffdfa;border:1px solid var(--line)"></i> Available</span>
+          </div>
+        </div>
+        <div class="navrow" style="margin-top:22px">
+          <span></span><button class="btn btn-a" data-go="2">Choose a room &rarr;</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="panel hide" id="p2">
+        <div class="ph-head"><h2>Pick a room</h2><p>All rooms are air-conditioned and cleaned twice daily. Prices shown are per night for your selected pet size.</p></div>
+        <div id="rooms"></div>
+        <div class="navrow" style="margin-top:20px">
+          <button class="btn btn-o" data-go="1">&larr; Back</button>
+          <button class="btn btn-a" data-go="3">Add extras &rarr;</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="panel hide" id="p3">
+        <div class="ph-head"><h2>Anything extra?</h2><p>Optional. Add them now or tell us when you drop your pet off.</p></div>
+        <div id="addons"></div>
+        <div class="fld" style="margin-top:20px"><label>Feeding, medication or special notes</label>
+          <textarea placeholder="e.g. Two scoops of his own food at 8am and 6pm. One tablet with breakfast.">Brings his own food. Two scoops at 8am and 6pm.</textarea></div>
+        <div class="navrow" style="margin-top:6px">
+          <button class="btn btn-o" data-go="2">&larr; Back</button>
+          <button class="btn btn-a" data-go="4">Review booking &rarr;</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="panel hide" id="p4">
+        <div class="ph-head"><h2>Your details</h2><p>We only need enough to reach you while your pet is with us.</p></div>
+        <form id="bform">
+          <div class="two">
+            <div class="fld"><label>Full name</label><input required value="Nadia Rahim"></div>
+            <div class="fld"><label>Phone (WhatsApp)</label><input required value="012-388 4471"></div>
+          </div>
+          <div class="fld"><label>Email</label><input required type="email" value="nadia.rahim@email.com"></div>
+          <div class="fld"><label>Emergency contact</label><input value="Hafiz Rahim &middot; 013-220 9918"></div>
+          <div class="fld"><label>Vet clinic (if any)</label><input value="Klinik Veterinar SS15"></div>
+          <div class="navrow">
+            <button class="btn btn-o" type="button" data-go="3">&larr; Back</button>
+            <button class="btn btn-a" type="submit">Confirm booking</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- DONE -->
+      <div class="panel hide" id="p5">
+        <div class="done-box">
+          <div class="tick">&#10003;</div>
+          <h2>Booking confirmed</h2>
+          <p class="lead" style="margin-top:8px">We have reserved the room. A confirmation is on its way to your WhatsApp.</p>
+          <div class="ref">PI-2026-04417</div>
+          <div class="recap" id="recap"></div>
+          <div class="note"><b>What a live system would do here:</b> hold the room in the calendar so it cannot be double-booked, send the WhatsApp and email confirmation, take the deposit through an online payment gateway, and add the drop-off to the staff roster for that morning.</div>
+          <button class="btn btn-o" style="margin-top:22px" onclick="location.reload()">Make another booking</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="sum">
+      <h3>Booking summary</h3>
+      <p class="sub" id="sub">Dates and room update as you choose.</p>
+      <div id="lines"></div>
+      <div class="total"><span>Total</span><b id="tot">RM 0</b></div>
+      <div class="dep">Deposit payable now (30%)<b id="depv">RM 0</b></div>
+      <button class="btn btn-a" id="sumbtn" data-go="4">Continue to confirm</button>
+      <p class="trustline">Free cancellation up to 48 hours before check-in.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="f-g">
+      <div>
+        <div class="logo" style="margin-bottom:13px"><i>&#128062;</i><span>Paws Inn<small>Boarding &amp; Daycare</small></span></div>
+        <p>21, Jalan SS15/4B, 47500 Subang Jaya, Selangor.<br>Open daily 8:00am &ndash; 8:00pm for drop-off and pick-up.</p>
+      </div>
+      <div><h4>Services</h4><ul><li>Overnight boarding</li><li>Daycare</li><li>Grooming</li><li>Pick-up &amp; drop-off</li></ul></div>
+      <div><h4>Contact</h4><ul><li>03-5612 7788</li><li>stay@pawsinn.my</li><li>WhatsApp 012-700 7788</li></ul></div>
+    </div>
+    <div class="f-bot"><span>&copy; 2026 Paws Inn (demo). All rights reserved.</span><span>Mockup built by Bejaa Digital</span></div>
+  </div>
+</footer>
+
+<div class="demo"><b>DEMO MOCKUP</b><br>Fictional business, sample data. Built by Bejaa Digital.</div>
+
+<script>
+var ROOMS=[
+  {id:"std", name:"Standard Kennel", base:45, desc:"3ft x 4ft indoor kennel with a raised bed and ceiling fan zone.", tags:["Air-conditioned","2 walks daily","Daily photo"], ic:"&#127968;", bg:"linear-gradient(150deg,#f0e4d2,#e3d2b8)", left:4},
+  {id:"del", name:"Deluxe Suite", base:72, desc:"6ft x 6ft private suite with a window, soft bedding and more floor time.", tags:["Window view","3 walks daily","Daily photo","Toy box"], ic:"&#127969;", bg:"linear-gradient(150deg,#e2eef5,#c9dfeb)", left:2},
+  {id:"fam", name:"Family Room", base:98, desc:"Large shared room for two pets from the same household, kept together.", tags:["Fits 2 pets","3 walks daily","Video call on request"], ic:"&#127970;", bg:"linear-gradient(150deg,#e6f1e7,#cde3d2)", left:1},
+  {id:"vip", name:"VIP Playroom", base:135, desc:"Our biggest room with an attached play pen and one-to-one play sessions.", tags:["Play pen","1-to-1 play","Grooming included","Video call"], ic:"&#11088;", bg:"linear-gradient(150deg,#f6e8f0,#e8d1e0)", left:0}
+];
+var ADDONS=[
+  {id:"gr", name:"Full groom before pick-up", price:65, unit:"once", desc:"Bath, blow dry, nail clip and ear clean on the morning of check-out."},
+  {id:"wk", name:"Extra evening walk", price:12, unit:"night", desc:"A third 20-minute walk at 7pm, on top of the room&rsquo;s daily walks."},
+  {id:"pt", name:"Daily photo &amp; video update", price:8, unit:"night", desc:"Two photos and a short clip sent to your WhatsApp every evening."},
+  {id:"tx", name:"Pick-up and drop-off", price:45, unit:"once", desc:"Within 15km of SS15. We collect in the morning and return after check-out."}
+];
+var FULL=[3,4,11,12,24,25,31];
+
+var S={step:1, type:"Dog", size:"Medium", sizeAdd:10, room:"std", addons:{}, nights:4};
+
+function nights(){
+  var a=new Date(document.getElementById("din").value), b=new Date(document.getElementById("dout").value);
+  var n=Math.round((b-a)/86400000);
+  return (isNaN(n)||n<1)?0:n;
+}
+function roomObj(){ return ROOMS.filter(function(r){return r.id===S.room})[0] }
+function rate(){ var r=roomObj(); return r?r.base+S.sizeAdd:0 }
+
+function drawCal(){
+  var inD=new Date(document.getElementById("din").value).getDate();
+  var outD=new Date(document.getElementById("dout").value).getDate();
+  var h="";
+  for(var d=12;d<=32;d++){
+    if(d>31) break;
+    var cls="";
+    if(FULL.indexOf(d)>-1) cls="full";
+    else if(d===inD||d===outD) cls="sel";
+    else if(d>inD&&d<outD) cls="in";
+    var dow=["Th","Fr","Sa","Su","Mo","Tu","We"][(d-1)%7];
+    h+='<div class="'+cls+'">'+dow+'<b>'+d+'</b></div>';
+  }
+  document.getElementById("cal").innerHTML=h;
+}
+function drawRooms(){
+  document.getElementById("rooms").innerHTML=ROOMS.map(function(r){
+    var out=r.left===0;
+    return '<div class="room '+(S.room===r.id&&!out?"on":"")+(out?" out":"")+'" data-r="'+r.id+'">'+
+      '<div class="im" style="background:'+r.bg+'">'+r.ic+'</div>'+
+      '<div><h3>'+r.name+'</h3><p>'+r.desc+'</p><div class="tags">'+
+        r.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join("")+
+        (out?'<span class="tag sold">Fully booked</span>':'<span class="tag">'+r.left+' left</span>')+
+      '</div></div>'+
+      '<div class="pr"><b>RM '+(r.base+S.sizeAdd)+'</b><span>per night</span></div></div>';
+  }).join("");
+  document.querySelectorAll(".room:not(.out)").forEach(function(el){
+    el.onclick=function(){ S.room=el.dataset.r; drawRooms(); sum() };
+  });
+}
+function drawAddons(){
+  document.getElementById("addons").innerHTML=ADDONS.map(function(a){
+    return '<div class="addon '+(S.addons[a.id]?"on":"")+'" data-a="'+a.id+'">'+
+      '<div class="bx">&#10003;</div><div class="tx"><b>'+a.name+'</b><p>'+a.desc+'</p></div>'+
+      '<div class="amt">RM '+a.price+'<span style="font-size:11px;color:var(--ink2);font-weight:600"> /'+a.unit+'</span></div></div>';
+  }).join("");
+  document.querySelectorAll(".addon").forEach(function(el){
+    el.onclick=function(){ var k=el.dataset.a; S.addons[k]=!S.addons[k]; drawAddons(); sum() };
+  });
+}
+function sum(){
+  var n=nights(); S.nights=n;
+  var r=roomObj(), html="", total=0;
+  document.getElementById("sub").innerHTML=n>0
+    ? S.pet()+" &middot; "+n+" night"+(n>1?"s":"")+" &middot; "+S.size.toLowerCase()+" "+S.type.toLowerCase()
+    : "Pick a check-out date after the check-in date.";
+  if(n>0&&r){
+    var stay=rate()*n; total+=stay;
+    html+='<div class="line"><span>'+r.name+' &times; '+n+' night'+(n>1?"s":"")+'</span><b>RM '+stay+'</b></div>';
+    html+='<div class="line"><span style="font-size:12.5px">RM '+r.base+' base + RM '+S.sizeAdd+' '+S.size.toLowerCase()+' pet</span><b style="font-size:12.5px;color:var(--ink2)">RM '+rate()+'/night</b></div>';
+    ADDONS.forEach(function(a){
+      if(S.addons[a.id]){
+        var amt=a.unit==="night"?a.price*n:a.price; total+=amt;
+        html+='<div class="line"><span>'+a.name+(a.unit==="night"?" &times; "+n:"")+'</span><b>RM '+amt+'</b></div>';
+      }
+    });
+  } else {
+    html='<div class="line empty">Nothing selected yet.</div>';
+  }
+  document.getElementById("lines").innerHTML=html;
+  document.getElementById("tot").textContent="RM "+total.toLocaleString();
+  document.getElementById("depv").textContent="RM "+Math.round(total*.3).toLocaleString();
+  return total;
+}
+S.pet=function(){ return (document.getElementById("pname").value||"Your pet") };
+
+function go(s){
+  S.step=s;
+  [1,2,3,4,5].forEach(function(i){
+    document.getElementById("p"+i).classList.toggle("hide", i!==s);
+  });
+  document.querySelectorAll("#stepper div").forEach(function(d){
+    var n=+d.dataset.s;
+    d.classList.toggle("on", n===s && s<5);
+    d.classList.toggle("done", n<s);
+  });
+  document.getElementById("sumbtn").style.display = s>=4 ? "none" : "";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-go]");
+  if(b){ go(+b.dataset.go) }
+});
+document.querySelectorAll("#ptype .pick").forEach(function(el){
+  el.onclick=function(){
+    document.querySelectorAll("#ptype .pick").forEach(function(x){x.classList.remove("on")});
+    el.classList.add("on"); S.type=el.dataset.v; sum();
+  };
+});
+document.querySelectorAll("#psize .pick").forEach(function(el){
+  el.onclick=function(){
+    document.querySelectorAll("#psize .pick").forEach(function(x){x.classList.remove("on")});
+    el.classList.add("on"); S.size=el.dataset.v; S.sizeAdd=+el.dataset.m;
+    drawRooms(); sum();
+  };
+});
+["din","dout","pname"].forEach(function(id){
+  document.getElementById(id).addEventListener("change",function(){ drawCal(); sum() });
+  document.getElementById(id).addEventListener("input",function(){ sum() });
+});
+document.getElementById("bform").onsubmit=function(e){
+  e.preventDefault();
+  var t=sum(), r=roomObj(), adds=ADDONS.filter(function(a){return S.addons[a.id]});
+  document.getElementById("recap").innerHTML=
+    '<div class="line"><span>Pet</span><b>'+S.pet()+' &middot; '+S.size+' '+S.type+'</b></div>'+
+    '<div class="line"><span>Stay</span><b>'+document.getElementById("din").value+' &rarr; '+document.getElementById("dout").value+' ('+S.nights+' nights)</b></div>'+
+    '<div class="line"><span>Room</span><b>'+r.name+'</b></div>'+
+    '<div class="line"><span>Add-ons</span><b>'+(adds.length?adds.length+" selected":"None")+'</b></div>'+
+    '<div class="line"><span>Total</span><b>RM '+t.toLocaleString()+'</b></div>'+
+    '<div class="line"><span>Deposit paid</span><b>RM '+Math.round(t*.3).toLocaleString()+'</b></div>';
+  go(5);
+};
+drawCal(); drawRooms(); drawAddons(); sum();
+</script>
+</body>
+</html>

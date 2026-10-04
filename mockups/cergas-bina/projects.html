@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Cergas Bina Engineering Sdn Bhd</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bg:'#080c14',surface:'#0f1623',border:'#1e2d40',gold:'#f59e0b','gold-dark':'#d97706',muted:'#94a3b8'},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    body{background:#080c14;color:#f1f5f9;font-family:'Inter',sans-serif}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.reveal.in{opacity:1;transform:none}
+    .demo-tag{position:fixed;bottom:16px;right:16px;z-index:999;background:rgba(245,158,11,.12);border:1px solid #f59e0b;color:#f59e0b;font-size:11px;font-weight:700;padding:6px 12px;border-radius:4px;letter-spacing:.05em}
+    .proj-card{transition:transform .3s,box-shadow .3s}.proj-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.6)}
+    .proj-card .ov{transition:opacity .3s;opacity:0}.proj-card:hover .ov{opacity:1}
+    .filter-btn{transition:all .2s;cursor:pointer}.filter-btn.active{background:#f59e0b;color:#080c14;border-color:#f59e0b}
+    .proj-item{transition:opacity .3s,transform .3s}
+    .proj-item.hidden-item{opacity:0;transform:scale(0.95);pointer-events:none;position:absolute}
+  </style>
+</head>
+<body>
+<div class="demo-tag">BEJAA DIGITAL — DEMO</div>
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 py-4 bg-bg/95 border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3"><div class="w-9 h-9 bg-gold flex items-center justify-center"><span class="text-bg font-black text-sm">CB</span></div><div><div class="font-bold text-white text-sm leading-tight">CERGAS BINA</div><div class="text-gold text-[10px] font-semibold tracking-widest uppercase">Engineering Sdn Bhd</div></div></a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="about.html" class="text-muted hover:text-white text-sm font-medium transition-colors">About</a>
+      <a href="services.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Services</a>
+      <a href="projects.html" class="text-gold text-sm font-semibold">Projects</a>
+      <a href="contact.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Contact</a>
+    </div>
+    <a href="contact.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-bg font-bold text-sm px-5 py-2.5 transition-colors">Request Quote <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+    <button id="mb" class="md:hidden text-muted hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  </div>
+  <div id="mm" class="hidden md:hidden mt-4 px-6 pb-4 border-t border-border pt-4 space-y-3">
+    <a href="about.html" class="block text-muted hover:text-white text-sm">About</a>
+    <a href="services.html" class="block text-muted hover:text-white text-sm">Services</a>
+    <a href="projects.html" class="block text-gold text-sm font-semibold">Projects</a>
+    <a href="contact.html" class="block text-muted hover:text-white text-sm">Contact</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="pt-32 pb-16 border-b border-border">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center gap-3 mb-4"><a href="index.html" class="text-muted text-xs hover:text-white transition-colors">Home</a><span class="text-border">/</span><span class="text-gold text-xs font-semibold">Projects</span></div>
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <h1 class="text-5xl md:text-6xl font-black text-white mb-4">Our Projects</h1>
+        <p class="text-muted text-lg max-w-xl">150+ completed works across civil, structural, infrastructure, and government sectors.</p>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <div class="border border-border px-3 py-1 text-center">
+          <div class="text-gold font-black text-xl">150+</div>
+          <div class="text-muted text-xs">Completed</div>
+        </div>
+        <div class="border border-border px-3 py-1 text-center">
+          <div class="text-gold font-black text-xl">4</div>
+          <div class="text-muted text-xs">States</div>
+        </div>
+        <div class="border border-border px-3 py-1 text-center">
+          <div class="text-gold font-black text-xl">0</div>
+          <div class="text-muted text-xs">DLP Failures</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER + GRID -->
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Filter -->
+    <div class="flex flex-wrap gap-2 mb-10 reveal">
+      <button class="filter-btn active border border-border text-sm font-semibold px-5 py-2" data-filter="all">All Projects</button>
+      <button class="filter-btn border border-border text-muted text-sm font-semibold px-5 py-2 hover:text-white" data-filter="civil">Civil</button>
+      <button class="filter-btn border border-border text-muted text-sm font-semibold px-5 py-2 hover:text-white" data-filter="commercial">Commercial</button>
+      <button class="filter-btn border border-border text-muted text-sm font-semibold px-5 py-2 hover:text-white" data-filter="infrastructure">Infrastructure</button>
+      <button class="filter-btn border border-border text-muted text-sm font-semibold px-5 py-2 hover:text-white" data-filter="government">Government</button>
+    </div>
+
+    <!-- Grid -->
+    <div id="projectGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 relative">
+
+      <div class="proj-card proj-item reveal" data-cat="commercial">
+        <img src="https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?w=600&q=80&fit=crop" alt="Warehouse" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Commercial</div><div class="text-white font-bold">Industrial Warehouse Complex</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Civil + Structural</span><span class="text-xs text-gold font-semibold">2022</span></div>
+          <div class="text-white font-bold mb-1">Industrial Warehouse Complex</div>
+          <div class="text-muted text-xs">Shah Alam, Selangor · Client: Private Developer</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 18.5M</span><span>Duration: 14 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" style="transition-delay:.05s" data-cat="infrastructure">
+        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80&fit=crop" alt="Road" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Infrastructure</div><div class="text-white font-bold">Federal Road Widening</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Road Works</span><span class="text-xs text-gold font-semibold">2023</span></div>
+          <div class="text-white font-bold mb-1">Federal Road Widening Project</div>
+          <div class="text-muted text-xs">Temerloh, Pahang · Client: JKR Pahang</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 32.1M</span><span>Duration: 18 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" style="transition-delay:.1s" data-cat="commercial">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&fit=crop" alt="Office" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Commercial</div><div class="text-white font-bold">8-Storey Office Tower</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Structural + M&E</span><span class="text-xs text-gold font-semibold">2021</span></div>
+          <div class="text-white font-bold mb-1">8-Storey Commercial Office Tower</div>
+          <div class="text-muted text-xs">Petaling Jaya, Selangor · Client: Property Corp</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 54.0M</span><span>Duration: 22 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" style="transition-delay:.05s" data-cat="infrastructure">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&fit=crop&crop=center" alt="Bridge" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Infrastructure</div><div class="text-white font-bold">Pre-Stressed Bridge</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Civil Infrastructure</span><span class="text-xs text-gold font-semibold">2020</span></div>
+          <div class="text-white font-bold mb-1">Pre-Stressed Concrete Bridge</div>
+          <div class="text-muted text-xs">Batu Pahat, Johor · Client: JKR Johor</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 110.8M</span><span>Duration: 30 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" style="transition-delay:.1s" data-cat="commercial">
+        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&fit=crop" alt="Factory" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Industrial</div><div class="text-white font-bold">Factory Expansion</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Renovation + M&E</span><span class="text-xs text-gold font-semibold">2023</span></div>
+          <div class="text-white font-bold mb-1">Factory Expansion & Renovation</div>
+          <div class="text-muted text-xs">Cheras, Kuala Lumpur · Client: Matang Industries</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 9.7M</span><span>Duration: 8 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" style="transition-delay:.15s" data-cat="government">
+        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80&fit=crop" alt="Clinic" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Government</div><div class="text-white font-bold">Government Health Clinic</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Full Build · JKR</span><span class="text-xs text-gold font-semibold">2022</span></div>
+          <div class="text-white font-bold mb-1">Government Health Clinic</div>
+          <div class="text-muted text-xs">Seremban, Negeri Sembilan · Client: KKM</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 22.3M</span><span>Duration: 16 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" data-cat="civil">
+        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80&fit=crop" alt="Earthworks" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Civil</div><div class="text-white font-bold">Township Earthworks — Rawang</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Civil Earthworks</span><span class="text-xs text-gold font-semibold">2021</span></div>
+          <div class="text-white font-bold mb-1">Township Development Earthworks</div>
+          <div class="text-muted text-xs">Rawang, Selangor · Client: Developer</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 7.4M</span><span>Duration: 10 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" style="transition-delay:.05s" data-cat="government">
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80&fit=crop" alt="School" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Government</div><div class="text-white font-bold">Secondary School Block</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Structural + M&E</span><span class="text-xs text-gold font-semibold">2019</span></div>
+          <div class="text-white font-bold mb-1">4-Storey Secondary School Block</div>
+          <div class="text-muted text-xs">Johor Bahru, Johor · Client: MOE</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 16.5M</span><span>Duration: 14 months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card proj-item reveal" style="transition-delay:.1s" data-cat="civil">
+        <img src="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=600&q=80&fit=crop" alt="Drain" class="w-full h-52 object-cover"/>
+        <div class="ov absolute inset-0 bg-bg/80 flex items-end p-5"><div><div class="text-gold text-xs font-bold uppercase tracking-wider mb-1">Civil</div><div class="text-white font-bold">Flood Mitigation Drain</div></div></div>
+        <div class="p-5 bg-surface border border-border border-t-0">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs text-muted uppercase tracking-wider font-semibold">Drainage Works</span><span class="text-xs text-gold font-semibold">2020</span></div>
+          <div class="text-white font-bold mb-1">Flood Mitigation Box Drain</div>
+          <div class="text-muted text-xs">Ampang, Kuala Lumpur · Client: DBKL</div>
+          <div class="mt-3 pt-3 border-t border-border flex items-center gap-4 text-xs text-muted">
+            <span>Contract: RM 11.2M</span><span>Duration: 12 months</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-gold">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-black text-bg mb-4">Want to See More or Discuss a Similar Project?</h2>
+    <p class="text-bg/70 text-lg mb-8">Our team is ready to discuss scope, budget, and timeline.</p>
+    <a href="contact.html" class="inline-flex items-center gap-2 bg-bg hover:bg-surface text-white font-bold px-10 py-4 transition-colors text-sm">Contact Our Team <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-border py-10">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3"><div class="w-8 h-8 bg-gold flex items-center justify-center"><span class="text-bg font-black text-xs">CB</span></div><div><div class="text-white font-bold text-sm">Cergas Bina Engineering Sdn Bhd</div><div class="text-muted text-xs">SSM: 200401234567 (123456-X) · CIDB: G7</div></div></div>
+    <div class="text-muted text-xs text-center md:text-right">© 2024 Cergas Bina Engineering Sdn Bhd. All rights reserved.<br/><span class="text-gold/60">Website by Bejaa Digital — bejaadigital.com</span></div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('mb').addEventListener('click',()=>document.getElementById('mm').classList.toggle('hidden'));
+  const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');ro.unobserve(x.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  // Filter
+  const btns=document.querySelectorAll('.filter-btn');
+  const items=document.querySelectorAll('.proj-item');
+  btns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      btns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f=btn.getAttribute('data-filter');
+      items.forEach(item=>{
+        if(f==='all'||item.getAttribute('data-cat')===f){
+          item.style.display='';item.style.opacity='1';item.style.transform='';item.classList.remove('hidden-item');
+        }else{
+          item.style.opacity='0';item.style.transform='scale(0.95)';
+          setTimeout(()=>{item.style.display='none'},300);
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

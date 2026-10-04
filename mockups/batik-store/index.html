@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kirana Batik — Modern Batik Wear Online Store</title>
+<meta name="description" content="Online store demo: batik shirts, kurung and scarves with a working cart, size picker and FPX checkout.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#241f1b; --ink2:#7b7169; --line:#eae4dc; --line2:#d9d0c4;
+  --bg:#fbf8f4; --terra:#9c4a2f; --terra-d:#7d3722; --terra-l:#f8ece7;
+  --indigo:#2b3d6b; --green:#4a8b5f; --r:12px;
+}
+body{font:16px/1.65 "Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+h1,h2,h3{line-height:1.2;letter-spacing:-.02em}
+h1{font-size:clamp(28px,4.2vw,44px);font-weight:700}
+h2{font-size:clamp(21px,2.8vw,30px);font-weight:700}
+h3{font-size:17px;font-weight:600}
+.lead{font-size:16.5px;color:var(--ink2)}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--terra)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:14.5px;border:0;cursor:pointer;transition:.18s}
+.btn-t{background:var(--terra);color:#fff}
+.btn-t:hover{background:var(--terra-d)}
+.btn-t:disabled{background:var(--line2);cursor:not-allowed}
+.btn-o{background:#fff;color:var(--ink);border:1px solid var(--line2)}
+.btn-o:hover{border-color:var(--terra);color:var(--terra)}
+.btn-d{background:var(--ink);color:#fff}
+.btn-d:hover{background:#3c342d}
+
+.ann{background:var(--ink);color:#e8ded2;text-align:center;font-size:12.5px;padding:9px 20px;letter-spacing:.03em}
+.ann b{color:#fff}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:22px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:20px;letter-spacing:.02em}
+.brand i{width:38px;height:38px;border-radius:11px;background:var(--terra);color:#fff;display:grid;place-items:center;font-style:normal;font-size:19px}
+.nav nav{display:flex;gap:26px;font-size:14.5px;font-weight:600}
+.nav nav a:hover{color:var(--terra)}
+.icons{display:flex;align-items:center;gap:8px}
+.ic-b{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;font-size:18px;cursor:pointer;position:relative}
+.ic-b:hover{border-color:var(--terra)}
+.badge{position:absolute;top:-3px;right:-3px;background:var(--terra);color:#fff;font-size:10.5px;font-weight:800;min-width:19px;height:19px;border-radius:999px;display:grid;place-items:center;padding:0 5px}
+@media(max-width:940px){.nav nav{display:none}}
+
+.hero{background:linear-gradient(145deg,var(--terra-l),#fff 70%);border-bottom:1px solid var(--line);padding:52px 0}
+.hero-g{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.hero h1{margin:14px 0 14px}
+.hero .btn{margin-top:24px}
+.swatch{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sw{aspect-ratio:3/4;border-radius:var(--r);position:relative;overflow:hidden}
+.sw:after{content:"";position:absolute;inset:0;background-image:
+  radial-gradient(circle at 25% 25%,rgba(255,255,255,.35) 7%,transparent 8%),
+  radial-gradient(circle at 75% 75%,rgba(255,255,255,.28) 9%,transparent 10%),
+  repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 6px,transparent 6px 14px);
+  background-size:38px 38px,46px 46px,auto}
+@media(max-width:880px){.hero-g{grid-template-columns:1fr;gap:30px}}
+
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 0 18px}
+.cats{display:flex;gap:8px;flex-wrap:wrap}
+.cat{padding:9px 17px;border-radius:999px;border:1px solid var(--line2);background:#fff;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.cat:hover{border-color:var(--terra);color:var(--terra)}
+.cat.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.sortsel{padding:10px 14px;border:1px solid var(--line2);border-radius:999px;font:inherit;font-size:13.5px;background:#fff;color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;padding-bottom:60px}
+.pc{cursor:pointer}
+.pc .im{aspect-ratio:3/4;border-radius:var(--r);position:relative;overflow:hidden;margin-bottom:13px}
+.pc .im:after{content:"";position:absolute;inset:0;background-image:
+  radial-gradient(circle at 30% 20%,rgba(255,255,255,.4) 6%,transparent 7%),
+  repeating-linear-gradient(45deg,rgba(0,0,0,.055) 0 7px,transparent 7px 16px);
+  background-size:42px 42px,auto}
+.pc:hover .im{filter:brightness(1.04)}
+.flag{position:absolute;top:11px;left:11px;z-index:2;background:#fff;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.flag.new{background:var(--indigo);color:#fff}
+.flag.sale{background:var(--terra);color:#fff}
+.flag.low{background:#fff;color:var(--terra);border:1px solid var(--terra)}
+.pc .nm{font-size:15px;font-weight:600;margin-bottom:4px}
+.pc .cp{font-size:12.5px;color:var(--ink2)}
+.pc .pr{margin-top:8px;display:flex;align-items:baseline;gap:9px}
+.pc .pr b{font-size:16.5px;font-weight:700}
+.pc .pr s{font-size:13px;color:var(--ink2)}
+.pc .add{margin-top:11px;width:100%;padding:11px;border-radius:999px;border:1px solid var(--line2);background:#fff;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.pc .add:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media(max-width:1060px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:780px){.grid{grid-template-columns:repeat(2,1fr);gap:16px}}
+
+.trust{background:var(--bg);border-top:1px solid var(--line);padding:40px 0}
+.trust-g{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.trust-g .ic{font-size:26px;margin-bottom:9px}
+.trust-g b{display:block;font-size:14.5px}
+.trust-g span{font-size:13px;color:var(--ink2)}
+@media(max-width:780px){.trust-g{grid-template-columns:1fr 1fr;gap:20px}}
+
+/* drawer + modal */
+.shade{position:fixed;inset:0;background:rgba(36,31,27,.45);z-index:60;opacity:0;pointer-events:none;transition:.2s}
+.shade.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:412px;max-width:92vw;background:#fff;z-index:70;transform:translateX(100%);transition:.26s cubic-bezier(.3,.8,.3,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhead{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--line)}
+.dhead h3{font-size:18px}
+.x{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:17px;cursor:pointer;color:var(--ink)}
+.dbody{flex:1;overflow-y:auto;padding:18px 22px}
+.dfoot{border-top:1px solid var(--line);padding:20px 22px;background:var(--bg)}
+.ci{display:grid;grid-template-columns:68px 1fr auto;gap:13px;padding:14px 0;border-bottom:1px solid var(--line)}
+.ci .im{aspect-ratio:3/4;border-radius:9px}
+.ci b{font-size:14px;display:block}
+.ci span{font-size:12.5px;color:var(--ink2)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:999px;margin-top:8px}
+.qty button{width:28px;height:28px;border:0;background:none;cursor:pointer;font-size:15px;color:var(--ink)}
+.qty b{min-width:26px;text-align:center;font-size:13.5px}
+.ci .rt{text-align:right}
+.ci .rt b{font-size:14.5px}
+.rm{background:none;border:0;font-size:12px;color:var(--ink2);cursor:pointer;text-decoration:underline;margin-top:8px}
+.empty{text-align:center;padding:50px 10px;color:var(--ink2)}
+.empty .ic{font-size:42px;margin-bottom:12px}
+.ship{background:var(--terra-l);border-radius:10px;padding:12px 14px;font-size:13px;margin:4px 0 14px;color:#7d3722}
+.ship .barr{height:5px;border-radius:999px;background:#eccfc3;margin-top:9px;overflow:hidden}
+.ship .barr i{display:block;height:100%;background:var(--terra);border-radius:999px}
+.ln{display:flex;justify-content:space-between;font-size:14px;padding:6px 0}
+.ln.tot{font-size:19px;font-weight:700;border-top:1px solid var(--line2);margin-top:9px;padding-top:12px}
+.dfoot .btn{width:100%;margin-top:12px}
+
+.modal{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.mbox{background:#fff;border-radius:20px;max-width:900px;width:100%;max-height:92vh;overflow-y:auto;position:relative}
+.mg{display:grid;grid-template-columns:1fr 1fr}
+.mg .im{aspect-ratio:4/5;position:relative}
+.mg .im:after{content:"";position:absolute;inset:0;background-image:
+  radial-gradient(circle at 30% 24%,rgba(255,255,255,.4) 6%,transparent 7%),
+  repeating-linear-gradient(45deg,rgba(0,0,0,.055) 0 8px,transparent 8px 18px);background-size:52px 52px,auto}
+.mb{padding:32px}
+.mb .x{position:absolute;top:16px;right:16px;z-index:3}
+.mprice{display:flex;align-items:baseline;gap:10px;margin:12px 0 16px}
+.mprice b{font-size:27px;font-weight:700}
+.mprice s{color:var(--ink2);font-size:16px}
+.mprice .off{background:var(--terra-l);color:var(--terra-d);font-size:12px;font-weight:800;padding:4px 9px;border-radius:999px}
+.opt{margin-bottom:18px}
+.opt .lbl{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:9px}
+.szrow{display:flex;gap:8px;flex-wrap:wrap}
+.sz{min-width:48px;padding:10px 13px;border:1.5px solid var(--line2);border-radius:9px;background:#fff;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--ink)}
+.sz:hover{border-color:var(--terra)}
+.sz.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.sz:disabled{opacity:.38;cursor:not-allowed;text-decoration:line-through}
+.colrow{display:flex;gap:10px}
+.col{width:38px;height:38px;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--line2)}
+.col.on{box-shadow:0 0 0 2.5px var(--ink)}
+.mb .desc{font-size:14.5px;color:var(--ink2);margin:16px 0}
+.mb .meta{font-size:13px;color:var(--ink2);border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.mb .meta div{padding:4px 0}
+@media(max-width:780px){.mg{grid-template-columns:1fr}.mg .im{aspect-ratio:16/10}.mb{padding:24px}}
+
+/* checkout */
+.co{padding:18px 22px}
+.cstep{display:flex;gap:9px;margin-bottom:18px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.cstep span{display:flex;align-items:center;gap:6px}
+.cstep span.on{color:var(--terra)}
+.fld{margin-bottom:13px}
+.fld label{display:block;font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px}
+.fld input,.fld select,.fld textarea{width:100%;padding:11px 12px;border:1.5px solid var(--line2);border-radius:10px;font:inherit;font-size:14px;background:#fdfcfa;color:var(--ink)}
+.fld input:focus{outline:0;border-color:var(--terra);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.pay{border:1.5px solid var(--line2);border-radius:11px;padding:13px;margin-bottom:9px;cursor:pointer;display:flex;align-items:center;gap:12px}
+.pay:hover{border-color:var(--terra)}
+.pay.on{border-color:var(--terra);background:var(--terra-l)}
+.pay .rd{width:19px;height:19px;border-radius:50%;border:2px solid var(--line2);flex:none}
+.pay.on .rd{border:6px solid var(--terra)}
+.pay b{font-size:14px;display:block}
+.pay span{font-size:12px;color:var(--ink2)}
+.banks{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0 4px;padding-left:31px}
+.bk{border:1px solid var(--line2);border-radius:8px;padding:9px;font-size:12.5px;font-weight:600;cursor:pointer;background:#fff;text-align:left;color:var(--ink)}
+.bk.on{border-color:var(--indigo);background:#eef1f8;color:var(--indigo)}
+.okpay{text-align:center;padding:26px 6px}
+.okpay .tick{width:64px;height:64px;border-radius:50%;background:#eaf5ee;color:var(--green);display:grid;place-items:center;font-size:32px;margin:0 auto 14px}
+.note{background:#eef1f8;border:1px solid #d3dbec;border-radius:11px;padding:13px;font-size:13px;color:#2b3d6b;text-align:left;margin-top:16px}
+
+footer{background:var(--ink);color:#b4a99d;padding:50px 0 24px;font-size:14px}
+.f-g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:34px}
+footer h4{color:#fff;font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:13px}
+footer li{list-style:none;margin-bottom:8px}
+footer a:hover{color:#fff}
+.f-bot{border-top:1px solid rgba(255,255,255,.14);padding-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px}
+@media(max-width:880px){.f-g{grid-template-columns:1fr 1fr}}
+
+.demo{position:fixed;left:16px;bottom:16px;z-index:80;background:#241f1b;color:#fff;border-radius:12px;padding:11px 15px;font-size:12px;line-height:1.45;max-width:250px;box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.demo b{color:#e8a98c}
+@media(max-width:700px){.demo{max-width:160px;font-size:11px;padding:9px 11px}}
+</style>
+</head>
+<body>
+
+<div class="ann">Free shipping within Peninsular Malaysia on orders above <b>RM 150</b> &middot; Raya pre-order now open</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand"><i>&#10042;</i>Kirana Batik</a>
+    <nav><a href="#shop">Shop all</a><a href="#shop">Men</a><a href="#shop">Women</a><a href="#shop">Accessories</a><a href="#">Our story</a></nav>
+    <div class="icons">
+      <button class="ic-b" aria-label="Search">&#128269;</button>
+      <button class="ic-b" aria-label="Account">&#128100;</button>
+      <button class="ic-b" id="cartbtn" aria-label="Cart">&#128722;<span class="badge" id="cbadge">0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-g">
+    <div>
+      <span class="eyebrow">Raya 2026 collection</span>
+      <h1>Batik that works on a Monday, not just Hari Raya</h1>
+      <p class="lead">Hand-blocked prints on breathable cotton and tencel, cut for the office. Made with workshops in Kelantan and Terengganu.</p>
+      <a href="#shop" class="btn btn-t">Shop the collection</a>
+    </div>
+    <div class="swatch">
+      <div class="sw" style="background:linear-gradient(140deg,#9c4a2f,#c87a52)"></div>
+      <div class="sw" style="background:linear-gradient(140deg,#2b3d6b,#5a6fa0)"></div>
+      <div class="sw" style="background:linear-gradient(140deg,#3f5e45,#789c7a)"></div>
+      <div class="sw" style="background:linear-gradient(140deg,#7a5330,#b89355)"></div>
+      <div class="sw" style="background:linear-gradient(140deg,#6b3f5e,#a06f92)"></div>
+      <div class="sw" style="background:linear-gradient(140deg,#2f5d6b,#6fa0ab)"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="shop">
+  <div class="bar">
+    <div class="cats" id="cats"></div>
+    <select class="sortsel" id="sort">
+      <option value="feat">Sort: Featured</option>
+      <option value="lo">Price: low to high</option>
+      <option value="hi">Price: high to low</option>
+      <option value="new">Newest first</option>
+    </select>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="trust">
+  <div class="wrap trust-g">
+    <div><div class="ic">&#128230;</div><b>Ships in 1 working day</b><span>From our Shah Alam studio</span></div>
+    <div><div class="ic">&#128179;</div><b>FPX, cards &amp; e-wallet</b><span>All Malaysian banks supported</span></div>
+    <div><div class="ic">&#128260;</div><b>14-day exchange</b><span>Wrong size? Swap it free</span></div>
+    <div><div class="ic">&#129309;</div><b>Made by local artisans</b><span>Fair-paid workshops</span></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="f-g">
+      <div>
+        <a href="#" class="brand" style="color:#fff;margin-bottom:14px"><i>&#10042;</i>Kirana Batik</a>
+        <p>Unit 7, Jalan Pelukis U1/46,<br>Temasya Industrial Park, 40150 Shah Alam.</p>
+        <p style="margin-top:10px">hello@kiranabatik.my &middot; 03-5566 2200</p>
+      </div>
+      <div><h4>Shop</h4><ul><li><a href="#shop">Men&rsquo;s shirts</a></li><li><a href="#shop">Women&rsquo;s wear</a></li><li><a href="#shop">Accessories</a></li><li><a href="#shop">Gift sets</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#">Size guide</a></li><li><a href="#">Shipping &amp; returns</a></li><li><a href="#">Care instructions</a></li><li><a href="#">Track my order</a></li></ul></div>
+      <div><h4>Payment</h4><ul><li>FPX online banking</li><li>Visa &amp; Mastercard</li><li>Touch &lsquo;n Go eWallet</li><li>GrabPay &amp; ShopeePay</li></ul></div>
+    </div>
+    <div class="f-bot"><span>&copy; 2026 Kirana Batik (demo store). All rights reserved.</span><span>Mockup built by Bejaa Digital</span></div>
+  </div>
+</footer>
+
+<div class="shade" id="shade"></div>
+
+<!-- CART / CHECKOUT DRAWER -->
+<aside class="drawer" id="drawer">
+  <div class="dhead"><h3 id="dtitle">Your cart</h3><button class="x" id="dclose">&times;</button></div>
+  <div class="dbody" id="dbody"></div>
+  <div class="dfoot" id="dfoot"></div>
+</aside>
+
+<!-- PRODUCT MODAL -->
+<div class="modal" id="modal">
+  <div class="mbox" id="mbox"></div>
+</div>
+
+<div class="demo"><b>DEMO MOCKUP</b><br>Fictional store, sample data. Built by Bejaa Digital.</div>
+
+<script>
+var P=[
+  {id:1,n:"Teluk Bayu Shirt",c:"Men",p:189,was:0,g:"linear-gradient(140deg,#9c4a2f,#c87a52)",sz:["S","M","L","XL","2XL"],out:["2XL"],tag:"new",d:"Long-sleeve shirt in hand-blocked cotton. Soft collar that sits well without a tie.",fab:"100% cotton voile",care:"Hand wash cold, iron inside out",sold:42},
+  {id:2,n:"Pahlawan Short Sleeve",c:"Men",p:149,was:179,g:"linear-gradient(140deg,#2b3d6b,#5a6fa0)",sz:["S","M","L","XL"],out:[],tag:"sale",d:"Our best seller. Short sleeve, boxy cut, holds its shape after many washes.",fab:"Cotton tencel blend",care:"Machine wash gentle, hang dry",sold:118},
+  {id:3,n:"Seri Kurung Set",c:"Women",p:329,was:0,g:"linear-gradient(140deg,#6b3f5e,#a06f92)",sz:["XS","S","M","L","XL"],out:["XS"],tag:"",d:"Two-piece kurung with a matching batik shawl. Lined bodice, side pockets.",fab:"Tencel satin",care:"Dry clean recommended",sold:27},
+  {id:4,n:"Melur Wrap Blouse",c:"Women",p:168,was:0,g:"linear-gradient(140deg,#3f5e45,#789c7a)",sz:["XS","S","M","L"],out:[],tag:"low",d:"Wrap blouse with an adjustable tie. Office-appropriate, sleeves to the elbow.",fab:"Rayon crepe",care:"Hand wash cold",sold:63},
+  {id:5,n:"Pucuk Rebung Scarf",c:"Accessories",p:79,was:99,g:"linear-gradient(140deg,#7a5330,#b89355)",sz:["One size"],out:[],tag:"sale",d:"Lightweight square scarf, hand-rolled edges. The classic bamboo shoot motif.",fab:"Silk cotton",care:"Hand wash separately",sold:205},
+  {id:6,n:"Kota Bharu Sarong",c:"Accessories",p:129,was:0,g:"linear-gradient(140deg,#2f5d6b,#6fa0ab)",sz:["One size"],out:[],tag:"",d:"Full-length sarong, stitched tube. Doubles as a travel blanket.",fab:"Cotton",care:"Machine wash cold",sold:88},
+  {id:7,n:"Langkawi Linen Shirt",c:"Men",p:219,was:0,g:"linear-gradient(140deg,#5b6b3f,#96a16f)",sz:["M","L","XL","2XL"],out:["M"],tag:"new",d:"Washed linen with a tonal print. Breathable enough for an outdoor wedding.",fab:"Washed linen",care:"Machine wash cold, tumble low",sold:19},
+  {id:8,n:"Bunga Raya Kaftan",c:"Women",p:248,was:289,g:"linear-gradient(140deg,#a03f4a,#cf7b82)",sz:["S","M","L","XL"],out:[],tag:"sale",d:"Loose kaftan with side slits. Popular for Raya open house and the beach alike.",fab:"Viscose",care:"Hand wash cold",sold:71}
+];
+var CATS=["All","Men","Women","Accessories"];
+var st={cat:"All",sort:"feat",cart:[],view:null,sz:null,col:0,pay:"fpx",bank:null,co:0};
+var COLS=["#9c4a2f","#2b3d6b","#3f5e45","#7a5330"];
+var money=function(n){return "RM "+n.toLocaleString("en-MY",{minimumFractionDigits:0})};
+
+function drawCats(){
+  document.getElementById("cats").innerHTML=CATS.map(function(c){
+    var n=c==="All"?P.length:P.filter(function(p){return p.c===c}).length;
+    return '<button class="cat '+(st.cat===c?"on":"")+'" data-c="'+c+'">'+c+' ('+n+')</button>';
+  }).join("");
+  document.querySelectorAll(".cat").forEach(function(b){
+    b.onclick=function(){st.cat=b.dataset.c;drawCats();drawGrid()};
+  });
+}
+function list(){
+  var a=P.filter(function(p){return st.cat==="All"||p.c===st.cat});
+  if(st.sort==="lo") a=a.slice().sort(function(x,y){return x.p-y.p});
+  if(st.sort==="hi") a=a.slice().sort(function(x,y){return y.p-x.p});
+  if(st.sort==="new") a=a.slice().sort(function(x,y){return (y.tag==="new")-(x.tag==="new")});
+  return a;
+}
+function drawGrid(){
+  document.getElementById("grid").innerHTML=list().map(function(p){
+    var fl=p.tag==="new"?'<span class="flag new">New</span>':
+           p.tag==="sale"?'<span class="flag sale">Save '+money(p.was-p.p)+'</span>':
+           p.tag==="low"?'<span class="flag low">Low stock</span>':'';
+    return '<div class="pc" data-p="'+p.id+'"><div class="im" style="background:'+p.g+'">'+fl+'</div>'+
+      '<div class="nm">'+p.n+'</div><div class="cp">'+p.c+' &middot; '+p.sold+' sold</div>'+
+      '<div class="pr"><b>'+money(p.p)+'</b>'+(p.was?'<s>'+money(p.was)+'</s>':'')+'</div>'+
+      '<button class="add">View &amp; add</button></div>';
+  }).join("");
+  document.querySelectorAll(".pc").forEach(function(el){
+    el.onclick=function(){openP(+el.dataset.p)};
+  });
+}
+function openP(id){
+  var p=P.filter(function(x){return x.id===id})[0];
+  st.view=p; st.sz=p.sz.filter(function(s){return p.out.indexOf(s)<0})[0]; st.col=0;
+  document.getElementById("mbox").innerHTML=
+    '<button class="x" id="mx">&times;</button><div class="mg">'+
+    '<div class="im" style="background:'+p.g+'"></div><div class="mb">'+
+    '<span class="eyebrow">'+p.c+'</span><h2 style="margin:8px 0 0">'+p.n+'</h2>'+
+    '<div class="mprice"><b>'+money(p.p)+'</b>'+(p.was?'<s>'+money(p.was)+'</s><span class="off">'+Math.round((1-p.p/p.was)*100)+'% off</span>':'')+'</div>'+
+    '<p class="desc">'+p.d+'</p>'+
+    '<div class="opt"><div class="lbl">Size'+(p.out.length?' &middot; '+p.out.join(", ")+' sold out':'')+'</div><div class="szrow">'+
+      p.sz.map(function(s){
+        var o=p.out.indexOf(s)>-1;
+        return '<button class="sz '+(st.sz===s?"on":"")+'" '+(o?"disabled":"")+' data-s="'+s+'">'+s+'</button>';
+      }).join("")+'</div></div>'+
+    '<div class="opt"><div class="lbl">Print colourway</div><div class="colrow">'+
+      COLS.map(function(c,i){return '<div class="col '+(st.col===i?"on":"")+'" data-i="'+i+'" style="background:'+c+'"></div>'}).join("")+
+      '</div></div>'+
+    '<button class="btn btn-t" id="addbtn" style="width:100%">Add to cart &middot; '+money(p.p)+'</button>'+
+    '<div class="meta"><div><b>Fabric:</b> '+p.fab+'</div><div><b>Care:</b> '+p.care+'</div><div><b>Delivery:</b> Ships in 1 working day, 2&ndash;4 days to your door</div></div>'+
+    '</div></div>';
+  document.getElementById("modal").classList.add("on");
+  document.getElementById("shade").classList.add("on");
+  document.getElementById("mx").onclick=closeAll;
+  document.querySelectorAll(".sz:not(:disabled)").forEach(function(b){
+    b.onclick=function(){st.sz=b.dataset.s;openP(id)};
+  });
+  document.querySelectorAll(".col").forEach(function(b){
+    b.onclick=function(){st.col=+b.dataset.i;openP(id)};
+  });
+  document.getElementById("addbtn").onclick=function(){
+    addCart(p,st.sz,st.col); closeAll(); openCart();
+  };
+}
+function addCart(p,sz,col){
+  var key=p.id+"-"+sz+"-"+col;
+  var ex=st.cart.filter(function(c){return c.key===key})[0];
+  if(ex) ex.q++;
+  else st.cart.push({key:key,id:p.id,n:p.n,p:p.p,sz:sz,col:col,g:p.g,q:1});
+  badge();
+}
+function badge(){
+  var n=st.cart.reduce(function(a,b){return a+b.q},0);
+  document.getElementById("cbadge").textContent=n;
+}
+function subtotal(){ return st.cart.reduce(function(a,b){return a+b.p*b.q},0) }
+function shipFee(){ return st.cart.length===0 ? 0 : (subtotal()>=150 ? 0 : 10) }
+
+function openCart(){
+  st.co=0; renderDrawer();
+  document.getElementById("drawer").classList.add("on");
+  document.getElementById("shade").classList.add("on");
+}
+function renderDrawer(){
+  var body=document.getElementById("dbody"), foot=document.getElementById("dfoot");
+  document.getElementById("dtitle").textContent = st.co===0?"Your cart":(st.co===1?"Delivery details":(st.co===2?"Payment":"Order placed"));
+  if(st.co===0){
+    if(!st.cart.length){
+      body.innerHTML='<div class="empty"><div class="ic">&#128722;</div><p>Your cart is empty.</p><p style="font-size:13.5px;margin-top:6px">Browse the collection and add something you like.</p></div>';
+      foot.innerHTML='<button class="btn btn-o" id="keep" style="width:100%">Continue shopping</button>';
+      document.getElementById("keep").onclick=closeAll;
+      return;
+    }
+    var left=150-subtotal();
+    body.innerHTML=
+      (left>0
+        ? '<div class="ship">Add <b>'+money(left)+'</b> more for free shipping<div class="barr"><i style="width:'+Math.min(100,subtotal()/150*100)+'%"></i></div></div>'
+        : '<div class="ship">&#10003; You have free shipping on this order.</div>')+
+      st.cart.map(function(c){
+        return '<div class="ci"><div class="im" style="background:'+c.g+'"></div>'+
+          '<div><b>'+c.n+'</b><span>Size '+c.sz+' &middot; colourway '+(c.col+1)+'</span>'+
+          '<div class="qty"><button data-m="-1" data-k="'+c.key+'">&minus;</button><b>'+c.q+'</b><button data-m="1" data-k="'+c.key+'">+</button></div></div>'+
+          '<div class="rt"><b>'+money(c.p*c.q)+'</b><br><button class="rm" data-rm="'+c.key+'">Remove</button></div></div>';
+      }).join("");
+    foot.innerHTML=
+      '<div class="ln"><span>Subtotal</span><span>'+money(subtotal())+'</span></div>'+
+      '<div class="ln"><span>Shipping</span><span>'+(shipFee()?money(shipFee()):"Free")+'</span></div>'+
+      '<div class="ln tot"><span>Total</span><span>'+money(subtotal()+shipFee())+'</span></div>'+
+      '<button class="btn btn-t" id="next">Checkout &middot; '+money(subtotal()+shipFee())+'</button>'+
+      '<button class="btn btn-o" id="keep" style="width:100%;margin-top:9px">Continue shopping</button>';
+    body.querySelectorAll("[data-m]").forEach(function(b){
+      b.onclick=function(){
+        var c=st.cart.filter(function(x){return x.key===b.dataset.k})[0];
+        c.q+= +b.dataset.m;
+        if(c.q<1) st.cart=st.cart.filter(function(x){return x.key!==c.key});
+        badge(); renderDrawer();
+      };
+    });
+    body.querySelectorAll("[data-rm]").forEach(function(b){
+      b.onclick=function(){ st.cart=st.cart.filter(function(x){return x.key!==b.dataset.rm}); badge(); renderDrawer() };
+    });
+    document.getElementById("next").onclick=function(){st.co=1;renderDrawer()};
+    document.getElementById("keep").onclick=closeAll;
+  }
+  else if(st.co===1){
+    body.innerHTML=
+      '<div class="cstep"><span class="on">1 Delivery</span><span>&rsaquo;</span><span>2 Payment</span></div>'+
+      '<div class="fld"><label>Full name</label><input value="Aisyah Kamaruddin"></div>'+
+      '<div class="two"><div class="fld"><label>Phone</label><input value="012-667 4420"></div>'+
+      '<div class="fld"><label>Email</label><input value="aisyah.k@email.com"></div></div>'+
+      '<div class="fld"><label>Address</label><input value="12, Jalan Setia Impian 4"></div>'+
+      '<div class="two"><div class="fld"><label>Postcode</label><input value="40170"></div>'+
+      '<div class="fld"><label>City</label><input value="Setia Alam"></div></div>'+
+      '<div class="fld"><label>State</label><select><option selected>Selangor</option><option>Kuala Lumpur</option><option>Johor</option><option>Penang</option><option>Sabah</option><option>Sarawak</option></select></div>'+
+      '<div class="fld"><label>Delivery note (optional)</label><input placeholder="e.g. Leave with the guard house"></div>';
+    foot.innerHTML=
+      '<div class="ln tot"><span>Total</span><span>'+money(subtotal()+shipFee())+'</span></div>'+
+      '<button class="btn btn-t" id="next">Continue to payment</button>'+
+      '<button class="btn btn-o" id="back" style="width:100%;margin-top:9px">&larr; Back to cart</button>';
+    document.getElementById("next").onclick=function(){st.co=2;renderDrawer()};
+    document.getElementById("back").onclick=function(){st.co=0;renderDrawer()};
+  }
+  else if(st.co===2){
+    var banks=["Maybank2u","CIMB Clicks","Public Bank","RHB Now","Bank Islam","Hong Leong Connect"];
+    body.innerHTML=
+      '<div class="cstep"><span>1 Delivery</span><span>&rsaquo;</span><span class="on">2 Payment</span></div>'+
+      '<div class="pay '+(st.pay==="fpx"?"on":"")+'" data-p="fpx"><div class="rd"></div><div><b>FPX online banking</b><span>Pay straight from your bank account</span></div></div>'+
+      (st.pay==="fpx"?'<div class="banks">'+banks.map(function(b){return '<button class="bk '+(st.bank===b?"on":"")+'" data-b="'+b+'">'+b+'</button>'}).join("")+'</div>':'')+
+      '<div class="pay '+(st.pay==="card"?"on":"")+'" data-p="card"><div class="rd"></div><div><b>Credit or debit card</b><span>Visa, Mastercard</span></div></div>'+
+      '<div class="pay '+(st.pay==="wal"?"on":"")+'" data-p="wal"><div class="rd"></div><div><b>e-Wallet</b><span>Touch &lsquo;n Go, GrabPay, ShopeePay</span></div></div>'+
+      '<div class="pay '+(st.pay==="cod"?"on":"")+'" data-p="cod"><div class="rd"></div><div><b>Cash on delivery</b><span>Klang Valley only, +RM 5 handling</span></div></div>';
+    foot.innerHTML=
+      '<div class="ln"><span>Subtotal</span><span>'+money(subtotal())+'</span></div>'+
+      '<div class="ln"><span>Shipping</span><span>'+(shipFee()?money(shipFee()):"Free")+'</span></div>'+
+      (st.pay==="cod"?'<div class="ln"><span>COD handling</span><span>'+money(5)+'</span></div>':'')+
+      '<div class="ln tot"><span>Total</span><span>'+money(subtotal()+shipFee()+(st.pay==="cod"?5:0))+'</span></div>'+
+      '<button class="btn btn-t" id="next" '+(st.pay==="fpx"&&!st.bank?"disabled":"")+'>'+(st.pay==="fpx"&&!st.bank?"Choose your bank":"Pay "+money(subtotal()+shipFee()+(st.pay==="cod"?5:0)))+'</button>'+
+      '<button class="btn btn-o" id="back" style="width:100%;margin-top:9px">&larr; Back</button>';
+    body.querySelectorAll(".pay").forEach(function(el){
+      el.onclick=function(){st.pay=el.dataset.p;renderDrawer()};
+    });
+    body.querySelectorAll(".bk").forEach(function(el){
+      el.onclick=function(){st.bank=el.dataset.b;renderDrawer()};
+    });
+    document.getElementById("next").onclick=function(){st.co=3;renderDrawer()};
+    document.getElementById("back").onclick=function(){st.co=1;renderDrawer()};
+  }
+  else{
+    var t=subtotal()+shipFee()+(st.pay==="cod"?5:0);
+    body.innerHTML='<div class="okpay"><div class="tick">&#10003;</div><h3 style="font-size:20px">Payment received</h3>'+
+      '<p style="font-size:14px;color:var(--ink2);margin-top:8px">Order <b>KB-2026-7741</b> is confirmed. We will email the tracking number once it ships.</p>'+
+      '<div class="ln tot" style="justify-content:center;gap:10px;border:0;margin-top:14px"><span>Paid</span><span>'+money(t)+'</span></div>'+
+      '<div class="note"><b>What a live store would do here:</b> send the order to the payment gateway (FPX via ToyyibPay or similar), hold stock the moment payment clears, email the invoice, and push the parcel details to the courier for a pickup label.</div></div>';
+    foot.innerHTML='<button class="btn btn-d" id="keep" style="width:100%">Back to the store</button>';
+    document.getElementById("keep").onclick=function(){ st.cart=[]; st.co=0; badge(); closeAll() };
+  }
+}
+function closeAll(){
+  document.getElementById("drawer").classList.remove("on");
+  document.getElementById("modal").classList.remove("on");
+  document.getElementById("shade").classList.remove("on");
+}
+document.getElementById("cartbtn").onclick=openCart;
+document.getElementById("dclose").onclick=closeAll;
+document.getElementById("shade").onclick=closeAll;
+document.getElementById("sort").onchange=function(){st.sort=this.value;drawGrid()};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll()});
+drawCats(); drawGrid(); badge();
+</script>
+</body>
+</html>

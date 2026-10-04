@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Cergas Bina Engineering Sdn Bhd</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bg:'#080c14',surface:'#0f1623',border:'#1e2d40',gold:'#f59e0b','gold-dark':'#d97706',muted:'#94a3b8'},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    body{background:#080c14;color:#f1f5f9;font-family:'Inter',sans-serif}
+    #navbar{transition:all .3s}#navbar.scrolled{background:rgba(8,12,20,.97);backdrop-filter:blur(12px);border-bottom:1px solid #1e2d40}
+    .gold-line::before{content:'';display:block;width:48px;height:3px;background:#f59e0b;margin-bottom:16px}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.reveal.in{opacity:1;transform:none}
+    .demo-tag{position:fixed;bottom:16px;right:16px;z-index:999;background:rgba(245,158,11,.12);border:1px solid #f59e0b;color:#f59e0b;font-size:11px;font-weight:700;padding:6px 12px;border-radius:4px;letter-spacing:.05em}
+    .val-card{transition:border-color .3s}.val-card:hover{border-color:#f59e0b}
+  </style>
+</head>
+<body>
+<div class="demo-tag">BEJAA DIGITAL — DEMO</div>
+
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-4 bg-bg/95 border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-gold flex items-center justify-center"><span class="text-bg font-black text-sm">CB</span></div>
+      <div><div class="font-bold text-white text-sm leading-tight">CERGAS BINA</div><div class="text-gold text-[10px] font-semibold tracking-widest uppercase">Engineering Sdn Bhd</div></div>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="about.html" class="text-gold text-sm font-semibold">About</a>
+      <a href="services.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Services</a>
+      <a href="projects.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Projects</a>
+      <a href="contact.html" class="text-muted hover:text-white text-sm font-medium transition-colors">Contact</a>
+    </div>
+    <a href="contact.html" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-bg font-bold text-sm px-5 py-2.5 transition-colors">Request Quote <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+    <button id="mb" class="md:hidden text-muted hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  </div>
+  <div id="mm" class="hidden md:hidden mt-4 px-6 pb-4 border-t border-border pt-4 space-y-3">
+    <a href="about.html" class="block text-gold text-sm font-semibold">About</a>
+    <a href="services.html" class="block text-muted hover:text-white text-sm">Services</a>
+    <a href="projects.html" class="block text-muted hover:text-white text-sm">Projects</a>
+    <a href="contact.html" class="block text-muted hover:text-white text-sm">Contact</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="pt-32 pb-16 border-b border-border">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center gap-3 mb-4"><a href="index.html" class="text-muted text-xs hover:text-white transition-colors">Home</a><span class="text-border">/</span><span class="text-gold text-xs font-semibold">About</span></div>
+    <h1 class="text-5xl md:text-6xl font-black text-white mb-4">About Us</h1>
+    <p class="text-muted text-lg max-w-2xl">Two decades of delivering engineering excellence across Peninsular Malaysia.</p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+      <div class="reveal">
+        <div class="gold-line"><span class="text-gold text-xs font-bold tracking-widest uppercase">Our Story</span></div>
+        <h2 class="text-4xl font-black text-white mb-6 leading-tight">Founded on Site. Built on Trust.</h2>
+        <div class="space-y-4 text-muted text-base leading-relaxed">
+          <p>Cergas Bina Engineering Sdn Bhd was established in 2004 by a group of civil engineers who believed that Malaysia's construction industry needed contractors who were not just builders — but partners in delivery.</p>
+          <p>Starting with small civil earthworks contracts in Selangor, the company grew steadily through repeat business and referrals. By 2010, we had achieved CIDB Grade G7 — qualifying us for contracts of unlimited value across all categories of construction work.</p>
+          <p>Today, with over 150 completed projects across Selangor, Kuala Lumpur, Johor, and Pahang, Cergas Bina remains a privately held, engineer-led firm. Every project is personally overseen by our directors.</p>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.2s">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80&fit=crop&crop=center" alt="Site" class="w-full h-72 object-cover mb-5"/>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="border border-border p-5 text-center">
+            <div class="text-3xl font-black text-gold mb-1">2004</div>
+            <div class="text-muted text-xs font-semibold uppercase tracking-wider">Year Founded</div>
+          </div>
+          <div class="border border-border p-5 text-center">
+            <div class="text-3xl font-black text-gold mb-1">G7</div>
+            <div class="text-muted text-xs font-semibold uppercase tracking-wider">CIDB Grade</div>
+          </div>
+          <div class="border border-border p-5 text-center">
+            <div class="text-3xl font-black text-gold mb-1">150+</div>
+            <div class="text-muted text-xs font-semibold uppercase tracking-wider">Projects Done</div>
+          </div>
+          <div class="border border-border p-5 text-center">
+            <div class="text-3xl font-black text-gold mb-1">4</div>
+            <div class="text-muted text-xs font-semibold uppercase tracking-wider">States Active</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section class="py-20 bg-surface">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <div class="flex items-center justify-center gap-3 mb-4"><div class="h-px w-10 bg-gold"></div><span class="text-gold text-xs font-bold tracking-widest uppercase">Our Journey</span><div class="h-px w-10 bg-gold"></div></div>
+      <h2 class="text-4xl font-black text-white">Key Milestones</h2>
+    </div>
+    <div class="relative">
+      <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2"></div>
+      <div class="space-y-8">
+        <div class="grid md:grid-cols-2 gap-6 items-center reveal">
+          <div class="md:text-right md:pr-10">
+            <div class="text-gold font-black text-2xl mb-1">2004</div>
+            <div class="text-white font-bold mb-1">Company Founded</div>
+            <div class="text-muted text-sm">Incorporated in Klang, Selangor. First contract: earthworks at Taman Industri Bestari, Shah Alam.</div>
+          </div>
+          <div class="hidden md:block md:pl-10"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 items-center reveal">
+          <div class="hidden md:block md:pr-10"></div>
+          <div class="md:pl-10">
+            <div class="text-gold font-black text-2xl mb-1">2008</div>
+            <div class="text-white font-bold mb-1">First Government Contract</div>
+            <div class="text-muted text-sm">Awarded JKR road rehabilitation project, Pahang. Completed under budget, zero DLP claims.</div>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 items-center reveal">
+          <div class="md:text-right md:pr-10">
+            <div class="text-gold font-black text-2xl mb-1">2010</div>
+            <div class="text-white font-bold mb-1">Achieved CIDB Grade G7</div>
+            <div class="text-muted text-sm">Upgraded to highest CIDB classification — unlimited contract value across all categories.</div>
+          </div>
+          <div class="hidden md:block md:pl-10"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 items-center reveal">
+          <div class="hidden md:block md:pr-10"></div>
+          <div class="md:pl-10">
+            <div class="text-gold font-black text-2xl mb-1">2015</div>
+            <div class="text-white font-bold mb-1">ISO 9001 Certification</div>
+            <div class="text-muted text-sm">Quality management system certified. Opened access to international-standard tender requirements.</div>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 items-center reveal">
+          <div class="md:text-right md:pr-10">
+            <div class="text-gold font-black text-2xl mb-1">2020</div>
+            <div class="text-white font-bold mb-1">RM 100M+ Single Contract</div>
+            <div class="text-muted text-sm">First contract exceeding RM100M — pre-stressed bridge and approach road, Johor.</div>
+          </div>
+          <div class="hidden md:block md:pl-10"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 items-center reveal">
+          <div class="hidden md:block md:pr-10"></div>
+          <div class="md:pl-10">
+            <div class="text-gold font-black text-2xl mb-1">2024</div>
+            <div class="text-white font-bold mb-1">20 Years. 150+ Projects.</div>
+            <div class="text-muted text-sm">Celebrating two decades of uninterrupted operations, zero financial default, and zero fatal site accidents.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <div class="flex items-center justify-center gap-3 mb-4"><div class="h-px w-10 bg-gold"></div><span class="text-gold text-xs font-bold tracking-widest uppercase">How We Work</span><div class="h-px w-10 bg-gold"></div></div>
+      <h2 class="text-4xl font-black text-white">Our Core Values</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="val-card border border-border p-7 reveal cursor-default">
+        <div class="text-gold text-3xl font-black mb-3">01</div>
+        <h3 class="text-white font-bold text-lg mb-2">Quality Without Compromise</h3>
+        <p class="text-muted text-sm leading-relaxed">Every pour, every weld, every installation is inspected to specification. We do not accept "good enough" on any Cergas Bina site.</p>
+      </div>
+      <div class="val-card border border-border p-7 reveal cursor-default" style="transition-delay:.1s">
+        <div class="text-gold text-3xl font-black mb-3">02</div>
+        <h3 class="text-white font-bold text-lg mb-2">Delivery on Schedule</h3>
+        <p class="text-muted text-sm leading-relaxed">Time is money for our clients. We build realistic programmes, staff accordingly, and escalate early when risk to timeline is detected.</p>
+      </div>
+      <div class="val-card border border-border p-7 reveal cursor-default" style="transition-delay:.2s">
+        <div class="text-gold text-3xl font-black mb-3">03</div>
+        <h3 class="text-white font-bold text-lg mb-2">Full Transparency</h3>
+        <p class="text-muted text-sm leading-relaxed">Clients receive weekly progress reports with photos, variation notices on day 1, and direct access to our site supervisors at all times.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS BAR -->
+<section class="py-16 bg-surface border-y border-border">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-10 reveal"><p class="text-muted text-sm font-semibold uppercase tracking-widest">Registrations & Certifications</p></div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+      <div class="border border-border p-5 text-center"><div class="text-gold font-black text-xl mb-1">CIDB G7</div><div class="text-muted text-xs">B01 · B04 · CE21</div></div>
+      <div class="border border-border p-5 text-center"><div class="text-gold font-black text-xl mb-1">ISO 9001</div><div class="text-muted text-xs">Quality Management</div></div>
+      <div class="border border-border p-5 text-center"><div class="text-gold font-black text-xl mb-1">DOSH</div><div class="text-muted text-xs">Safety & Health</div></div>
+      <div class="border border-border p-5 text-center"><div class="text-gold font-black text-xl mb-1">QLASSIC 75+</div><div class="text-muted text-xs">Above industry avg</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-gold">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="text-4xl font-black text-bg mb-4">Have a Project in Mind?</h2>
+    <p class="text-bg/70 text-lg mb-8">Let's talk. We respond within 24 hours.</p>
+    <a href="contact.html" class="inline-flex items-center gap-2 bg-bg hover:bg-surface text-white font-bold px-10 py-4 transition-colors text-sm">Contact Us <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-border py-10">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3"><div class="w-8 h-8 bg-gold flex items-center justify-center"><span class="text-bg font-black text-xs">CB</span></div><div><div class="text-white font-bold text-sm">Cergas Bina Engineering Sdn Bhd</div><div class="text-muted text-xs">SSM: 200401234567 (123456-X) · CIDB: G7</div></div></div>
+    <div class="text-muted text-xs text-center md:text-right">© 2024 Cergas Bina Engineering Sdn Bhd. All rights reserved.<br/><span class="text-gold/60">Website by Bejaa Digital — bejaadigital.com</span></div>
+  </div>
+</footer>
+
+<script>
+  const mb=document.getElementById('mb'),mm=document.getElementById('mm');
+  mb.addEventListener('click',()=>mm.classList.toggle('hidden'));
+  const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');ro.unobserve(x.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Office Filing System</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --ink: #1c2430; --muted: #667085; --line: #e4e7ec;
+    --accent: #1f5eff; --accent-ink: #ffffff; --danger: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+  .top { display: flex; align-items: center; gap: 16px; padding: 12px 0; flex-wrap: wrap; }
+  .brand { font-weight: 700; font-size: 17px; white-space: nowrap; }
+  .brand small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+  .find { flex: 1; min-width: 220px; display: flex; gap: 8px; }
+  .find input { flex: 1; font-size: 16px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; }
+  nav { display: flex; gap: 4px; padding-bottom: 8px; overflow-x: auto; }
+  nav button { background: none; border: 0; padding: 8px 12px; border-radius: 8px; font-size: 14px; color: var(--muted); cursor: pointer; white-space: nowrap; }
+  nav button.on { background: var(--ink); color: #fff; }
+  main { padding: 20px 0 60px; }
+  h2 { font-size: 20px; margin: 0 0 12px; }
+  h3 { font-size: 15px; margin: 0 0 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; }
+  .tile b { display: block; font-size: 28px; line-height: 1.1; }
+  .tile span { color: var(--muted); font-size: 13px; }
+  .tile .warn { color: var(--danger); font-size: 12px; font-weight: 600; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); flex-wrap: wrap; }
+  .row:first-of-type { border-top: 0; }
+  .row .grow { flex: 1; min-width: 200px; }
+  .ref { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); }
+  .title { font-weight: 600; cursor: pointer; }
+  .title:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .tag { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .s-desk { background: #e5e7eb; color: #374151; }
+  .s-director { background: #fef3c7; color: #92400e; }
+  .s-returned { background: #fee2e2; color: #991b1b; }
+  .s-filed { background: #dcfce7; color: #166534; }
+  .s-person { background: #dbeafe; color: #1e40af; }
+  .s-out { background: #ede9fe; color: #5b21b6; }
+  .s-archived { background: #f3f4f6; color: #6b7280; }
+  .late { color: var(--danger); font-weight: 600; }
+  button, .btn { font: inherit; font-size: 14px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button.danger { color: var(--danger); border-color: #fecaca; }
+  button.sm { padding: 5px 10px; font-size: 13px; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  form label { display: block; font-size: 13px; color: var(--muted); margin: 12px 0 4px; }
+  form input, form select, form textarea { width: 100%; font: inherit; padding: 9px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  form textarea { min-height: 70px; resize: vertical; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+  .check { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+  .check input { width: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  .tablewrap { overflow-x: auto; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .filters select, .filters input { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  .empty { color: var(--muted); padding: 24px 0; text-align: center; }
+  .overlay { position: fixed; inset: 0; background: rgba(20, 24, 32, .45); display: flex; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 10; }
+  .modal { background: var(--card); border-radius: 14px; width: 100%; max-width: 620px; padding: 20px; }
+  .modal h2 { display: flex; justify-content: space-between; align-items: center; }
+  .x { background: none; border: 0; font-size: 22px; padding: 0 6px; }
+  .status-big { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; background: var(--bg); margin: 12px 0; flex-wrap: wrap; }
+  .status-big .tag { font-size: 14px; }
+  .hist { list-style: none; padding: 0; margin: 0; }
+  .hist li { padding: 8px 0 8px 18px; border-left: 2px solid var(--line); position: relative; }
+  .hist li::before { content: ""; position: absolute; left: -6px; top: 14px; width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+  .hist li:first-child::before { background: var(--accent); }
+  .hist small { display: block; color: var(--muted); }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 14px; z-index: 20; }
+  .list { padding: 0; margin: 0; list-style: none; }
+  .list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); }
+  .list li:first-child { border-top: 0; }
+  .help { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  @media print {
+    header, .actions, .filters, button, .overlay { display: none !important; }
+    body { background: #fff; }
+    .card { border: 0; padding: 0; }
+    main { padding: 0; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">Office Filing System<small>Where is the document now?</small></div>
+      <div class="find">
+        <input id="find" type="search" placeholder="Where is it? Search ref, title, sender, location…" autocomplete="off">
+      </div>
+      <button class="primary" data-act="nav" data-v="new">+ New document</button>
+    </div>
+    <nav id="nav">
+      <button data-act="nav" data-v="dash">Dashboard</button>
+      <button data-act="nav" data-v="register">Register</button>
+      <button data-act="nav" data-v="new">New document</button>
+      <button data-act="nav" data-v="settings">Settings</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="view"></main>
+<div id="modal"></div>
+<div id="toast"></div>
+
+<script>
+const KEY = 'ofs-v1';
+const DAY = 86400000;
+const STATUS = {
+  desk:     { label: 'At front desk',                 cls: 's-desk' },
+  director: { label: 'With Director',                 cls: 's-director' },
+  returned: { label: 'Back from Director, no home yet', cls: 's-returned' },
+  filed:    { label: 'Filed',                         cls: 's-filed' },
+  person:   { label: 'With staff',                    cls: 's-person' },
+  out:      { label: 'Sent out',                      cls: 's-out' },
+  archived: { label: 'Archived',                      cls: 's-archived' }
+};
+const LIMITS = { director: 3, returned: 1, person: 7, desk: 2 };
+const TYPES = ['Official letter', 'Government letter', 'Circular', 'Notice', 'Approval / permit', 'Agreement', 'Memo', 'Minutes', 'Report', 'Other'];
+const PURPOSES = ['Signature', 'Approval', 'Review', 'Acknowledgement', 'Information'];
+const OUTCOMES = ['Signed', 'Approved', 'Noted', 'Rejected', 'Needs changes', 'No action'];
+
+let state = load();
+let view = 'dash';
+let q = '';
+let filter = { status: 'active', type: '' };
+let armed = null;
+
+function load() {
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if (s && Array.isArray(s.docs)) { s.drive = s.drive || { url: '', key: '' }; return s; }
+  } catch (e) {}
+  return { docs: [], people: [], locations: [], seq: 0, drive: { url: '', key: '' } };
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); }
+  catch (e) { toast('Could not save. Browser storage is blocked.'); }
+}
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function today() { return new Date().toISOString().slice(0, 10); }
+function days(ts) { return Math.floor((Date.now() - ts) / DAY); }
+function fmt(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+}
+function ago(ts) {
+  const n = days(ts);
+  return n === 0 ? 'today' : n === 1 ? '1 day' : n + ' days';
+}
+function late(d) {
+  const lim = LIMITS[d.status];
+  return lim != null && days(d.since) >= lim;
+}
+function byId(id) { return state.docs.find(d => d.id === id); }
+function remember(list, name) {
+  name = (name || '').trim();
+  if (name && !list.some(x => x.toLowerCase() === name.toLowerCase())) list.push(name);
+}
+function log(doc, action, by, note) {
+  doc.history.push({ ts: Date.now(), action, by: (by || '').trim(), note: (note || '').trim() });
+  doc.since = Date.now();
+  remember(state.people, by);
+}
+function move(doc, status, where) {
+  doc.status = status;
+  doc.where = where;
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.innerHTML = '<div class="toast">' + esc(msg) + '</div>';
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.innerHTML = '', 3000);
+}
+function datalist(id, list) {
+  return '<datalist id="' + id + '">' + list.map(x => '<option value="' + esc(x) + '">').join('') + '</datalist>';
+}
+function options(list, sel) {
+  return list.map(x => '<option' + (x === sel ? ' selected' : '') + '>' + esc(x) + '</option>').join('');
+}
+function tag(d) {
+  return '<span class="tag ' + STATUS[d.status].cls + '">' + STATUS[d.status].label + '</span>';
+}
+
+function registerDoc(f) {
+  state.seq += 1;
+  const year = new Date().getFullYear();
+  const doc = {
+    id: 'd' + Date.now() + Math.random().toString(36).slice(2, 6),
+    ref: 'DOC-' + year + '-' + String(state.seq).padStart(4, '0'),
+    title: f.title.trim(), type: f.type, from: f.from.trim(), theirRef: (f.theirRef || '').trim(), received: f.received || today(),
+    note: (f.note || '').trim(), status: 'desk', where: 'Front desk', since: Date.now(), history: []
+  };
+  log(doc, 'Received from ' + (doc.from || 'unknown'), f.by, doc.note);
+  state.docs.push(doc);
+  if (f.direct) {
+    move(doc, 'director', 'Director');
+    log(doc, 'Sent to Director for ' + f.purpose, f.by, '');
+  }
+  save();
+  return doc;
+}
+function applyNext(doc, kind, dest, by, note) {
+  dest = (dest || '').trim();
+  if (kind === 'file') { move(doc, 'filed', dest); log(doc, 'Filed at ' + dest, by, note); remember(state.locations, dest); }
+  else if (kind === 'person') { move(doc, 'person', dest); log(doc, 'Handed to ' + dest, by, note); remember(state.people, dest); }
+  else if (kind === 'out') { move(doc, 'out', dest); log(doc, 'Sent out to ' + dest, by, note); }
+  else { move(doc, 'returned', 'Front desk'); log(doc, 'Kept at front desk, no destination yet', by, note); }
+}
+
+const views = {
+  dash() {
+    const active = state.docs.filter(d => d.status !== 'archived');
+    const dir = active.filter(d => d.status === 'director');
+    const ret = active.filter(d => d.status === 'returned' || d.status === 'desk');
+    const per = active.filter(d => d.status === 'person');
+    const filed = active.filter(d => d.status === 'filed');
+    const lateAll = active.filter(late).sort((a, b) => a.since - b.since);
+    const recent = state.docs.flatMap(d => d.history.map(h => ({ d, h }))).sort((a, b) => b.h.ts - a.h.ts).slice(0, 8);
+    const tile = (n, label, st, lateN) =>
+      '<div class="tile" data-act="filter" data-status="' + st + '"><b>' + n + '</b><span>' + label + '</span>' +
+      (lateN ? '<div class="warn">' + lateN + ' overdue</div>' : '') + '</div>';
+    const rowFor = (d, btn) =>
+      '<div class="row"><div class="grow"><span class="ref">' + esc(d.ref) + '</span> <span class="title" data-act="open" data-id="' + d.id + '">' + esc(d.title) + '</span>' +
+      '<div class="meta">' + esc(d.history[d.history.length - 1].action) + ' · ' + (late(d) ? '<span class="late">' : '<span>') + ago(d.since) + '</span></div></div>' +
+      '<div class="actions">' + btn + '</div></div>';
+    if (!state.docs.length) {
+      return '<div class="card empty">No documents yet. Click <b>+ New document</b> when something lands on the desk, or load sample data in Settings to see how it works.</div>';
+    }
+    return '<div class="tiles">' +
+      tile(dir.length, 'With Director', 'director', dir.filter(late).length) +
+      tile(ret.length, 'Needs a home', 'returned', ret.filter(late).length) +
+      tile(per.length, 'With staff', 'person', per.filter(late).length) +
+      tile(filed.length, 'Filed', 'filed', 0) + '</div>' +
+      (lateAll.length ? '<div class="card"><h3>Overdue, chase these</h3>' + lateAll.map(d =>
+        rowFor(d, tag(d) + ' <button class="sm" data-act="open" data-id="' + d.id + '">Update</button>')).join('') + '</div>' : '') +
+      '<div class="card"><h3>In the Director\'s office</h3>' + (dir.length ? dir.sort((a, b) => a.since - b.since).map(d =>
+        rowFor(d, '<button class="sm primary" data-act="fromdir" data-id="' + d.id + '">Came back</button>')).join('') : '<div class="empty">Nothing with the Director.</div>') + '</div>' +
+      '<div class="card"><h3>Back on the desk, needs a home</h3>' + (ret.length ? ret.sort((a, b) => a.since - b.since).map(d =>
+        rowFor(d, '<button class="sm" data-act="file" data-id="' + d.id + '">File it</button><button class="sm" data-act="hand" data-id="' + d.id + '">Hand over</button><button class="sm" data-act="todir" data-id="' + d.id + '">To Director</button>')).join('') : '<div class="empty">Nothing waiting.</div>') + '</div>' +
+      '<div class="card"><h3>Recent movements</h3>' + recent.map(x =>
+        '<div class="row"><div class="grow"><span class="ref">' + esc(x.d.ref) + '</span> <span class="title" data-act="open" data-id="' + x.d.id + '">' + esc(x.d.title) + '</span>' +
+        '<div class="meta">' + esc(x.h.action) + (x.h.by ? ' · by ' + esc(x.h.by) : '') + ' · ' + fmt(x.h.ts) + '</div></div></div>').join('') + '</div>';
+  },
+
+  register() {
+    const s = q.trim().toLowerCase();
+    let list = state.docs.slice().sort((a, b) => b.since - a.since);
+    if (filter.status === 'active') list = list.filter(d => d.status !== 'archived');
+    else if (filter.status !== 'all') list = list.filter(d => d.status === filter.status);
+    if (filter.type) list = list.filter(d => d.type === filter.type);
+    if (s) list = list.filter(d => [d.ref, d.title, d.from, d.theirRef, d.where, d.type, d.note].join(' ').toLowerCase().includes(s));
+    return '<h2>Register</h2><div class="card">' +
+      '<div class="filters"><select data-act="fstatus"><option value="active"' + (filter.status === 'active' ? ' selected' : '') + '>All active</option><option value="all"' + (filter.status === 'all' ? ' selected' : '') + '>Everything incl. archived</option>' +
+      Object.keys(STATUS).map(k => '<option value="' + k + '"' + (filter.status === k ? ' selected' : '') + '>' + STATUS[k].label + '</option>').join('') + '</select>' +
+      '<select data-act="ftype"><option value="">All types</option>' + options(TYPES, filter.type) + '</select>' +
+      '<button data-act="print">Print list</button><span class="meta" style="align-self:center">' + list.length + ' document' + (list.length === 1 ? '' : 's') + '</span></div>' +
+      (list.length ? '<div class="tablewrap"><table><thead><tr><th>Ref</th><th>Document</th><th>Type</th><th>From</th><th>Their ref.</th><th>Received</th><th>Status</th><th>Where now</th><th>Since</th></tr></thead><tbody>' +
+        list.map(d => '<tr><td class="ref">' + esc(d.ref) + '</td><td><span class="title" data-act="open" data-id="' + d.id + '">' + esc(d.title) + '</span></td><td>' + esc(d.type) + '</td><td>' + esc(d.from) + '</td><td class="ref">' + esc(d.theirRef) + '</td><td>' + esc(d.received) + '</td><td>' + tag(d) + '</td><td>' + esc(d.where) + '</td><td' + (late(d) ? ' class="late"' : '') + '>' + ago(d.since) + '</td></tr>').join('') +
+        '</tbody></table></div>' : '<div class="empty">No documents match.</div>') + '</div>';
+  },
+
+  new() {
+    return '<h2>New document</h2><div class="card"><form data-form="new">' +
+      '<div class="grid2"><div><label>Document title *</label><input name="title" required placeholder="e.g. Letter from MBPJ re: signboard licence"></div>' +
+      '<div><label>Type</label><select name="type">' + options(TYPES) + '</select></div>' +
+      '<div><label>From (agency, department or person)</label><input name="from" placeholder="e.g. Majlis Bandaraya, LHDN, HQ"></div>' +
+      '<div><label>Their reference no.</label><input name="theirRef" placeholder="e.g. MBPJ/JPB/2026/1234"></div>' +
+      '<div><label>Date received</label><input name="received" type="date" value="' + today() + '"></div>' +
+      '<div><label>Received by</label><input name="by" list="people" placeholder="Your name"></div></div>' +
+      '<label>Note</label><textarea name="note" placeholder="Anything useful: urgency, what needs to happen, attachments"></textarea>' +
+      '<div class="check"><input type="checkbox" name="direct" id="direct"><label for="direct" style="margin:0">Going straight to the Director</label></div>' +
+      '<label>Purpose</label><select name="purpose">' + options(PURPOSES) + '</select>' +
+      '<div class="actions" style="margin-top:16px"><button class="primary" type="submit">Register document</button></div>' +
+      datalist('people', state.people) + '</form></div>';
+  },
+
+  settings() {
+    const li = (list, act) => list.length ? list.map(x => '<li>' + esc(x) + '<button class="sm" data-act="' + act + '" data-name="' + esc(x) + '">Remove</button></li>').join('') : '<li class="meta">None yet. Names typed into forms are added here automatically.</li>';
+    return '<h2>Settings</h2>' +
+      '<div class="card"><h3>Filing locations</h3><ul class="list">' + li(state.locations, 'del-loc') + '</ul>' +
+      '<form data-form="add-loc" class="actions" style="margin-top:12px"><input name="name" placeholder="e.g. Cabinet A / Drawer 2 / Invoices 2026" style="flex:1;min-width:200px" required><button type="submit">Add</button></form></div>' +
+      '<div class="card"><h3>Staff</h3><ul class="list">' + li(state.people, 'del-person') + '</ul>' +
+      '<form data-form="add-person" class="actions" style="margin-top:12px"><input name="name" placeholder="Name" style="flex:1;min-width:200px" required><button type="submit">Add</button></form></div>' +
+      '<div class="card"><h3>Google Drive scans</h3><p class="help">Scans upload through a Google Apps Script in your own Google account and land in a Drive folder called "Office Filing System". Setup steps are in the README.</p>' +
+      '<form data-form="drive"><label>Script web app URL</label><input name="url" type="url" value="' + esc(state.drive.url) + '" placeholder="https://script.google.com/macros/s/…/exec">' +
+      '<label>Secret key (must match the one in the script)</label><input name="key" value="' + esc(state.drive.key) + '">' +
+      '<div class="actions" style="margin-top:12px"><button class="primary" type="submit">Save</button><button type="button" data-act="drive-test"' + (state.drive.url ? '' : ' disabled') + '>Test connection</button></div></form></div>' +
+      '<div class="card"><h3>Backup</h3><p class="help">Data lives in this browser on this PC only. Download a backup regularly and keep it somewhere safe.</p>' +
+      '<div class="actions"><button data-act="export">Download backup (JSON)</button><label class="btn" style="margin:0">Restore from backup<input type="file" accept="application/json" data-act="import" style="display:none"></label></div></div>' +
+      '<div class="card"><h3>Danger zone</h3><div class="actions">' +
+      (!state.docs.length ? '<button data-act="sample">Load sample data</button>' : '') +
+      '<button class="danger" data-act="wipe">' + (armed === 'wipe' ? 'Click again to delete everything' : 'Delete all data') + '</button></div></div>';
+  }
+};
+
+function render() {
+  document.getElementById('view').innerHTML = views[view]();
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.v === view));
+}
+
+function openDetail(id) {
+  const d = byId(id);
+  if (!d) return;
+  const btn = (act, label, cls) => '<button class="sm ' + (cls || '') + '" data-act="' + act + '" data-id="' + d.id + '">' + label + '</button>';
+  let acts = '';
+  if (d.status === 'director') acts = btn('fromdir', 'Came back from Director', 'primary');
+  else if (d.status !== 'archived') acts = btn('todir', 'Send to Director', d.status === 'desk' || d.status === 'returned' ? 'primary' : '') + btn('file', 'File it') + btn('hand', 'Hand to staff') + btn('out', 'Send out') + (d.status !== 'desk' && d.status !== 'returned' ? btn('desk', 'Back to desk') : '');
+  acts += btn('note', 'Add note') + btn('edit', 'Edit details') + (d.status === 'archived' ? btn('desk', 'Reopen') : btn('archive', 'Archive'));
+  const files = d.files || [];
+  modal('<span><span class="ref">' + esc(d.ref) + '</span> ' + esc(d.title) + '</span>',
+    '<div class="meta">' + esc(d.type) + (d.from ? ' · from ' + esc(d.from) : '') + (d.theirRef ? ' · their ref ' + esc(d.theirRef) : '') + ' · received ' + esc(d.received) + '</div>' +
+    (d.note ? '<p>' + esc(d.note) + '</p>' : '') +
+    '<div class="status-big">' + tag(d) + '<b>' + esc(d.where) + '</b><span class="meta">since ' + fmt(d.since) + ' (' + (late(d) ? '<span class="late">' : '<span>') + ago(d.since) + '</span>)</span></div>' +
+    '<div class="actions">' + acts + '</div>' +
+    '<h3 style="margin-top:20px">Scanned copies</h3>' +
+    (files.length ? '<ul class="list">' + files.map(f => '<li><a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.name) + '</a><span class="meta">' + fmt(f.ts) + (f.by ? ' · ' + esc(f.by) : '') + '</span></li>').join('') + '</ul>' : '<div class="meta">None attached.</div>') +
+    '<div class="actions" style="margin-top:8px">' + btn('attach', 'Attach scan') + '</div>' +
+    '<h3 style="margin-top:20px">History</h3><ul class="hist">' + d.history.slice().reverse().map(h =>
+      '<li>' + esc(h.action) + (h.note ? ' — ' + esc(h.note) : '') + '<small>' + fmt(h.ts) + (h.by ? ' · ' + esc(h.by) : '') + '</small></li>').join('') + '</ul>');
+}
+
+function modal(title, body) {
+  document.getElementById('modal').innerHTML = '<div class="overlay" data-act="close"><div class="modal"><h2>' + title + '<button class="x" data-act="close">×</button></h2>' + body + '</div></div>';
+}
+function closeModal() { document.getElementById('modal').innerHTML = ''; }
+
+function actionForm(kind, id) {
+  const d = byId(id);
+  if (!d) return;
+  const by = '<label>Done by</label><input name="by" list="people" placeholder="Your name">';
+  const note = '<label>Note</label><input name="note" placeholder="Optional">';
+  const lists = datalist('people', state.people) + datalist('locations', state.locations);
+  const forms = {
+    todir: ['Send to Director', '<label>Purpose</label><select name="purpose">' + options(PURPOSES) + '</select>' + by + note],
+    fromdir: ['Came back from Director',
+      '<label>Outcome</label><select name="outcome">' + options(OUTCOMES) + '</select>' +
+      '<label>Where does it go now? *</label><select name="kind" data-act="kind"><option value="file">File it, at a location</option><option value="person">Hand to a staff member</option><option value="out">Send out, to someone outside</option><option value="desk">Keep at front desk for now (will be flagged)</option></select>' +
+      '<label id="destlabel">Location *</label><input name="dest" id="dest" list="locations" required placeholder="e.g. Cabinet A / Drawer 2 / Invoices 2026">' +
+      '<p class="help">This is the step where documents go missing. Say exactly where it went before closing.</p>' + by + note],
+    file: ['File it', '<label>Location *</label><input name="dest" list="locations" required placeholder="e.g. Cabinet A / Drawer 2 / Invoices 2026">' + by + note],
+    hand: ['Hand to staff', '<label>Staff member *</label><input name="dest" list="people" required placeholder="Name">' + '<label>Purpose</label><input name="purpose" placeholder="e.g. process payment">' + by + note],
+    out: ['Send out', '<label>To *</label><input name="dest" required placeholder="Company or person outside the office">' + '<label>How</label><select name="how"><option>By hand</option><option>Courier</option><option>Post</option><option>Email (scanned)</option></select>' + by + note],
+    desk: ['Back to front desk', by + note],
+    archive: ['Archive', '<p class="help">Use this when the document is closed and no longer moves. It stays searchable in the register.</p>' + by + note],
+    note: ['Add note', '<label>Note *</label><textarea name="note" required></textarea>' + by],
+    attach: ['Attach scan',
+      (state.drive.url ? '<label>Upload a scan to Google Drive (PDF or image, up to 20 MB)</label><input name="file" type="file" accept="application/pdf,image/*">' : '<p class="help">Google Drive upload is not set up yet. Add the script URL in Settings, or paste a Drive link below.</p>') +
+      '<label>Or paste a Google Drive link</label><input name="link" type="url" placeholder="https://drive.google.com/file/d/…">' +
+      '<label>Name (optional)</label><input name="name" placeholder="e.g. signed copy">' + by],
+    edit: ['Edit details',
+      '<label>Title *</label><input name="title" required value="' + esc(d.title) + '">' +
+      '<label>Type</label><select name="type">' + options(TYPES, d.type) + '</select>' +
+      '<label>From</label><input name="from" value="' + esc(d.from) + '">' +
+      '<label>Their reference no.</label><input name="theirRef" value="' + esc(d.theirRef) + '">' +
+      '<label>Date received</label><input name="received" type="date" value="' + esc(d.received) + '">' +
+      '<label>Note</label><textarea name="note">' + esc(d.note) + '</textarea>']
+  };
+  const f = forms[kind];
+  modal(f[0] + ' <span class="ref">' + esc(d.ref) + '</span>',
+    '<div class="meta">' + esc(d.title) + '</div><form data-form="action" data-kind="' + kind + '" data-id="' + d.id + '">' + f[1] + lists +
+    '<div class="actions" style="margin-top:16px"><button class="primary" type="submit">Save</button><button type="button" data-act="open" data-id="' + d.id + '">Cancel</button></div></form>');
+}
+
+function runAction(kind, id, f) {
+  const d = byId(id);
+  if (!d) return;
+  if (kind === 'todir') { move(d, 'director', 'Director'); log(d, 'Sent to Director for ' + f.purpose, f.by, f.note); }
+  else if (kind === 'fromdir') { log(d, 'Returned from Director: ' + f.outcome, f.by, ''); applyNext(d, f.kind, f.dest, f.by, f.note); }
+  else if (kind === 'file') applyNext(d, 'file', f.dest, f.by, f.note);
+  else if (kind === 'hand') applyNext(d, 'person', f.dest, f.by, [f.purpose, f.note].filter(Boolean).join('. '));
+  else if (kind === 'out') applyNext(d, 'out', f.dest, f.by, [f.how, f.note].filter(Boolean).join('. '));
+  else if (kind === 'desk') { const was = d.status; move(d, 'desk', 'Front desk'); log(d, was === 'archived' ? 'Reopened' : 'Back at front desk', f.by, f.note); }
+  else if (kind === 'archive') { move(d, 'archived', d.where); log(d, 'Archived', f.by, f.note); }
+  else if (kind === 'note') log(d, 'Note', f.by, f.note);
+  else if (kind === 'edit') { d.title = f.title.trim(); d.type = f.type; d.from = f.from.trim(); d.theirRef = (f.theirRef || '').trim(); d.received = f.received; d.note = f.note.trim(); }
+  save();
+  toast('Saved: ' + d.ref);
+  render();
+  openDetail(id);
+}
+
+function drivePost(body) {
+  return fetch(state.drive.url, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(Object.assign({ key: state.drive.key }, body)) })
+    .then(r => r.json());
+}
+function addFile(d, f) {
+  d.files = d.files || [];
+  d.files.push(f);
+  log(d, 'Scan attached: ' + f.name, f.by, '');
+  save();
+  toast('Attached to ' + d.ref);
+  render();
+  openDetail(d.id);
+}
+function attachScan(id, form, f) {
+  const d = byId(id);
+  if (!d) return;
+  const file = form.querySelector('[name=file]') && form.querySelector('[name=file]').files[0];
+  const link = (f.link || '').trim();
+  if (!file && !link) { toast('Choose a file or paste a link.'); return; }
+  if (!file) { addFile(d, { name: (f.name || '').trim() || 'Drive link', url: link, ts: Date.now(), by: (f.by || '').trim() }); return; }
+  if (file.size > 20 * 1024 * 1024) { toast('File is over 20 MB.'); return; }
+  const btn = form.querySelector('button[type=submit]');
+  btn.disabled = true;
+  btn.textContent = 'Uploading…';
+  const r = new FileReader();
+  r.onload = () => {
+    drivePost({ action: 'upload', ref: d.ref, title: d.title, name: file.name, mime: file.type, data: r.result.split(',')[1] })
+      .then(res => {
+        if (!res.ok) throw new Error(res.error || 'upload failed');
+        addFile(d, { name: (f.name || '').trim() || res.name, url: res.url, id: res.id, ts: Date.now(), by: (f.by || '').trim() });
+      })
+      .catch(err => { toast('Upload failed: ' + err.message); btn.disabled = false; btn.textContent = 'Save'; });
+  };
+  r.readAsDataURL(file);
+}
+function exportJson() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'office-filing-backup-' + today() + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importJson(file) {
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const s = JSON.parse(r.result);
+      if (!s || !Array.isArray(s.docs)) throw new Error('bad');
+      state = { docs: s.docs, people: s.people || [], locations: s.locations || [], seq: s.seq || s.docs.length, drive: s.drive || state.drive };
+      save();
+      toast('Backup restored: ' + state.docs.length + ' documents');
+      render();
+    } catch (e) { toast('That file is not a valid backup.'); }
+  };
+  r.readAsText(file);
+}
+function loadSample() {
+  const shift = (doc, d) => { doc.since -= d * DAY; doc.history.forEach(h => h.ts -= d * DAY); };
+  let a = registerDoc({ title: 'Signboard licence renewal, MBPJ', type: 'Government letter', from: 'Majlis Bandaraya Petaling Jaya', theirRef: 'MBPJ/JPB/2026/1234', received: today(), by: 'Aina', note: 'Reply due in 14 days', direct: true, purpose: 'Approval' });
+  shift(a, 5);
+  let b = registerDoc({ title: 'Audit notice 2025 accounts', type: 'Notice', from: 'LHDN Cawangan PJ', theirRef: 'LHDN/PJ/AUD/77812', received: today(), by: 'Aina', note: '', direct: true, purpose: 'Signature' });
+  shift(b, 1);
+  let c = registerDoc({ title: 'Tenancy agreement renewal', type: 'Agreement', from: 'Landlord', theirRef: '', received: today(), by: 'Aina', note: '', direct: true, purpose: 'Signature' });
+  log(c, 'Returned from Director: Signed', 'Aina', ''); applyNext(c, 'desk', '', 'Aina', ''); shift(c, 2);
+  let e = registerDoc({ title: 'HQ circular: new leave policy', type: 'Circular', from: 'HQ Admin', theirRef: 'HQ/ADM/CIR/09/2026', received: today(), by: 'Aina', note: '', direct: true, purpose: 'Approval' });
+  log(e, 'Returned from Director: Approved', 'Aina', ''); applyNext(e, 'file', 'Cabinet A / Drawer 1 / Circulars 2026', 'Aina', ''); shift(e, 3);
+  let g = registerDoc({ title: 'Bank letter: facility review', type: 'Official letter', from: 'Maybank Business', theirRef: 'MBB/BIZ/2026/5561', received: today(), by: 'Aina', note: '', direct: true, purpose: 'Approval' });
+  log(g, 'Returned from Director: Approved', 'Aina', ''); applyNext(g, 'person', 'Farah (Accounts)', 'Aina', 'process payment'); shift(g, 9);
+  save();
+  toast('Sample data loaded');
+  view = 'dash';
+  render();
+}
+
+document.getElementById('find').addEventListener('input', e => {
+  q = e.target.value;
+  if (view !== 'register') view = 'register';
+  render();
+});
+
+document.body.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  if (el.tagName === 'INPUT' || el.tagName === 'SELECT') return;
+  const act = el.dataset.act, id = el.dataset.id;
+  if (act === 'close' && e.target !== el) return;
+  if (act === 'nav') { view = el.dataset.v; armed = null; render(); }
+  else if (act === 'filter') { filter.status = el.dataset.status; view = 'register'; render(); }
+  else if (act === 'open') { closeModal(); openDetail(id); }
+  else if (act === 'close') closeModal();
+  else if (['todir', 'fromdir', 'file', 'hand', 'out', 'desk', 'archive', 'note', 'edit', 'attach'].includes(act)) actionForm(act, id);
+  else if (act === 'print') window.print();
+  else if (act === 'drive-test') {
+    toast('Testing…');
+    drivePost({ action: 'ping' }).then(r => toast(r.ok ? 'Google Drive connected.' : 'Script answered but rejected: ' + (r.error || 'check the secret key'))).catch(e => toast('Cannot reach the script: ' + e.message));
+  }
+  else if (act === 'export') exportJson();
+  else if (act === 'sample') loadSample();
+  else if (act === 'del-loc') { state.locations = state.locations.filter(x => x !== el.dataset.name); save(); render(); }
+  else if (act === 'del-person') { state.people = state.people.filter(x => x !== el.dataset.name); save(); render(); }
+  else if (act === 'wipe') {
+    if (armed === 'wipe') { state = { docs: [], people: [], locations: [], seq: 0, drive: state.drive }; save(); armed = null; toast('All data deleted'); }
+    else armed = 'wipe';
+    render();
+  }
+});
+
+document.body.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.act === 'fstatus') { filter.status = el.value; render(); }
+  else if (el.dataset.act === 'ftype') { filter.type = el.value; render(); }
+  else if (el.dataset.act === 'import' && el.files[0]) { importJson(el.files[0]); el.value = ''; }
+  else if (el.dataset.act === 'kind') {
+    const dest = document.getElementById('dest'), lab = document.getElementById('destlabel');
+    const map = { file: ['Location *', 'locations', true], person: ['Staff member *', 'people', true], out: ['To *', '', true], desk: ['Reason (optional)', '', false] };
+    const m = map[el.value];
+    lab.textContent = m[0];
+    dest.setAttribute('list', m[1]);
+    dest.required = m[2];
+    dest.placeholder = el.value === 'file' ? 'e.g. Cabinet A / Drawer 2 / Invoices 2026' : el.value === 'desk' ? 'e.g. waiting for cheque' : 'Name';
+  }
+});
+
+document.body.addEventListener('submit', e => {
+  const form = e.target.closest('form[data-form]');
+  if (!form) return;
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(form).entries());
+  const kind = form.dataset.form;
+  if (kind === 'new') {
+    f.direct = form.querySelector('[name=direct]').checked;
+    const d = registerDoc(f);
+    toast('Registered ' + d.ref);
+    view = 'dash';
+    render();
+    openDetail(d.id);
+  } else if (kind === 'action') {
+    if (form.dataset.kind === 'attach') attachScan(form.dataset.id, form, f);
+    else runAction(form.dataset.kind, form.dataset.id, f);
+  } else if (kind === 'drive') { state.drive = { url: f.url.trim(), key: f.key.trim() }; save(); toast('Drive settings saved'); render(); }
+  else if (kind === 'add-loc') { remember(state.locations, f.name); save(); render(); }
+  else if (kind === 'add-person') { remember(state.people, f.name); save(); render(); }
+});
+
+render();
+</script>
+</body>
+</html>
