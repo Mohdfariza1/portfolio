@@ -34,7 +34,7 @@
 
   /* ── nav: floating glass pill ── */
   .nav{position:fixed;left:0;right:0;top:0;z-index:50;padding:12px 16px 0;}
-  .nav__in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 20px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border:1px solid rgba(15,23,42,.07);box-shadow:0 10px 30px -12px rgba(15,23,42,.18);transition:background-color .3s ease,border-color .3s ease;}
+  .nav__in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 20px;border-radius:999px;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(18px);border:1px solid rgba(15,23,42,.07);box-shadow:0 10px 30px -12px rgba(15,23,42,.18);transition:background-color .3s ease,border-color .3s ease;}
   .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.02em;}
   .brand small{display:block;font-family:var(--font-s);font-weight:500;font-size:11px;color:var(--faint);letter-spacing:0;line-height:1.1;}
   .navlinks{display:flex;align-items:center;gap:4px;}
@@ -48,10 +48,10 @@
   .drawer{display:none;max-width:1180px;margin:8px auto 0;background:rgba(255,255,255,.97);border:1px solid rgba(15,23,42,.07);border-radius:22px;padding:10px;box-shadow:0 20px 40px -20px rgba(15,23,42,.25);flex-direction:column;}
   .drawer.open{display:flex;}
   .drawer .navitem{justify-content:space-between;font-size:16px;padding:12px 14px;}
-  .nav.dark .nav__in{background:rgba(22,26,32,.72);border-color:rgba(255,255,255,.08);}
-  .nav.dark .brand,.nav.dark .navitem,.nav.dark .burger{color:#F4F4F5;}
-  .nav.dark .brand svg{filter:invert(1) hue-rotate(180deg) brightness(1.15);}
-  .nav.dark .navitem.active{color:#5EEAD4;}
+  .nav.is-dark .nav__in{background:rgba(18,22,28,.9);border-color:rgba(255,255,255,.08);}
+  .nav.is-dark .brand,.nav.is-dark .navitem,.nav.is-dark .burger{color:#F4F4F5;}
+  .nav.is-dark .brand svg{filter:invert(1) hue-rotate(180deg) brightness(1.15);}
+  .nav.is-dark .navitem.active{color:#5EEAD4;}
 
   /* ── page heads (inner views) ── */
   .content{min-height:70vh;}
@@ -1269,7 +1269,7 @@ function onScroll(){
       b.style.setProperty("--d", Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh)).toFixed(3));
     });
     const dark = $$(".dark, .foot").some(s => { const r = s.getBoundingClientRect(); return r.top <= 40 && r.bottom >= 40; });
-    $("#nav").classList.toggle("dark", dark);
+    $("#nav").classList.toggle("is-dark", dark);
   });
 }
 addEventListener("scroll", onScroll, { passive:true });
@@ -1350,6 +1350,6 @@ if(window.Lenis){
 applyHash();
 </script>
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
-<script type="module" src="hero3d.js?v=2"></script>
+<script type="module" src="hero3d.js?v=3"></script>
 </body>
 </html>

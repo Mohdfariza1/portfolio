@@ -117,7 +117,7 @@ function init() {
             const narrow = w < 700;
             // A page can move the wau with data-wau="x,y,maxHeight" (fractions of
             // the hero, px cap) and data-wau-phone="x,yPx,heightPx" on the canvas.
-            const d = (narrow ? canvas.dataset.wauPhone : canvas.dataset.wau || '').split(',').map(Number);
+            const d = ((narrow ? canvas.dataset.wauPhone : canvas.dataset.wau) || '').split(',').map(Number);
             const cx = narrow ? w * (d[0] || 0.875) : w * (d[0] || 0.76);
             const cy = narrow ? Math.min(h * 0.57, d[1] || 482) : h * (d[1] || 0.36);
             const ht = narrow ? (d[2] || 96) : Math.min(h * 0.46, d[2] || 420);
