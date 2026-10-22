@@ -119,7 +119,7 @@ tbody tr:hover{background:#fafbfd}
 .page{display:none}.page.on{display:block}
 .vw{display:none}.vw.on{display:block}
 
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(150%);background:var(--ink);color:#fff;border-radius:10px;padding:13px 20px;font-size:13.5px;font-weight:600;z-index:80;transition:.25s;box-shadow:0 12px 34px rgba(0,0,0,.3)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(calc(100% + 40px));background:var(--ink);color:#fff;border-radius:10px;padding:13px 20px;font-size:13.5px;font-weight:600;z-index:80;transition:.25s;box-shadow:0 12px 34px rgba(0,0,0,.3)}
 .toast.on{transform:translateX(-50%)}
 .demo{position:fixed;right:16px;bottom:16px;z-index:70;background:#191d2f;color:#fff;border-radius:11px;padding:11px 15px;font-size:11.5px;line-height:1.45;max-width:248px;box-shadow:0 12px 32px rgba(0,0,0,.3)}
 .demo b{color:#a79bf5}
@@ -129,10 +129,24 @@ tbody tr:hover{background:#fafbfd}
   .app{grid-template-columns:1fr}
   .side,.body{min-width:0}
   .top>div{min-width:0}
-  .side{position:static;height:auto}
   .pad,.top{padding-left:16px;padding-right:16px}
   .hidem{display:none}
-  .demo{max-width:158px;font-size:11px;padding:9px 11px}
+  /* phone: the sidebar becomes one slim row you swipe sideways, so the system itself is the first screen */
+  .top{position:static}
+  .side{position:sticky;top:0;z-index:30;height:auto;display:flex;flex-direction:row;align-items:center;gap:6px;padding:10px 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+  .side::-webkit-scrollbar{display:none}
+  .side .brand{flex:none;padding:0 6px 0 0;margin:0;border:0}
+  .side .brand i{width:30px;height:30px;font-size:14px}
+  .side .brand span span{display:none}
+  .side .slbl,.suser,.who,.synccard,.botcard{display:none}
+  #nav-staff,#nav-mgr{display:contents}
+  .side .snav{flex:none;white-space:nowrap;padding:8px 12px;border-left:0;border-radius:999px;font-size:13px}
+  .side .snav .ic{width:auto}
+  .side .snav .pill{margin-left:4px}
+  .rsw{flex:none;margin:0}
+  .rsw button{padding:6px 10px;white-space:nowrap}
+  .demo{font-size:0;line-height:0;max-width:none;padding:7px 11px;border-radius:999px;right:10px;bottom:10px}
+  .demo b{font-size:10.5px;line-height:1.2;letter-spacing:.06em}
 }
 </style>
 </head>
