@@ -171,6 +171,7 @@ function init() {
             requestAnimationFrame(loop);
         };
         const start = () => {
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) { renderer.render(scene, camera); return; }
             if (!running && visible && !document.hidden) {
                 running = true;
                 last = performance.now();

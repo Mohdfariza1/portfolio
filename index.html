@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mohd Farizal Roslie — Portfolio | Bejaa Digital</title>
-<meta name="description" content="Websites, internal business systems and automation built by Mohd Farizal Roslie of Bejaa Digital, Shah Alam. Live projects and 14 working demos." />
+<meta name="description" content="Websites, business systems and automated work for small businesses in Malaysia, built by Mohd Farizal Roslie of Bejaa Digital, Shah Alam. Live projects and 14 demos you can click through." />
 <link rel="icon" href="https://bejaadigital.com/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,7 +61,7 @@
   h1,h2,h3{font-family:var(--font-d);color:var(--ink);letter-spacing:-.035em;}
   .pagehead h1{font-size:clamp(36px,4.6vw,64px);font-weight:600;line-height:1.04;}
   .pagehead p{font-size:19px;color:var(--muted);max-width:640px;}
-  .grad{background:linear-gradient(100deg,#00A896 0%,#00C9A7 45%,#0EA5E9 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .grad{color:var(--teal-ink);}
 
   /* ── hero (home) ── */
   .hero__frame{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 72% 42%,#DDF5F0 0%,rgba(221,245,240,0) 70%),linear-gradient(#fff,#F7FAFA);transform:scale(calc(1 - var(--p)*.07)) translateY(calc(var(--p)*24px));border-radius:calc(var(--p)*44px);transform-origin:50% 0;will-change:transform;}
@@ -284,6 +284,21 @@
     .foot__grid{grid-template-columns:1fr;}
     .browser__bar span{display:none;}
   }
+
+  /* readability + motion pass (2026-10-28, impeccable audit) */
+  :root{--faint:#6E6E73;}
+  .hero h1{font-size:clamp(40px,4.4vw,60px);}
+  .plate{background:linear-gradient(135deg,#0F1A1E,#16242A);}
+  .stats{background:linear-gradient(115deg,#00564E 0%,#00786C 100%);}
+  .stat .l{opacity:1;}
+  .foot__bottom{color:#A1A1AA;}
+  a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--teal-ink);outline-offset:3px;border-radius:6px;}
+  .dark a:focus-visible,.dark button:focus-visible,.foot a:focus-visible{outline-color:var(--teal);}
+  @media (prefers-reduced-motion:reduce){
+    .strip__track,.floor,.modal{animation:none;}
+    .browser{transform:none;transition:none;}
+    .rv{opacity:1;transform:none;transition:none;}
+  }
 </style>
 </head>
 <body>
@@ -327,7 +342,7 @@
       <div>
         <b>Mohd Farizal bin Roslie</b>
         <span>Founder &amp; developer, Bejaa Digital. Websites, internal business systems and automation for Malaysian businesses.</span>
-        <span style="font-size:13px;color:#71717A">SSM 202603141826 (TR0343303-M) · Shah Alam, Selangor</span>
+        <span style="font-size:13px;color:#A1A1AA">SSM 202603141826 (TR0343303-M) · Shah Alam, Selangor</span>
       </div>
       <div>
         <b>Portfolio</b>
@@ -399,7 +414,7 @@ const PROJECTS = [
       "Company profile and services pages",
       "Project showcase and photo gallery",
       "Customer enquiry form",
-      "Mobile responsive across phone, tablet and desktop"
+      "Works well on phone, tablet and computer"
     ],
     skills:["PHP","HTML/CSS","JavaScript","Responsive Design","SEO"]
   },
@@ -417,7 +432,7 @@ const PROJECTS = [
       "Shopping cart and checkout flow",
       "Admin dashboard for products and orders",
       "Live order handling with real customer transactions",
-      "Mobile responsive storefront"
+      "Online shop that works well on a phone"
     ],
     skills:["PHP","MySQL","JavaScript","HTML/CSS","Responsive Design"]
   },
@@ -429,7 +444,7 @@ const PROJECTS = [
     timeline:"May 2026 — present", icon:"🧾", highlight:true,
     summary:"Automated invoice data extraction that replaces manual key-in of supplier invoices. Validated on the client's own invoices and now running under an ongoing maintenance retainer.",
     features:[
-      "OCR pipeline that reads supplier invoices automatically",
+      "Reads supplier invoices from a photo or PDF automatically",
       "AI-assisted field parsing (supplier, dates, line items, totals)",
       "90% extraction accuracy across a live 10-invoice test set",
       "Compiled results dashboard for reviewing extracted data",
@@ -447,9 +462,9 @@ const PROJECTS = [
     features:[
       "Six pages — Home, About, Services, Why Us, Clients, Contact",
       "PHP component architecture (shared header, footer, helpers)",
-      "Tailwind CSS with custom styling layer",
-      "Mobile responsive, SEO structure in place",
-      "Hosting and deployment setup included"
+      "Own look and feel, not a template",
+      "Works well on a phone, and set up to be found on Google",
+      "Hosting and going live included"
     ],
     skills:["PHP","Tailwind CSS","JavaScript","HTML/CSS","SEO"]
   },
@@ -461,7 +476,7 @@ const PROJECTS = [
     timeline:"2026 — present", icon:"⚡", highlight:true,
     url:"https://bejaadigital.com",
     image:"bejaa-digital-website.jpg",
-    summary:"My own agency site — not just a brochure page, but a working lead-capture system with an admin backend and a client progress tracker, deployed via Docker and running in production.",
+    summary:"My own agency site — not just a brochure page, but a working system that collects enquiries, has an admin side for us, and lets each client follow their project progress. Live and in daily use.",
     features:[
       "PHP component-include architecture with centralised content layer",
       "Request-for-quote form writing leads to a database",
@@ -470,7 +485,7 @@ const PROJECTS = [
       "Client progress tracker — every client gets a private link showing live milestone status, no login needed",
       "Progress percentage calculated from milestones, never typed in by hand",
       "Structured data, dynamic sitemap and per-page titles for search and AI discoverability",
-      "Docker container deployed to Render",
+      "Hosted and live on Render",
       "Full custom-domain email setup — MX, SPF, DKIM and DMARC records"
     ],
     skills:["PHP","Tailwind CSS","MySQL","Docker","Render","DNS & Email","SEO"]
@@ -485,7 +500,7 @@ const PROJECTS = [
     features:[
       "Four-step guided booking form",
       "Live database storing real bookings",
-      "Fully functional backend, not a static mockup",
+      "Everything really works and saves data, not just pictures",
       "Built as a pitch demo so prospects can click through a real system"
     ],
     skills:["PHP","MySQL","JavaScript","HTML/CSS"]
@@ -518,7 +533,7 @@ const PROJECTS = [
       "Product catalogue with category browsing",
       "Order enquiry flow (no payment gateway, by scope)",
       "Admin product-management concept",
-      "Mobile responsive layout"
+      "Works well on a phone"
     ],
     skills:["HTML/CSS","JavaScript","Responsive Design"]
   },
@@ -533,9 +548,9 @@ const PROJECTS = [
     confidential:true,
     summary:"A custom internal project-management system replacing scattered WhatsApp coordination for a construction client. Currently in active development.",
     features:[
-      "Role-based system covering multiple levels of the client's organisation",
+      "Each level of staff, up to the director, sees only their own part",
       "Web and mobile-friendly interfaces",
-      "Self-hosted database — the client's operational data stays on infrastructure they own",
+      "The client's data stays on a server they own, not shared with anyone",
       "Further scope and screens are covered by client confidentiality"
     ],
     skills:["Next.js","Tailwind CSS","PostgreSQL","Docker","DigitalOcean"]
@@ -546,21 +561,21 @@ const PROJECTS = [
     client:"Own product",
     type:"Personal", status:"progress", bucket:"inprogress",
     timeline:"August 2026 — present", icon:"📦", highlight:true,
-    summary:"A distribution ERP for Malaysian wholesalers and stockists — stock, sales orders, purchasing and customer pricing in one system instead of five spreadsheets. Specification written and the codebase scaffolded; modules are being built one at a time.",
+    summary:"A distribution ERP for Malaysian wholesalers and stockists — stock, sales orders, purchasing and customer pricing in one system instead of five spreadsheets. The plan is written and the base is built; each part is being added one at a time.",
     features:[
       "Stock movement ledger — quantity on hand is calculated from movements, never typed in by hand",
       "Sales orders, purchase orders and goods receiving",
       "Per-customer price tiers",
       "Command-palette search across products, customers and documents",
-      "Self-hosted PostgreSQL — the database stays on hardware the business owns",
-      "Docker deployment to a private server"
+      "The data stays on a computer the business owns",
+      "Runs on a private server, not shared"
     ],
     skills:["Next.js","TypeScript","PostgreSQL","Drizzle ORM","Tailwind CSS","Docker"]
   },
   {
     slug:"sitepulse",
     name:"SitePulse — Construction Site Progress Tracker",
-    client:"Own SaaS product",
+    client:"Own product, sold as a monthly subscription",
     type:"Personal", status:"progress", bucket:"inprogress",
     timeline:"April 2026 — present", icon:"📱", highlight:true,
     summary:"A mobile app that lets site supervisors report daily progress from their phone, and gives project managers and clients a live picture of whether a project is on schedule. Android build is demo-ready.",
@@ -596,17 +611,17 @@ const PROJECTS = [
   },
   {
     slug:"catering-cms",
-    name:"Catering Group — Corporate Website & CMS",
+    name:"Catering Group — Corporate Website & Admin Panel",
     client:"Catering & food service group",
     type:"Client", status:"upcoming", bucket:"upcoming",
     timeline:"Scoped 2026", icon:"🍽️",
     summary:"Corporate website with a self-serve content management system for a catering group. Scope and quotation delivered, awaiting client go-ahead.",
     features:[
-      "Full corporate website, fully responsive",
+      "Full company website that works well on any screen",
       "Bilingual English / Arabic",
-      "CMS admin panel — text, images, banners, statistics and contact details editable without touching code",
+      "Admin panel — the client changes text, photos, banners, numbers and contact details themselves",
       "Contact and enquiry form",
-      "Testing, deployment and full source-code handover",
+      "Testing, going live, and the full source code handed over",
       "Post-launch warranty period"
     ],
     skills:["Laravel","Blade","PHP","MySQL","cPanel"]
@@ -960,7 +975,7 @@ function viewBackground(){
         <li>
           <div class="yr">2025 — present</div>
           <b>Full-time web & systems development</b>
-          <span>Moved from side projects into building websites and operational systems as the main focus.</span>
+          <span>Moved from side projects into building websites and business systems as the main focus.</span>
         </li>
         <li>
           <div class="yr">2012 — present</div>
@@ -987,13 +1002,13 @@ function viewServices(){
   </div>
   <div class="prose">
     <div class="svcgrid">
-      <div class="svc"><b>Corporate Websites</b><span>Bilingual, mobile responsive, search-ready company sites that make a business look as serious as it actually is.</span></div>
+      <div class="svc"><b>Corporate Websites</b><span>Company websites in BM and English that work on a phone, can be found on Google, and make a business look as serious as it actually is.</span></div>
       <div class="svc"><b>Internal Business Systems</b><span>Custom systems for project tracking, stock, approvals and daily operations — replacing WhatsApp groups and spreadsheets.</span></div>
       <div class="svc"><b>E-Commerce</b><span>Product catalogue, cart, checkout and an admin dashboard you can actually run yourself.</span></div>
       <div class="svc"><b>Automation</b><span>Document and invoice data extraction, and other repetitive manual work handed over to software.</span></div>
       <div class="svc"><b>Mobile Apps</b><span>Android and iOS apps for teams working away from a desk — site crews, field staff, delivery.</span></div>
       <div class="svc"><b>Digital Advertising</b><span>Facebook and TikTok campaigns, including Click-to-WhatsApp setups that send enquiries straight to your phone.</span></div>
-      <div class="svc"><b>Maintenance & Support</b><span>Retainer arrangements covering uptime monitoring, bug fixes, security updates and monthly reporting.</span></div>
+      <div class="svc"><b>Maintenance & Support</b><span>A monthly plan: we check the site stays up, fix problems, do security updates and send a short report every month.</span></div>
       <div class="svc"><b>Domain & Business Email</b><span>Custom-domain email setup done properly — MX, SPF, DKIM and DMARC, so your mail actually arrives.</span></div>
     </div>
   </div>  </div></section>`;
@@ -1335,7 +1350,7 @@ $("#overlay").addEventListener("click", e => { if(e.target === $("#overlay")) di
 document.addEventListener("keydown", e => { if(e.key === "Escape") dismissModal(); });
 window.addEventListener("hashchange", applyHash);
 
-if(window.Lenis){
+if(window.Lenis && !matchMedia("(prefers-reduced-motion: reduce)").matches){
   window.__lenis = new window.Lenis({ lerp:.1 });
   const raf = t => { window.__lenis.raf(t); requestAnimationFrame(raf); };
   requestAnimationFrame(raf);
