@@ -1,0 +1,60 @@
+const ICONS = {
+  users: '<circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.4 3-5.2 6-5.2s5.4 1.8 6 5.2"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 13.9c2.3.2 4 1.7 4.5 4.6"/>',
+  bed: '<path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2.5a2.5 2.5 0 0 0-2.5-2.5H11v5"/><circle cx="7" cy="11" r="1.8"/>',
+  bath: '<path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2Z"/><path d="M6 12V6a2 2 0 0 1 3.6-1.2"/><path d="M8 19l-1 2M16 19l1 2"/>',
+  size: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+  pool: '<path d="M3 17c1.5 0 1.5-1 3-1s1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1"/><path d="M3 21c1.5 0 1.5-1 3-1s1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1"/><path d="M8 14V5a2 2 0 0 1 4 0M16 14V5a2 2 0 0 0-4 0M8 9h8"/>',
+  kitchen: '<path d="M5 3v8a2 2 0 0 0 2 2v8M9 3v8a2 2 0 0 1-2 2M7 3v5"/><path d="M17 21V3c-2 1-3 4-3 8h3"/>',
+  kitchenette: '<rect x="4" y="5" width="16" height="15" rx="1.5"/><path d="M4 10h16"/><circle cx="9" cy="7.5" r=".6"/><circle cx="12" cy="7.5" r=".6"/><rect x="8" y="13" width="8" height="4" rx=".8"/>',
+  bbq: '<path d="M4 9h16a8 8 0 0 1-16 0Z"/><path d="M8 16l-2 5M16 16l2 5M12 17v4"/><path d="M9 5.5c0-1 1-1.2 1-2.5M13 5.5c0-1 1-1.2 1-2.5"/>',
+  parking1: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M10 17V7h3a3 3 0 0 1 0 6h-3"/>',
+  parking3: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M10 17V7h3a3 3 0 0 1 0 6h-3"/>',
+  wifi: '<path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.6 16a5 5 0 0 1 6.8 0"/><circle cx="12" cy="19.2" r="1"/>',
+  aircon: '<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/><path d="M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/>',
+  surau: '<path d="M12 3c2.8 2 5 3.8 5 6.5V11H7V9.5C7 6.8 9.2 5 12 3Z"/><path d="M5 21V11h14v10"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/><path d="M3 21h18"/>',
+  tv: '<rect x="3" y="5" width="18" height="12" rx="1.5"/><path d="M8 21h8M12 17v4"/>',
+  washer: '<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="4.5"/><path d="M7 6.5h2"/><path d="M9.5 13.5c1 .8 2 .8 3 0s2-.8 3 0"/>',
+  towels: '<path d="M6 4h12v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4Z"/><path d="M6 8h12M6 15h12"/><path d="M4 4h16"/>',
+  kids: '<circle cx="12" cy="6" r="2.6"/><path d="M8 21l1.2-6M16 21l-1.2-6M7 11.5c3-1.5 7-1.5 10 0M12 9.5v5.5"/>',
+  river: '<path d="M3 8c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 3 2"/><path d="M3 13c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 3 2"/><path d="M3 18c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 3 2"/>',
+  bathtub: '<path d="M3 11h18v2.5A5.5 5.5 0 0 1 15.5 19h-7A5.5 5.5 0 0 1 3 13.5V11Z"/><path d="M5 11V5.5a2.5 2.5 0 0 1 4.6-1.3"/><path d="M8 19.5 7 21M16 19.5l1 1.5"/>',
+  view: '<path d="M2 19l6.5-9 4 5 3-3.5L22 19Z"/><circle cx="17" cy="6" r="2"/>',
+  coffee: '<path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c0 1.5 1 1.5 1 3M12 3c0 1.5 1 1.5 1 3"/>',
+  workdesk: '<path d="M3 10h18M5 10v10M19 10v10"/><rect x="8" y="4" width="8" height="6" rx="1"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  nosmoke: '<path d="M3 15h10v3H3z"/><path d="M16 15h2v3M20 15h1v3"/><path d="M3 3l18 18"/><path d="M17 4c0 2 2 2 2 4"/>',
+  pet: '<circle cx="5.5" cy="10" r="2"/><circle cx="9.5" cy="5.5" r="2"/><circle cx="14.5" cy="5.5" r="2"/><circle cx="18.5" cy="10" r="2"/><path d="M8 17.5c0-3 2-5.5 4-5.5s4 2.5 4 5.5c0 2-1.8 2.8-4 2-2.2.8-4 0-4-2Z"/>',
+  quiet: '<path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M16 9l5 6M21 9l-5 6"/>',
+  pin: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  car: '<path d="M4 16V12l2-5h12l2 5v4"/><path d="M3 16h18v2H3z"/><circle cx="7.5" cy="13" r=".6"/><circle cx="16.5" cy="13" r=".6"/>',
+  walk: '<circle cx="13" cy="4" r="2"/><path d="M10 21l2-6 3 3v3M9 11l3-3 3 3 3 1M12 8l-1 7"/>',
+  whatsapp: '<path d="M4 20l1.3-4A8 8 0 1 1 8.3 19Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.6-1.8-1-1 .8a4 4 0 0 1-1.9-1.9l.8-1-1-1.8Z"/>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+  left: '<path d="M15 5l-7 7 7 7"/>',
+  right: '<path d="M9 5l7 7-7 7"/>',
+  close: '<path d="M6 6l12 12M18 6 6 18"/>',
+  check: '<path d="M4 12.5l5 5L20 6.5"/>',
+  minus: '<path d="M5 12h14"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  expand: '<path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/>',
+  calendar: '<rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  money: '<rect x="3" y="6" width="18" height="12" rx="1.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v.01M17.5 14.5v.01"/>',
+  door: '<path d="M5 21V4a1 1 0 0 1 1-1h9l4 2v16"/><path d="M3 21h18"/><circle cx="12.5" cy="12.5" r=".8"/>',
+  logout: '<path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4M16 17l5-5-5-5M21 12H9"/>',
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/>',
+  lock: '<rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
+  phone: '<path d="M5 3h3.5l1.8 4.6-2.3 1.5a11 11 0 0 0 5.9 5.9l1.5-2.3L20 14.5V18a2 2 0 0 1-2 2A15 15 0 0 1 3 5a2 2 0 0 1 2-2Z"/>'
+};
+
+const AMENITY = {
+  pool: 'Private pool', kitchen: 'Full kitchen', kitchenette: 'Kitchenette', bbq: 'BBQ pit',
+  parking3: 'Parking, 3 cars', parking1: 'Parking, 1 car', wifi: 'Fast Wi-Fi', aircon: 'Aircond in every room',
+  surau: 'Prayer mat + qibla', tv: 'Smart TV', washer: 'Washing machine', towels: 'Towels + toiletries',
+  kids: 'Kid friendly', river: 'Right on the river', bathtub: 'Bathtub', view: 'Hill view deck',
+  coffee: 'Coffee + tea', workdesk: 'Work desk'
+};
+
+function icon(name, cls = '') {
+  return `<svg class="icon ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ''}</svg>`;
+}
