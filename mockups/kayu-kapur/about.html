@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About | Kayu &amp; Kapur</title>
+<meta name="description" content="One team that draws the room, builds it and hands you the keys. A demo website by Bejaa Digital.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <a class="nav__mark" href="index.html" aria-label="Kayu &amp; Kapur, home">Kayu &amp; Kapur</a>
+  <ul class="nav__links">
+      <li><a href="projects.html" data-ms="Projek">Projects</a></li>
+      <li><a href="services.html" data-ms="Servis">Services</a></li>
+      <li><a href="about.html" aria-current="page" data-ms="Tentang kami">About</a></li>
+      <li><a href="contact.html" data-ms="Hubungi">Contact</a></li>
+    <li><a class="btn btn--primary btn--sm" href="contact.html#visit" data-ms="Book lawatan tapak">Book a site visit</a></li>
+  </ul>
+  <button class="nav__lang" type="button" id="lang" aria-label="Tukar ke Bahasa Melayu">BM</button>
+  <details class="nav__menu">
+    <summary data-ms="Menu">Menu</summary>
+    <ul>
+      <li><a href="projects.html" data-ms="Projek">Projects</a></li>
+      <li><a href="services.html" data-ms="Servis">Services</a></li>
+      <li><a href="about.html" aria-current="page" data-ms="Tentang kami">About</a></li>
+      <li><a href="contact.html" data-ms="Hubungi">Contact</a></li>
+      <li><a href="contact.html#visit" data-ms="Book lawatan tapak">Book a site visit</a></li>
+    </ul>
+  </details>
+</header>
+
+<main id="main">
+  <section class="page-head">
+    <div class="container">
+      <h1 data-ms="Tentang kami">About</h1>
+      <p class="lead" data-ms="Bengkel kabinet yang berkembang jadi studio yang design dan bina satu bilik penuh.">A carpentry workshop that grew into a studio which designs and builds the whole room.</p>
+    </div>
+  </section>
+  <section class="story">
+    <div class="container story__in">
+      <img src="img/living-detail.jpg" width="720" height="900" alt="" loading="lazy">
+      <div>
+        <h2 data-ms="Satu team, dari lukisan sampai serah kunci">One team, from the drawing to the keys</h2>
+        <p data-ms="Kayu &amp; Kapur bermula pada 2014 sebagai bengkel kabinet di Petaling Jaya. Pelanggan selalu tanya siapa nak buat dinding dan lantai keliling kabinet kami, jadi kami belajar buat yang tu juga.">Kayu &amp; Kapur started in 2014 as a carpentry workshop in Petaling Jaya. Customers kept asking who would do the walls and the floor around our cabinets, so we learned to do those too.</p>
+        <p data-ms="Hari ni orang yang sama lukis bilik, bina dan pusing rumah dengan anda masa serah kunci. Tak ada yang diserah pada kontraktor kedua.">Today the same people draw the room, build it and walk it with you at handover. Nothing is passed to a second contractor.</p>
+      </div>
+    </div>
+  </section>
+  <section class="team">
+    <div class="container">
+      <h2 data-ms="Siapa yang anda akan jumpa">Who you will meet</h2>
+      <ul class="team__list">
+        <li><h3>Faris</h3><p class="team__role" data-ms="Designer">Designer</p><p data-ms="Ukur setiap rumah sendiri dan lukis setiap bilik dalam 3D.">Measures every house himself and draws each room in 3D.</p></li>
+        <li><h3>Mei Ling</h3><p class="team__role" data-ms="Penyelia tapak">Site supervisor</p><p data-ms="Ada di tapak setiap hari kerja. Dialah yang hantar gambar setiap petang.">On site every working day. She is the one who sends the evening photos.</p></li>
+        <li><h3>Azman</h3><p class="team__role" data-ms="Ketua bengkel">Workshop lead</p><p data-ms="Bina kabinet di Petaling Jaya sebelum sampai ke rumah anda.">Builds the cabinets in Petaling Jaya before they reach your house.</p></li>
+      </ul>
+      <p class="note" data-ms="Studio ni demo, jadi team ni rekaan.">This studio is a demo, so the team is made up.</p>
+    </div>
+  </section>
+  <section class="areas">
+    <div class="container">
+      <h2 data-ms="Apa yang kami janji">What we promise</h2>
+      <ul class="ticks ticks--big">
+        <li data-ms="Satu harga, ditulis item demi item, yang tak berubah">One price, written item by item, that does not move</li>
+        <li data-ms="Gambar kerja hari tu di WhatsApp setiap petang">Photos of the day’s work on WhatsApp every evening</li>
+        <li data-ms="Warranty dua belas bulan untuk hasil kerja">Twelve months’ warranty on workmanship</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="visit" id="visit">
+    <div class="container visit__in">
+      <div>
+        <h2 data-ms="Book lawatan tapak">Book a site visit</h2>
+        <p class="lead" data-ms="Ceritakan pasal rumah anda. Kami datang dan ukur.">Tell us about the house. We come and measure it.</p>
+      </div>
+      <form class="form" data-endpoint="" novalidate>
+        <fieldset>
+          <legend data-ms="Jenis rumah">Type of home</legend>
+          <div class="seg">
+            <input type="radio" name="home" id="h1" value="Terrace house" checked><label for="h1" data-ms="Rumah teres">Terrace house</label>
+            <input type="radio" name="home" id="h2" value="Condominium"><label for="h2" data-ms="Kondominium">Condominium</label>
+            <input type="radio" name="home" id="h3" value="Semi-D or bungalow"><label for="h3" data-ms="Semi-D atau banglo">Semi-D or bungalow</label>
+          </div>
+        </fieldset>
+        <div>
+          <label class="lab" for="area" data-ms="Kawasan">Area</label>
+          <select id="area" name="area" autocomplete="address-level2">
+            <option>Kuala Lumpur</option><option>Petaling Jaya</option><option>Subang Jaya</option><option>Shah Alam</option><option>Klang</option><option>Puchong</option><option>Cheras</option><option>Ampang</option>
+            <option data-ms="Tempat lain di Selangor">Elsewhere in Selangor</option>
+          </select>
+        </div>
+        <div class="form__two">
+          <div><label class="lab" for="name" data-ms="Nama anda">Your name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+          <div><label class="lab" for="phone" data-ms="Nombor WhatsApp">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+        </div>
+        <div class="form__foot">
+          <button class="btn btn--primary" type="submit" data-ms="Minta lawatan">Ask for a visit</button>
+          <p class="form__help" id="form-help" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container">
+    <p class="foot__mark" aria-hidden="true" data-reveal>Kayu &amp; Kapur</p>
+    <div class="foot__cols">
+      <p><b>Kayu &amp; Kapur</b><span data-ms="Interior design dan renovation untuk rumah di Kuala Lumpur dan Selangor.">Interior design and renovation for homes in Kuala Lumpur and Selangor.</span></p>
+      <ul>
+        <li><a href="projects.html" data-ms="Projek">Projects</a></li>
+        <li><a href="services.html" data-ms="Servis">Services</a></li>
+        <li><a href="about.html" data-ms="Tentang kami">About</a></li>
+        <li><a href="contact.html" data-ms="Hubungi">Contact</a></li>
+      </ul>
+      <p><b data-ms="Studio">Studio</b>Petaling Jaya, Selangor<br>012-555 0142<br>hello@kayukapur.example</p>
+    </div>
+    <p class="foot__note" data-ms="Demo oleh Bejaa Digital. Studio, rumah, pelanggan dan maklumat hubungan ni rekaan. Gambar dibuat dengan Canva AI.">A demo by Bejaa Digital. The studio, homes, customers and contact details are made up. Photographs made with Canva AI.</p>
+  </div>
+</footer>
+
+<details class="wa">
+  <summary aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.6A8.3 8.3 0 1 1 8.2 19.3z"/><path d="M9 8.6c.3 2.7 2.6 5.2 5.6 6l1.3-1.3-2-1.1-.9.8c-.9-.5-1.7-1.300-2.2-2.200l.8-.9-1.100-2z"/></svg><span>WhatsApp</span></summary>
+  <p data-ms="Di website anda, butang ni buka chat WhatsApp dengan nombor anda, dari setiap page. Ini demo, jadi ia tak ke mana-mana.">On your website this button opens a WhatsApp chat with your number, from every page. This is a demo, so it goes nowhere.</p>
+</details>
+
+<script src="app.js"></script>
+</body>
+</html>

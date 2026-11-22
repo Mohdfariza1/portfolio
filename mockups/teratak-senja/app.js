@@ -474,7 +474,6 @@ function renderBook() {
 function renderDone(ref) {
   const b = S.last && S.last.ref === ref ? S.last : null;
   if (!b) return go('#/');
-  const msg = encodeURIComponent(`Hi Teratak Senja, booking ${b.ref} (${b.unit}, ${fmtDay(b.checkIn)} to ${fmtDay(b.checkOut)}). Here is my deposit receipt for ${rm(b.deposit)}.`);
   view.innerHTML = `<div class="book"><div class="wrap done">
     <h1>Thank you, ${esc(b.guestName.split(' ')[0])}. Your dates are held</h1>
     <div class="ticket">
@@ -484,8 +483,8 @@ function renderDone(ref) {
         <div class="summary__body" style="padding:0"><h2>${esc(b.unit)}</h2>
           <dl><dt>Check-in</dt><dd>${fmtDay(b.checkIn)}, 3 pm</dd><dt>Check-out</dt><dd>${fmtDay(b.checkOut)}, 12 pm</dd><dt>Total</dt><dd class="num">${rm(b.total)}</dd></dl></div>
         <div class="paybox"><b class="num">Pay ${rm(b.deposit)} deposit</b>
-          <p>Transfer to <code>Maybank 5123 4567 8901</code> (Teratak Senja Enterprise), or DuitNow QR. Then send the receipt on WhatsApp and we confirm the same day.</p></div>
-        <a class="btn btn--go" href="https://wa.me/60123456789?text=${msg}" rel="noopener">${icon('whatsapp')}Send receipt on WhatsApp</a>
+          <p>Transfer to <code>Maybank 0000 0000 0000</code> (Teratak Senja Enterprise), or DuitNow QR. Then send the receipt on WhatsApp and we confirm the same day.</p></div>
+        <button class="btn btn--go" type="button" data-wa>${icon('whatsapp')}Send receipt on WhatsApp</button>
         <p class="demo-note">Demo: bank account and number are not real.</p>
       </div>
     </div>
@@ -500,6 +499,13 @@ document.getElementById('lbClose').innerHTML = icon('close');
 document.getElementById('lbPrev').innerHTML = icon('left');
 document.getElementById('lbNext').innerHTML = icon('right');
 document.getElementById('footWa').insertAdjacentHTML('afterbegin', icon('whatsapp'));
+// WhatsApp in the demo: every WhatsApp button opens the note instead of a chat with a stranger's number.
+const waNote = document.getElementById('wa');
+waNote.querySelector('summary').insertAdjacentHTML('afterbegin', icon('whatsapp'));
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-wa]')) { waNote.open = true; waNote.querySelector('summary').focus(); return; }
+  if (waNote.open && !waNote.contains(e.target)) waNote.open = false;
+});
 function lbShow() {
   const p = lbList[lbI];
   const im = document.getElementById('lbImg');

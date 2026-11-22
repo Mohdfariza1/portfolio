@@ -1,0 +1,30 @@
+@font-face { font-family: "Onest"; src: url("fonts/onest.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+:root {
+  color-scheme: light;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display: clamp(2.75rem, 6.2vw, 5.75rem);
+  --text-statement: clamp(2rem, 4.4vw, 4.25rem);
+  --text-section: clamp(2.25rem, 3.6vw, 3.75rem); --text-title: clamp(1.375rem, 1.6vw + 0.75rem, 2.25rem); --text-lead: clamp(1.0625rem, 0.4vw + 1rem, 1.3125rem);
+  --text-mark: clamp(3.5rem, 13vw, 12rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms; --dur-wipe: 700ms; --dur-sweep: 1400ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --frame-inset: 16px; --band: 1680px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  --color-paper: oklch(96.5% 0.008 120); --color-paper-2: oklch(92.5% 0.012 120); --color-paper-3: oklch(88% 0.014 120);
+  --color-ink: oklch(24% 0.03 55); --color-ink-2: oklch(36% 0.03 55); --color-muted: oklch(46% 0.025 60);
+  --color-rule: oklch(84% 0.012 100);
+  --color-accent: oklch(40% 0.09 152); --color-accent-2: oklch(34% 0.085 152); --color-accent-ink: oklch(97% 0.012 120);
+  --color-focus: oklch(42% 0.13 152); --color-focus-dark: oklch(88% 0.17 105);
+  --color-field: oklch(40% 0.09 152); --color-field-rule: oklch(97% 0.012 120 / 0.28); --color-field-soft: oklch(90% 0.03 140);
+  --color-scrim: oklch(20% 0.03 55 / 0.74); --color-scrim-0: oklch(20% 0.03 55 / 0);
+  --color-glass: oklch(96.5% 0.008 120);
+  --color-line: oklch(98% 0.005 120);
+  --color-foot-soft: oklch(80% 0.02 80);
+  --font-display: "Onest", ui-sans-serif, system-ui, sans-serif; --font-body: "Onest", ui-sans-serif, system-ui, sans-serif; --font-outlier: var(--font-body);
+  --radius-frame: 28px; --radius-card: 16px; --radius-input: 12px; --radius-pill: 999px; --rule-hair: 1px; --shadow-card: none; --shadow-nav: 0 6px 24px oklch(20% 0.03 55 / 0.14);
+  --tracking-display: -0.035em;
+}
+@media (max-width: 60rem) { :root { --frame-inset: 8px; --radius-frame: 20px; } }
